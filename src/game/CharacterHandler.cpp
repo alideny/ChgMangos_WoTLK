@@ -18,6 +18,7 @@
 
 #include "Common.h"
 #include "Database/DatabaseEnv.h"
+#include "Config/Config.h"
 #include "WorldPacket.h"
 #include "SharedDefines.h"
 #include "WorldSession.h"
@@ -658,6 +659,16 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder *holder)
     data << pCurrChar->GetPositionZ();
     data << pCurrChar->GetOrientation();
     SendPacket(&data);
+
+    // 上线公告
+    static uint32 loginbroad = sConfig.GetIntDefault("LoginBroad.On", 0);
+    if ( loginbroad == 1)
+    {
+        std::string playername = pCurrChar->GetName();
+        std::string loginmsg = "[" + playername +"]  ";
+        std::string sendmsg = loginmsg + "已经登陆服务器啦! 大家鼓掌欢迎,送上鲜花!";
+        sWorld.SendWorldText(LANG_LOGIN_BROADCAST, sendmsg.c_str());
+    }
 
     // load player specific part before send times
     LoadAccountData(holder->GetResult(PLAYER_LOGIN_QUERY_LOADACCOUNTDATA),PER_CHARACTER_CACHE_MASK);

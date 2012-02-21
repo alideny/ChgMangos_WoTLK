@@ -201,7 +201,7 @@ AuthSocket::~AuthSocket()
 /// Accept the connection and set the s random value for SRP6
 void AuthSocket::OnAccept()
 {
-    BASIC_LOG("Accepting connection from '%s'", get_remote_address().c_str());
+    BASIC_LOG("建立新的会话连接，地址： '%s'", get_remote_address().c_str());
 }
 
 /// Read the packet from the client
@@ -222,12 +222,12 @@ void AuthSocket::OnRead()
                     (table[i].status == STATUS_CONNECTED ||
                      (_authed && table[i].status == STATUS_AUTHED)))
             {
-                DEBUG_LOG("[Auth] got data for cmd %u recv length %u",
+                DEBUG_LOG("[登录服务器] 收到数据包 %u ，长度 %u",
                         (uint32)_cmd, (uint32)recv_len());
 
                 if (!(*this.*table[i].handler)())
                 {
-                    DEBUG_LOG("Command handler failed for cmd %u recv length %u",
+                    DEBUG_LOG("处理命令 %u 失败，长度 %u",
                             (uint32)_cmd, (uint32)recv_len());
 
                     return;
@@ -239,7 +239,7 @@ void AuthSocket::OnRead()
         ///- Report unknown commands in the debug log
         if (i == AUTH_TOTAL_COMMANDS)
         {
-            DEBUG_LOG("[Auth] got unknown packet %u", (uint32)_cmd);
+            DEBUG_LOG("[登录服务器] 收到无法识别的数据包 %u", (uint32)_cmd);
             return;
         }
     }

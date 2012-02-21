@@ -47,7 +47,7 @@ DatabaseMysql::DatabaseMysql()
 
         if (!mysql_thread_safe())
         {
-            sLog.outError("FATAL ERROR: Used MySQL library isn't thread-safe.");
+            sLog.outError("MySQL 线程不安全！");
             Log::WaitBeforeContinueIfNeed();
             exit(1);
         }
@@ -79,7 +79,7 @@ bool MySQLConnection::Initialize(const char *infoString)
     MYSQL * mysqlInit = mysql_init(NULL);
     if (!mysqlInit)
     {
-        sLog.outError( "Could not initialize Mysql connection" );
+        sLog.outError( "初始化MySQL连接失败！" );
         return false;
     }
 
@@ -139,15 +139,15 @@ bool MySQLConnection::Initialize(const char *infoString)
 
     if (!mMysql)
     {
-        sLog.outError( "Could not connect to MySQL database at %s: %s\n",
+        sLog.outError( "无法连接 MySQL 数据库 %s: %s\n",
         host.c_str(),mysql_error(mysqlInit));
         mysql_close(mysqlInit);
         return false;
     }
 
-    DETAIL_LOG("Connected to MySQL database %s@%s:%s/%s", user.c_str(), host.c_str(), port_or_socket.c_str(), database.c_str());
-    sLog.outString("MySQL client library: %s", mysql_get_client_info());
-    sLog.outString("MySQL server ver: %s ", mysql_get_server_info( mMysql));
+    DETAIL_LOG("连接到 MySQL 数据库 %s@%s:%s/%s", user.c_str(), host.c_str(), port_or_socket.c_str(), database.c_str());
+    //sLog.outString("MySQL客户端版本： %s", mysql_get_client_info());
+    //sLog.outString("MySQL服务器版本： %s", mysql_get_server_info( mMysql));
 
     /*----------SET AUTOCOMMIT ON---------*/
     // It seems mysql 5.0.x have enabled this feature
@@ -175,16 +175,16 @@ bool MySQLConnection::Initialize(const char *infoString)
         my_bool my_true = (my_bool)1;
         if (mysql_options(mMysql, MYSQL_OPT_RECONNECT, &my_true))
         {
-            sLog.outDetail("Failed to turn on MYSQL_OPT_RECONNECT.");
+            sLog.outDetail("开启 MYSQL_OPT_RECONNECT 失败！");
         }
         else
         {
-            sLog.outDetail("Successfully turned on MYSQL_OPT_RECONNECT.");
+            sLog.outDetail("开启 MYSQL_OPT_RECONNECT 成功！");
         }
 #else
-        sLog.outDetail("Your mySQL client lib version does not support reconnecting after a timeout.");
-        sLog.outDetail("If this causes you any trouble we advice you to upgrade");
-        sLog.outDetail("your mySQL client libs to at least mySQL 5.0.13 to resolve this problem.");
+        sLog.outDetail("你的 mySQL 客户端版本不支持断线重连。");
+        sLog.outDetail("如果该问题经常出现，建议更新你的 mySQL 版本。");
+        sLog.outDetail("你的 mySQL 必须不低于版本 5.0.13 才能解决该问题。");
 #endif
 
     return true;
@@ -200,7 +200,7 @@ bool MySQLConnection::_Query(const char *sql, MYSQL_RES **pResult, MYSQL_FIELD *
     if(mysql_query(mMysql, sql))
     {
         sLog.outErrorDb( "SQL: %s", sql );
-        sLog.outErrorDb("query ERROR: %s", mysql_error(mMysql));
+        sLog.outErrorDb("语法错误: %s", mysql_error(mMysql));
         return false;
     }
     else

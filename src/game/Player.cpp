@@ -14124,6 +14124,38 @@ void Player::OnGossipSelect(WorldObject* pSource, uint32 gossipListId, uint32 me
     }
 }
 
+void Player::OnGossipSelectItem(Item *pItem, uint32 gossipListId, uint32 menuId)
+{
+  GossipMenu& gossipmenu = PlayerTalkClass->GetGossipMenu();
+
+  if (gossipListId >= gossipmenu.MenuItemCount())
+      return;
+
+  // if not same, then something funky is going on
+  if (menuId != gossipmenu.GetMenuId())
+      return;
+
+  GossipMenuItem const&  menu_item = gossipmenu.GetItem(gossipListId);
+
+  uint32 gossipOptionId = menu_item.m_gOptionId;
+  ObjectGuid guid = pItem->GetObjectGuid();
+  uint32 moneyTake = menu_item.m_gBoxMoney;
+
+  // if this function called and player have money for pay MoneyTake or cheating, proccess both cases
+  if (moneyTake > 0)
+  {
+      if (GetMoney() >= moneyTake)
+          ModifyMoney(-int32(moneyTake));
+      else
+          return;                                         // cheating
+  }
+
+  GossipMenuItemData pMenuData = gossipmenu.GetItemData(gossipListId);
+
+  if (pMenuData.m_gAction_poi)
+      PlayerTalkClass->SendPointOfInterest(pMenuData.m_gAction_poi);
+}
+
 uint32 Player::GetGossipTextId(WorldObject *pSource)
 {
     if (!pSource || pSource->GetTypeId() != TYPEID_UNIT)
@@ -23488,6 +23520,54 @@ void Player::UpdateFallInformationIfNeed( MovementInfo const& minfo,uint16 opcod
 {
     if (m_lastFallTime >= minfo.GetFallTime() || m_lastFallZ <= minfo.GetPos()->z || opcode == MSG_MOVE_FALL_LAND)
         SetFallInformation(minfo.GetFallTime(), minfo.GetPos()->z);
+}
+
+//PVP Token
+void Player::ReceiveToken()
+{
+    if(!sWorld.getConfig(CONFIG_BOOL_PVP_TOKEN_ENABLE))
+        return;
+
+    uint8 MapRestriction = sWorld.getConfig(CONFIG_FLOAT_PVP_TOKEN_RESTRICTION);
+
+    if( MapRestriction == 1 && !InBattleGround() && !HasByteFlag(UNIT_FIELD_BYTES_2, 1, UNIT_BYTE2_FLAG_FFA_PVP) ||
+        MapRestriction == 2 && !HasByteFlag(UNIT_FIELD_BYTES_2, 1, UNIT_BYTE2_FLAG_FFA_PVP) ||
+        MapRestriction == 3 && !InBattleGround())
+        return;
+
+    uint32 itemID = sWorld.getConfig(CONFIG_FLOAT_PVP_TOKEN_ITEMID);
+    uint32 itemCount = sWorld.getConfig(CONFIG_FLOAT_PVP_TOKEN_ITEMCOUNT);
+    uint32 goldAmount = sWorld.getConfig(CONFIG_FLOAT_PVP_TOKEN_GOLD);
+    uint32 honorAmount = sWorld.getConfig(CONFIG_PVP_TOKEN_HONOR);
+    uint32 arenaAmount = sWorld.getConfig(CONFIG_PVP_TOKEN_ARENA);
+
+    ItemPosCountVec dest;
+    InventoryResult msg = CanStoreNewItem( NULL_BAG, NULL_SLOT, dest, itemID, itemCount);
+    if( msg != EQUIP_ERR_OK )   // convert to possible store amount
+    {
+        SendEquipError( msg, NULL, NULL );
+        return;
+    }
+
+    Item* item = StoreNewItem( dest, itemID, true, Item::GenerateItemRandomPropertyId(itemID));
+    SendNewItem(item,itemCount,true,false);
+
+   if( honorAmount > 0 )
+       ModifyHonorPoints(honorAmount);
+       SaveToDB();
+       return;
+
+   if( goldAmount > 0 )
+       ModifyMoney(goldAmount);
+       SaveGoldToDB();
+       return;
+
+   if( arenaAmount > 0 )
+       ModifyArenaPoints(arenaAmount);
+       SaveToDB();
+       return;
+
+    ChatHandler(this).PSendSysMessage(LANG_EVENTMESSAGE);
 }
 
 void Player::UnsummonPetTemporaryIfAny(bool full)

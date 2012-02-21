@@ -304,6 +304,13 @@ enum eConfigFloatValues
     CONFIG_FLOAT_CROWDCONTROL_HP_BASE,
     CONFIG_FLOAT_LOADBALANCE_HIGHVALUE,
     CONFIG_FLOAT_LOADBALANCE_LOWVALUE,
+    ///PvP Token
+    CONFIG_FLOAT_PVP_TOKEN_ITEMID,
+    CONFIG_FLOAT_PVP_TOKEN_ITEMCOUNT,
+    CONFIG_FLOAT_PVP_TOKEN_GOLD,
+    CONFIG_PVP_TOKEN_HONOR,
+    CONFIG_PVP_TOKEN_ARENA,
+    CONFIG_FLOAT_PVP_TOKEN_RESTRICTION,
     CONFIG_FLOAT_VALUE_COUNT
 };
 
@@ -393,6 +400,12 @@ enum eConfigBoolValues
     CONFIG_BOOL_PLAYERBOT_COLLECT_OBJECTS,
     CONFIG_BOOL_PLAYERBOT_SELL_TRASH,
     CONFIG_BOOL_MMAP_ENABLED,
+    // PvP Token
+    CONFIG_BOOL_PVP_TOKEN_ENABLE,
+    // PvP Announcer
+    CONFIG_BOOL_PVP_ANNOUNCER,
+    // Flying Everywhere
+    CONFIG_BOOL_ALLOW_FLYING_MOUNTS_EVERYWHERE,
     CONFIG_BOOL_VALUE_COUNT
 };
 
@@ -574,6 +587,9 @@ class World
         void SendZoneMessage(uint32 zone, WorldPacket *packet, WorldSession *self = 0, uint32 team = 0);
         void SendZoneText(uint32 zone, const char *text, WorldSession *self = 0, uint32 team = 0);
         void SendServerMessage(ServerMessageType type, const char *text = "", Player* player = NULL);
+
+        //PVP Announcer
+        void SendPvPAnnounce(std::string str);
 
         /// Are we in the middle of a shutdown?
         bool IsShutdowning() const { return m_ShutdownTimer > 0; }

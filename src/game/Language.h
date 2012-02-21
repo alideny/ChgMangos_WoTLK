@@ -972,6 +972,8 @@ enum MangosStrings
 
     // Broadcaster
     LANG_AUTO_BROADCAST                 = 1300,
+    LANG_LOGIN_BROADCAST                = 1301,
+    LANG_PVP_ANNOUNCER                  = 1302,
 
     // Use for not-in-offcial-sources patches
     //                                    10000-10999

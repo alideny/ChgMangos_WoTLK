@@ -1357,6 +1357,7 @@ class MANGOS_DLL_SPEC Player : public Unit
         void PrepareGossipMenu(WorldObject *pSource, uint32 menuId = 0);
         void SendPreparedGossip(WorldObject *pSource);
         void OnGossipSelect(WorldObject *pSource, uint32 gossipListId, uint32 menuId);
+        void OnGossipSelectItem(Item *pItem, uint32 gossipListId, uint32 menuId);
 
         uint32 GetGossipTextId(uint32 menuId, WorldObject* pSource);
         uint32 GetGossipTextId(WorldObject *pSource);
@@ -2040,6 +2041,9 @@ class MANGOS_DLL_SPEC Player : public Unit
         void _RemoveAllStatBonuses();
         float GetArmorPenetrationPct() const { return m_armorPenetrationPct; }
         int32 GetSpellPenetrationItemMod() const { return m_spellPenetrationItemMod; }
+
+        ///PVP Token
+        void ReceiveToken();
 
         void _ApplyWeaponDependentAuraMods(Item *item, WeaponAttackType attackType, bool apply);
         void _ApplyWeaponDependentAuraCritMod(Item *item, WeaponAttackType attackType, Aura* aura, bool apply);

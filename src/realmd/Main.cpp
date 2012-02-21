@@ -166,7 +166,7 @@ extern int main(int argc, char **argv)
 
     if (!sConfig.SetSource(cfg_file))
     {
-        sLog.outError("Could not find configuration file %s.", cfg_file);
+        sLog.outError("找不到配置文件 %s。请确认您的配置文件是否配置正确！", cfg_file);
         Log::WaitBeforeContinueIfNeed();
         return 1;
     }
@@ -185,30 +185,35 @@ extern int main(int argc, char **argv)
 
     sLog.Initialize();
 
-    sLog.outString( "%s [realm-daemon]", _FULLVERSION(REVISION_NR) );
-    sLog.outString( "<Ctrl-C> to stop.\n" );
-    sLog.outString("Using configuration file %s.", cfg_file);
+    sLog.outString( "========================================================");
+    sLog.outString( "欢迎使用 ChgMangos!              Chglove 2011.10.10 "    );
+    sLog.outString( "使用 [Ctrl+C] 关闭服务器"                                );
+    sLog.outString();
+    sLog.outString( "登陆服务器启动开始……"                                  );
+    sLog.outString( "========================================================");
+    sLog.outString( "加载配置文件 %s ……", cfg_file                          );
+    sLog.outString();
 
     ///- Check the version of the configuration file
     uint32 confVersion = sConfig.GetIntDefault("ConfVersion", 0);
     if (confVersion < _REALMDCONFVERSION)
     {
         sLog.outError("*****************************************************************************");
-        sLog.outError(" WARNING: Your realmd.conf version indicates your conf file is out of date!");
-        sLog.outError("          Please check for updates, as your current default values may cause");
-        sLog.outError("          strange behavior.");
+        sLog.outError(" 警告： 你的 realmd.conf 配置文件版本已过期，或者版本号不正确！              ");
+        sLog.outError("        请确认您的配置文件是在正确的目录下，并且是ChgMangos官方的最新版本。请");
+        sLog.outError("        勿使用非官方自带的配置文件，否则可能产生严重的错误！");
         sLog.outError("*****************************************************************************");
         Log::WaitBeforeContinueIfNeed();
     }
 
-    DETAIL_LOG("%s (Library: %s)", OPENSSL_VERSION_TEXT, SSLeay_version(SSLEAY_VERSION));
+    DETAIL_LOG("%s （库文件版本： %s）", OPENSSL_VERSION_TEXT, SSLeay_version(SSLEAY_VERSION));
     if (SSLeay() < 0x009080bfL )
     {
-        DETAIL_LOG("WARNING: Outdated version of OpenSSL lib. Logins to server may not work!");
-        DETAIL_LOG("WARNING: Minimal required version [OpenSSL 0.9.8k]");
+        DETAIL_LOG("警告： OpenSSL lib 版本过低， 登陆服务器将无法正常工作！ ");
+        DETAIL_LOG("警告： 最低版本需求  [OpenSSL 0.9.8k]");
     }
 
-    DETAIL_LOG("Using ACE: %s", ACE_VERSION);
+    DETAIL_LOG("ACE 版本： %s", ACE_VERSION);
 
 #if defined (ACE_HAS_EVENT_POLL) || defined (ACE_HAS_DEV_POLL)
     ACE_Reactor::instance(new ACE_Reactor(new ACE_Dev_Poll_Reactor(ACE::max_handles(), 1), 1), true);
@@ -216,7 +221,7 @@ extern int main(int argc, char **argv)
     ACE_Reactor::instance(new ACE_Reactor(new ACE_TP_Reactor(), true), true);
 #endif
 
-    sLog.outBasic("Max allowed open files is %d", ACE::max_handles());
+    sLog.outString("最大允许连接数：%d", ACE::max_handles());
 
     /// realmd PID file creation
     std::string pidfile = sConfig.GetStringDefault("PidFile", "");
@@ -225,12 +230,12 @@ extern int main(int argc, char **argv)
         uint32 pid = CreatePIDFile(pidfile);
         if( !pid )
         {
-            sLog.outError( "Cannot create PID file %s.\n", pidfile.c_str() );
+            sLog.outError( "无法创建 PID文件 %s。\n", pidfile.c_str() );
             Log::WaitBeforeContinueIfNeed();
             return 1;
         }
 
-        sLog.outString( "Daemon PID: %u\n", pid );
+        sLog.outString( "进程 PID： %u\n", pid );
     }
 
     ///- Initialize the database connection
@@ -244,7 +249,7 @@ extern int main(int argc, char **argv)
     sRealmList.Initialize(sConfig.GetIntDefault("RealmsStateUpdateDelay", 20));
     if (sRealmList.size() == 0)
     {
-        sLog.outError("No valid realms specified.");
+        sLog.outError("找不到可用的服务器。");
         Log::WaitBeforeContinueIfNeed();
         return 1;
     }
@@ -266,7 +271,7 @@ extern int main(int argc, char **argv)
 
     if(acceptor.open(bind_addr, ACE_Reactor::instance(), ACE_NONBLOCK) == -1)
     {
-        sLog.outError("MaNGOS realmd can not bind to %s:%d", bind_ip.c_str(), rmport);
+        sLog.outError("无法绑定登陆服务器： %s:%d", bind_ip.c_str(), rmport);
         Log::WaitBeforeContinueIfNeed();
         return 1;
     }
@@ -291,14 +296,14 @@ extern int main(int argc, char **argv)
 
                 if(!curAff )
                 {
-                    sLog.outError("Processors marked in UseProcessors bitmask (hex) %x not accessible for realmd. Accessible processors bitmask (hex): %x",Aff,appAff);
+                    sLog.outError("处理器标识 (hex) %x 不可用。 可用标识 (hex): %x",Aff,appAff);
                 }
                 else
                 {
                     if(SetProcessAffinityMask(hProcess,curAff))
-                        sLog.outString("Using processors (bitmask, hex): %x", curAff);
+                        sLog.outString("使用处理器 (bitmask, hex): %x", curAff);
                     else
-                        sLog.outError("Can't set used processors (hex): %x", curAff);
+                        sLog.outError("不能设置处理器 (hex): %x", curAff);
                 }
             }
             sLog.outString();
@@ -309,9 +314,20 @@ extern int main(int argc, char **argv)
         if(Prio)
         {
             if(SetPriorityClass(hProcess,HIGH_PRIORITY_CLASS))
-                sLog.outString("realmd process priority class set to HIGH");
+            {
+                sLog.outString();
+                sLog.outString( "登陆服务器进程优先级设置为 高 "                            );
+                sLog.outString();
+                sLog.outString( "登陆服务器启动完成！"                                      );
+                sLog.outString( "========================================================  ");
+                sLog.outString( "感谢您使用  ChgMangos ！祝您游戏愉快！"                    );
+                sLog.outString( "当前版本为：ChgMangos_WoTLK_final_1.0    2011.10.10 "      );
+                sLog.outString();
+                sLog.outString( "欢迎访问  ：http://bbs.chglove.tk "                        );
+                sLog.outString( "========================================================"  );
+            }
             else
-                sLog.outError("Can't set realmd process priority class.");
+                sLog.outError("设置进程优先级失败！ ");
             sLog.outString();
         }
     }
@@ -339,7 +355,7 @@ extern int main(int argc, char **argv)
         if( (++loopCounter) == numLoops )
         {
             loopCounter = 0;
-            DETAIL_LOG("Ping MySQL to keep connection alive");
+            DETAIL_LOG("保持 MySQL 连接。");
             LoginDatabase.Ping();
         }
 #ifdef WIN32
@@ -354,7 +370,7 @@ extern int main(int argc, char **argv)
     ///- Remove signal handling before leaving
     UnhookSignals();
 
-    sLog.outString( "Halting process..." );
+    sLog.outString( "正在关闭服务器……" );
     return 0;
 }
 
@@ -384,15 +400,16 @@ bool StartDB()
     std::string dbstring = sConfig.GetStringDefault("LoginDatabaseInfo", "");
     if(dbstring.empty())
     {
-        sLog.outError("Database not specified");
+        sLog.outError("数据库不可用！ ");
         return false;
     }
 
-    sLog.outString("Login Database total connections: %i", 1 + 1);
+    sLog.outString("数据库连接信息：%i", 1 + 1);
+    sLog.outString();
 
     if(!LoginDatabase.Initialize(dbstring.c_str()))
     {
-        sLog.outError("Cannot connect to database");
+        sLog.outError("连接数据库失败！");
         return false;
     }
 

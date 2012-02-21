@@ -1,109 +1,106 @@
 ############################################
-# MaNGOS realmd configuration file         #
+# ChgMangos 登录服务器配置文件             #
 ############################################
 
 [RealmdConf]
-ConfVersion=2010062001
+ConfVersion=2012022101
 
 ###################################################################################################################
-# REALMD SETTINGS
+# 登陆服务器配置信息
 #
 #    LoginDatabaseInfo
-#        Database connection settings for the realm server.
-#        Default: hostname;port;username;password;database
-#                 .;somenumber;username;password;database - use named pipes at Windows
-#                       Named pipes: mySQL required adding "enable-named-pipe" to [mysqld] section my.ini
-#                 .;/path/to/unix_socket;username;password;database - use Unix sockets at Unix/Linux
-#                       Unix sockets: experimental, not tested
+#        数据库连接配置
+#        默认：主机名;端口;账户;密码;数据库
+#              IP地址;端口;账户;密码;数据库 - Windows 系统下一般使用 localhost 主机名
 #
 #    LogsDir
-#         Logs directory setting.
-#         Important: Logs dir must exists, or all logs be disable
-#         Default: "" - no log directory prefix. if used log names aren't absolute paths
-#                       then logs will be stored in the current directory of the running program.
+#         保存日志文件的目录
+#         注意: 日志文件目录必须存在,否则所有日志记录都将被禁用.
+#         默认: "" - 默认为空,日志文件将保存在服务器根目录下.
 #
 #    MaxPingTime
-#         Settings for maximum database-ping interval (minutes between pings)
+#         设置登录服务器检测数据库连接的时间间隔 (分钟)
 #
 #    RealmServerPort
-#         Port on which the server will listen
+#         登录服务器端口
+#         端口号必须为空闲端口,如果出现 "登录服务器无法连接" 的提示,请检查你的防火墙设置.
 #
 #    BindIP
-#         Bind Realm Server to IP/hostname
-#         This option is useful for running multiple worldd/realmd instances
-#         on different IP addresses using default ports.
-#         DO NOT CHANGE THIS UNLESS YOU _REALLY_ KNOW WHAT YOU'RE DOING
+#         登录服务器绑定 IP/主机
+#         该设置用于在同一台计算机上运行多个 服务器 的情况
+#         在不同的地址下使用不同的端口
+#         如果你不清楚该设置的具体作用,请不要修改此项目
 #
 #    PidFile
-#        Realmd daemon PID file
-#        Default: ""             - do not create PID file
-#                 "./realmd.pid" - create PID file (recommended name)
+#        登陆服务器进程 PID 文件
+#        默认: ""                - 不创建 PID 文件
+#              "./realmd.pid" - 创建 PID 文件
 #
 #    LogLevel
-#        Server console level of logging
-#        0 = Minimum; 1 = Error; 2 = Detail; 3 = Full/Debug
-#        Default: 0
+#        记录日志等级
+#        0 = 最小; 1 = 仅错误; 2 = 详细; 3 = 完整记录
+#        默认: 0
 #
 #    LogTime
-#        Include time in server console output [hh:mm:ss]
-#        Default: 0 (no time)
-#                 1 (print time)
+#        日志文件是否包含时间前缀 [hh:mm:ss]
+#        默认: 0 (不包含时间前缀)
+#              1 (包含时间前缀)
 #
 #    LogFile
-#        Logfile name
-#        Default: "Realmd.log"
-#                 "" - empty name disable creating log file
+#        记录日志文件名
+#        默认: "Realmd.log"
+#              "" - 留空则不创建日志文件
 #
 #    LogTimestamp
-#        Logfile with timestamp of server start in name
-#        Default: 0 - no timestamp in name
-#                 1 - add timestamp in name in form Logname_YYYY-MM-DD_HH-MM-SS.Ext for Logname.Ext
+#        日志文件名是否包含服务器启动时间
+#        默认: 0 - 不包含
+#              1 - 包含
 #
 #    LogFileLevel
-#        Server file level of logging
-#        0 = Minimum; 1 = Error; 2 = Detail; 3 = Full/Debug
-#        Default: 0
+#        日志文件记录等级
+#        0 = 最小; 1 = 仅错误; 2 = 详细; 3 = 完整记录
+#        默认: 0
 #
 #    LogColors
-#        Color for messages (format "normal_color details_color debug_color error_color)
-#        Colors: 0 - BLACK, 1 - RED, 2 - GREEN,  3 - BROWN, 4 - BLUE, 5 - MAGENTA, 6 -  CYAN, 7 - GREY,
-#                8 - YELLOW, 9 - LRED, 10 - LGREEN, 11 - LBLUE, 12 - LMAGENTA, 13 - LCYAN, 14 - WHITE
-#        Default: "" - none colors
-#                 "13 7 11 9" - for example :)
+#        控制台消息颜色 (格式: "普通信息 细节信息 调试消息 错误消息)
+#        颜色: 0 - 黑色, 1 - 红色, 2 - 绿色, 3 - 棕色, 4 - 蓝色, 5 - 洋红, 6 -  青色, 7 - 灰色,
+#              8 - 黄色, 9 - 淡红色, 10 - 淡绿色, 11 - 淡蓝色, 12 - L淡洋红, 13 - LCYAN, 14 - 白色
+#        默认: "" - 留空则所有消息为白色
+#              "13 7 11 9" - 默认)
 #
 #    UseProcessors
-#        Used processors mask for multi-processors system (Used only at Windows)
-#        Default: 0 (selected by OS)
-#                 number (bitmask value of selected processors)
+#        处理器标识,多处理器环境下使用 (仅 Windows 系统有效)
+#        默认: 0 (系统自动选择)
+#                 处理器号 (处理器号码)
 #
 #    ProcessPriority
-#        Process proirity setting (Used only at Windows)
-#        Default: 1 (HIGH)
-#                 0 (Normal)
+#        处理器进程优先级 (仅 Windows 系统下有效)
+#        默认: 1 (高)
+#              0 (正常)
 #
 #    WaitAtStartupError
-#        After startup error report wait <Enter> or some time before continue (and possible close console window)
-#                 -1 (wait until <Enter> press)
-#        Default:  0 (not wait)
-#                  N (>0, wait N secs)
+#        在发生严重错误导致无法继续运行服务器时是否等待用户确认
+#               -1 (直到用户按下 <Enter> 键后才关闭服务器)
+#        默认:  0 (不等待)
+#               N (>0, 等待 N 秒后关闭程序)
 #
 #    RealmsStateUpdateDelay
-#        Realm list Update up delay (updated at realm list request if delay expired).
-#        Default: 20
-#                 0  (Disabled)
+#        服务器状态更新时间间隔
+#        默认: 20
+#              0  (关闭)
 #
 #    WrongPass.MaxCount
-#        Number of login attemps with wrong password before the account or IP is banned
-#        Default: 0  (Never ban)
+#        在密码错误多少次后禁止该用户 IP 地址
+#        默认: 0  (从不)
 #
 #    WrongPass.BanTime
-#        Duration of the ban in seconds (0 means permanent ban)
-#        Default: 600
+#        禁止 IP 时间 (0 为永久)
+#        默认: 600
 #
 #    WrongPass.BanType
-#        Ban the IP or account on which login is attempted
-#        Default: 0 (Ban IP)
-#                 1 (Ban Account)
+#        禁止 IP 地址还是禁止 账号
+#        默认: 0 (禁止 IP)
+#              1 (禁止 账号)
 #
 ###################################################################################################################
 

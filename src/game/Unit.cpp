@@ -22,6 +22,7 @@
 #include "WorldPacket.h"
 #include "WorldSession.h"
 #include "World.h"
+#include "Config/Config.h"
 #include "ObjectMgr.h"
 #include "ObjectGuid.h"
 #include "SpellMgr.h"
@@ -937,6 +938,42 @@ uint32 Unit::DealDamage(Unit *pVictim, DamageInfo* damageInfo, bool durabilityLo
         if (player_tap && player_tap != pVictim)
         {
             player_tap->ProcDamageAndSpell(pVictim, PROC_FLAG_KILL, PROC_FLAG_KILLED, PROC_EX_NONE, 0);
+
+            // PvP Token
+            int8 leveldiff = player_tap->getLevel() - pVictim->getLevel();
+            if((pVictim->GetTypeId() == TYPEID_PLAYER) && leveldiff < 10)
+                player_tap->ReceiveToken();
+
+            // PvP Announcer
+            if (sWorld.getConfig(CONFIG_BOOL_PVP_ANNOUNCER))
+            {
+                if (pVictim->GetTypeId() == TYPEID_PLAYER)
+                {
+                    std::string msg, msg0, msg1, msg2;
+                    std::string KillerName = player_tap->GetName();
+                    std::string KilledName = ((Player*)pVictim)->GetName();
+                    std::string MapName    = ( GetAreaEntryByAreaID(player_tap->GetZoneId()))->area_name[player_tap->GetSession()->GetSessionDbcLocale()];
+
+                    std::string KillerN = "[" + KillerName + "]";
+                    std::string KilledN = "[" + KilledName + "] |cFFf300fc好黄好暴力哇～！！　";
+                    std::string MapN    = "[" + MapName + "]";
+
+                    std::string KillerColor = sConfig.GetStringDefault("PvPAnnouncer.ColorKiller", "|CFFFFFF01");
+                    std::string KilledColor = sConfig.GetStringDefault("PvPAnnouncer.ColorKilled", "|CFFFFFF01");
+                    std::string AreaColor = sConfig.GetStringDefault("PvPAnnouncer.ColorArea", "|CFFFE8A0E");
+
+                    std::string KillerS = KillerColor + KillerN;
+                    std::string KilledS = KilledColor + KilledN;
+                    std::string MapS    = AreaColor + MapN;
+
+                    msg0 = KillerS + "　|cFFf300fc在区域　";
+                    msg1 = msg0 + MapS;
+                    msg2 = msg1 + "　|cFFf300fc击杀了玩家　";
+                    msg = msg2 + KilledS;
+
+                    sWorld.SendPvPAnnounce(msg);
+                }
+            }
 
             WorldPacket data(SMSG_PARTYKILLLOG, (8+8));     //send event PARTY_KILL
             data << player_tap->GetObjectGuid();            //player with killing blow

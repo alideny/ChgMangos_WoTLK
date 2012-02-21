@@ -159,6 +159,9 @@ class Log : public MaNGOS::Singleton<Log, MaNGOS::ClassLevelLockable<Log, ACE_Th
         bool IsOutCharDump() const { return m_charLog_Dump; }
         bool IsIncludeTime() const { return m_includeTime; }
 
+        const char* Utf8ToUnicode(const char* input);
+        const char* UnicodeToUtf8(const char* input);
+
         static void WaitBeforeContinueIfNeed();
     private:
         FILE* openLogFile(char const* configFileName,char const* configTimeStampFlag, char const* mode);

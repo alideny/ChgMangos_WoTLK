@@ -34,6 +34,7 @@
 #include "Guild.h"
 #include "GuildMgr.h"
 #include "Chat.h"
+#include "Spell.h"
 
 enum StableResultCode
 {
@@ -393,6 +394,20 @@ void WorldSession::HandleGossipSelectOptionOpcode( WorldPacket & recv_data )
 
         if (!sScriptMgr.OnGossipSelect(_player, pGo, sender, action, code.empty() ? NULL : code.c_str()))
             _player->OnGossipSelect(pGo, gossipListId, menuId);
+    }
+    else if (guid.IsItem())
+    {
+        Item *pItem = GetPlayer()->GetItemByGuid(guid);
+        SpellCastTargets targets;
+
+        if (!pItem)
+        {
+            DEBUG_LOG("WORLD: HandleGossipSelectOptionOpcode - %s not found or you can't interact with it.", guid.GetString().c_str());
+            return;
+        }
+
+        if (!sScriptMgr.OnGossipSelectItem(_player, pItem, sender, action, targets))
+            _player->OnGossipSelectItem(pItem, gossipListId, menuId);
     }
 }
 

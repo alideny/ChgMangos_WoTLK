@@ -164,7 +164,7 @@ extern int main(int argc, char **argv)
 
     if (!sConfig.SetSource(cfg_file))
     {
-        sLog.outError("Could not find configuration file %s.", cfg_file);
+        sLog.outError("找不到配置文件 %s。请确认您的配置文件是否配置正确！", cfg_file);
         Log::WaitBeforeContinueIfNeed();
         return 1;
     }
@@ -181,31 +181,36 @@ extern int main(int argc, char **argv)
     }
 #endif
 
-    sLog.outString( "%s [world-daemon]", _FULLVERSION(REVISION_NR) );
-    sLog.outString( "%s [world-daemon]", _R2FULLVERSION(REVISION_DATE,REVISION_TIME,REVISION_R2,REVISION_ID) );
-    sLog.outString( "<Ctrl-C> to stop." );
-    sLog.outString("\n\n"
-        "MM   MM         MM   MM  MMMMM   MMMM   MMMMM\n"
-        "MM   MM         MM   MM MMM MMM MM  MM MMM MMM\n"
-        "MMM MMM         MMM  MM MMM MMM MM  MM MMM\n"
-        "MM M MM         MMMM MM MMM     MM  MM  MMM\n"
-        "MM M MM  MMMMM  MM MMMM MMM     MM  MM   MMM\n"
-        "MM M MM M   MMM MM  MMM MMMMMMM MM  MM    MMM\n"
-        "MM   MM     MMM MM   MM MM  MMM MM  MM     MMM\n"
-        "MM   MM MMMMMMM MM   MM MMM MMM MM  MM MMM MMM\n"
-        "MM   MM MM  MMM MM   MM  MMMMMM  MMMM   MMMMM\n"
-        "        MM  MMM http://getmangos.com\n"
-        "        MMMMMM  R2 modifications included (https://github.com/mangosR2/mangos)\n\n");
-    sLog.outString("Using configuration file %s.", cfg_file);
+    sLog.outString( "初始化……");
+    sLog.outString( "==============================================================");
+    sLog.outString( "欢迎使用 ChgMangos!              Chglove 2011.10.10"           );
+    sLog.outString( "使用 [Ctrl+C] 关闭服务器"                                      );
+    sLog.outString();
+    sLog.outString( "              C H G M A N G O S - P R O J E C T               ");    
+    sLog.outString( "                    Enjoy your WOW Word!                      ");    
+    sLog.outString( ".:::::: :::   ::: .::::::::  :::       ::: .:::::::: .::::::::");
+    sLog.outString( ":+      :+:   +:+ :+:        +: +     + +# :+:       :#:      ");
+    sLog.outString( "+#      #++##++#+ +:+    ### +#  +   #  #+ +:+    ### +#++#++.");
+    sLog.outString( "#+      +#+   +#+ +#+     #  +#   # #   ## +#+     #       +#+");
+    sLog.outString( " ###### ###   ###  ########  ##    #    ##  ######## #########");
+    sLog.outString( "==============================================================");
+    sLog.outString( "ChgMangos_WoTLK_1.0                      2011.10.10"           );
+    sLog.outString( "Mangos 11816, SD2 2307, ChgMDB_WoTLK_final_1.0_ACID 3.0.8     ");
+    sLog.outString( "==============================================================");
+    sLog.outString();
+    sLog.outString("游戏服务器启动开始……");
+    sLog.outString( "==============================================================");
+    sLog.outString("加载配置文件 %s……", cfg_file);
+    sLog.outString();
 
-    DETAIL_LOG("%s (Library: %s)", OPENSSL_VERSION_TEXT, SSLeay_version(SSLEAY_VERSION));
+    DETAIL_LOG("%s （库文件版本： %s）", OPENSSL_VERSION_TEXT, SSLeay_version(SSLEAY_VERSION));
     if (SSLeay() < 0x009080bfL )
     {
-        DETAIL_LOG("WARNING: Outdated version of OpenSSL lib. Logins to server may not work!");
-        DETAIL_LOG("WARNING: Minimal required version [OpenSSL 0.9.8k]");
+        DETAIL_LOG("警告： OpenSSL lib 版本过低， 登陆服务器将无法正常工作！ ");
+        DETAIL_LOG("警告： 最低版本需求  [OpenSSL 0.9.8k]");
     }
 
-    DETAIL_LOG("Using ACE: %s", ACE_VERSION);
+    DETAIL_LOG("ACE 版本： %s", ACE_VERSION);
 
     ///- Set progress bars show mode
     BarGoLink::SetOutputState(sConfig.GetBoolDefault("ShowProgressBars", true));

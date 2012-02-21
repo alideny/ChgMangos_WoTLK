@@ -63,6 +63,7 @@ ScriptMgr::ScriptMgr() :
     m_pGetGODialogStatus(NULL),
     m_pOnGOUse(NULL),
     m_pOnItemUse(NULL),
+    m_pOnGossipSelectItem(NULL),
     m_pOnAreaTrigger(NULL),
     m_pOnProcessEvent(NULL),
     m_pOnEffectDummyCreature(NULL),
@@ -1132,6 +1133,11 @@ bool ScriptMgr::OnItemUse(Player* pPlayer, Item* pItem, SpellCastTargets const& 
     return m_pOnItemUse != NULL && m_pOnItemUse(pPlayer, pItem, targets);
 }
 
+bool ScriptMgr::OnGossipSelectItem(Player* pPlayer, Item* pItem, uint32 sender, uint32 action, SpellCastTargets const& targets)
+{
+    return m_pOnGossipSelectItem != NULL && m_pOnGossipSelectItem(pPlayer, pItem, sender, action, targets);
+}
+
 bool ScriptMgr::OnAreaTrigger(Player* pPlayer, AreaTriggerEntry const* atEntry)
 {
     return m_pOnAreaTrigger != NULL && m_pOnAreaTrigger(pPlayer, atEntry);
@@ -1214,6 +1220,7 @@ ScriptLoadResult ScriptMgr::LoadScriptLibrary(const char* libName)
     GET_SCRIPT_HOOK_PTR(m_pGetGODialogStatus,          "GetGODialogStatus");
     GET_SCRIPT_HOOK_PTR(m_pOnGOUse,                    "GOUse");
     GET_SCRIPT_HOOK_PTR(m_pOnItemUse,                  "ItemUse");
+    GET_SCRIPT_HOOK_PTR(m_pOnGossipSelectItem,         "GossipSelectItem");
     GET_SCRIPT_HOOK_PTR(m_pOnAreaTrigger,              "AreaTrigger");
     GET_SCRIPT_HOOK_PTR(m_pOnProcessEvent,             "ProcessEvent");
     GET_SCRIPT_HOOK_PTR(m_pOnEffectDummyCreature,      "EffectDummyCreature");
@@ -1267,6 +1274,7 @@ void ScriptMgr::UnloadScriptLibrary()
     m_pGetGODialogStatus        = NULL;
     m_pOnGOUse                  = NULL;
     m_pOnItemUse                = NULL;
+    m_pOnGossipSelectItem       = NULL;
     m_pOnAreaTrigger            = NULL;
     m_pOnProcessEvent           = NULL;
     m_pOnEffectDummyCreature    = NULL;
