@@ -1,162 +1,155 @@
 ################################################
-# MANGOS Auction House Bot Configuration file  #
+# ChgMangos 拍卖行机器人配置文件               #
 ################################################
 
 [AhbotConf]
-ConfVersion=2010102201
+ConfVersion=2012022101
 
 ###################################################################################################################
-# AUCTION HOUSE BOT SETTINGS
+# 拍卖行机器人设置
 #
 #    AuctionHouseBot.Seller.Enabled
-#        General enable or disable AuctionHouseBot Seller fonctionality
-#    Default 0 (Disabled)
+#        开启自动出售
+#    默认 0 (关闭)
 #
 #    AuctionHouseBot.DEBUG.Seller
-#        Enable or disable AuctionHouseBot Seller debug mode
-#    Default 0 (Disabled)
+#        开启调试模式
+#    默认 0 (关闭)
 #
 #    AuctionHouseBot.Alliance.Items.Amount.Ratio
-#        Enable/Disable (disabled if 0) the part of AHBot that puts items up for auction on Alliance AH
-#    Default 100 (Enabled with 100% of items specified in AuctionHouse.Items.Amount.color section)
+#        是否开启联盟拍卖行
+#    默认 100
 #
 #    AuctionHouseBot.Horde.Items.Amount.Ratio
-#        Enable/Disable (disabled if 0) the part of AHBot that puts items up for auction on Horde AH
-#    Default 100 (Enabled with 100% of items specified in AuctionHouse.Items.Amount.color section)
+#        是否开启部落拍卖行
+#    默认 100
 #
 #    AuctionHouseBot.Neutral.Items.Amount.Ratio
-#        Enable/Disable (disabled if 0) the part of AHBot that puts items up for auction on Neutral AH
-#    Default 100 (Enabled with 100% of items specified in AuctionHouse.Items.Amount.color section)
+#        是否开启中立拍卖行
+#    默认 100
 #
 #    AuctionHouseBot.MinTime
-#        Minimum time for the new auction
-#    Default 1 (Hour)
+#        新拍卖最低时间
+#    默认 1 (小时)
 #
 #    AuctionHouseBot.MaxTime
-#        Maximum time for the new auction
-#    Default 72 (Hours)
+#        新拍卖最大时间
+#    默认 72 (小时)
 #
 #    AuctionHouseBot.Items.Vendor
-#        Include items that can be bought from vendors.
-#    Default 0
+#        包含可以从商人处购买到的物品
+#    默认 0
 #
 #    AuctionHouseBot.Items.Loot
-#        Include items that can be looted or fished for.
-#    Default 1
+#        包含可以从钓鱼获得的物品
+#    默认 1
 #
 #    AuctionHouseBot.Items.Misc
-#        Include misc. items.
-#    Default 0
+#        包含特殊物品
+#    默认 0
 #
 #    AuctionHouseBot.Bind.*
-#        Indicates which bonding types to allow the bot to put up for auction
-#            No     - Items that don't bind            Default 1 (Allowed)
-#            Pickup - Items that bind on pickup        Default 0 (Not Allowed)
-#            Equip  - Items that bind on equip         Default 1 (Allowed)
-#            Use    - Items that bind on use           Default 1 (Allowed)
-#            Quest  - Quest Items                      Default 0 (Not Allowed)
+#        拍卖物品绑定类型
+#            无        - 不绑定的物品               默认 1 (允许)
+#            拾取绑定  - 拾取后绑定的物品           默认 0 (不允许)
+#            装备绑定  - 装备后绑定的物品           默认 1 (允许)
+#            使用绑定  - 使用后绑定的物品           默认 1 (允许)
+#            任务获得  - 任务物品                   默认 0 (不允许)
 #
 #    AuctionHouseBot.LockBox.Enabled
-#        Enable or not lockbox in auctionhouse
-#    Default 0 (Disabled)
+#        允许锁定
+#    默认 0 (关闭)
 #
 #    AuctionHouseBot.Pets.Enabled
-#        Enable or not pets in auctionhouse
-#    Default 0 (Disabled)
+#        允许拍卖宠物
+#    默认 0 (关闭)
 #
 #    AuctionHouseBot.DMcards.Enabled
-#        Enable or not darkmoon cards in auctionhouse
-#    Default 0 (Disabled)
+#        允许拍卖暗月卡片
+#    默认 0 (关闭)
 #
 #    AuctionHouseBot.ItemsPerCycle.Boost
-#        This value is used to fill DB faster than normal when there is more than this value missed items.
-#        Normaly this value is used only first start of the server with empty auction table.
-#    Default 75
+#        填充拍卖行的最小数量. 一般仅在服务器第一次启动时才会触发
+#        如果发现卡角色的情况,请更改此项目
+#    默认 75
 #
 #    AuctionHouseBot.ItemsPerCycle.Normal
-#        This value is used to fill DB normal way with less cpu/db using.
-#        Normaly this value is used always when auction table is already initialised.
-#    Default 20
+#        填充拍卖行的普通模式
+#    默认 20
 #
 #    AuctionHouseBot.BuyPrice.Seller
-#        Should the Seller use BuyPrice or SellPrice to determine Bid Prices
-#    Default 1 (use SellPrice)
+#        允许使用价格范围
+#    默认 1
 #
 #    AuctionHouseBot.Alliance.Price.Ratio
-#        Define the price of selled item here for the Alliance Auction House
-#    Default 200
+#        联盟价格
+#    默认 200
 #
 #    AuctionHouseBot.Horde.Price.Ratio
-#        Define the price of selled item here for the Horde Auction House
-#    Default 200
+#        部落价格
+#    默认 200
 #
 #    AuctionHouseBot.Neutral.Price.Ratio
-#        Define the price of selled item here for the Neutral Auction House
-#    Default 200
+#        中立拍卖行价格
+#    默认 200
 #
 #    AuctionHouseBot.Items.ItemLevel.*
-#        Prevent seller from listing items below/above this item level
-#    Default 0 (Disabled)
+#        出售物品最高等级
+#    默认 0 (关闭)
 #
 #    AuctionHouseBot.Items.ReqLevel.*
-#        Prevent seller from listing items below/above this required level
-#    Default 0 (Disabled)
+#        出售物品最高使用等级
+#    默认 0 (关闭)
 #
 #    AuctionHouseBot.Items.ReqSkill.*
-#        Prevent seller from listing items below/above this skill level
-#    Default 0 (Disabled)
+#        出售物品最高需求技能等级
+#    默认 0 (关闭)
 #
 #    AuctionHouseBot.Items.Amount.*
-#        Define here for every items quality how many item you whant to be show in Auction House
-#        This value will be adjusted by AuctionHouseBot.FACTION.Items.Amount.Ratio to define exact amount of
-#        items will be show on Auction House
-#    Default 0, 2000, 2500, 1500, 1000, 0, 0 (grey, white, green, blue, purple, orange, yellow)
+#        定义每种物品的数量
+#    默认 0, 2000, 2500, 1500, 1000, 0, 0 (灰色, 白色, 绿色, 蓝色, 紫色, 橙色, 暗金色)
 #
 #    AuctionHouseBot.Class.*
-#        Here you can set the class of items you prefer to be show on AH
-#        These value is preference value, it's not percentage. So the maximum is 10.
-#        The minimum is 0 (disabled).
-#    Default 6,4,8,3,8,1,2,10,1,6,1,1,1,5,3
+#    默认 6,4,8,3,8,1,2,10,1,6,1,1,1,5,3
 #
 #
-# ITEM FINE TUNING
-#    The following are usefull for limiting what character levels can
-#    benefit from the auction house
+# 物品等级限制
+#    以下设置可以为拍卖行出售物品进行过滤
 #
 #    AuctionHouseBot.Class.Misc.Mount.ReqLevel.*
-#        Prevent seller from listing mounts below/above this required level
-#    Default 0
+#        出售坐骑等级限制
+#    默认 0
 #
 #    AuctionHouseBot.Class.Misc.Mount.ReqSkill.*
-#        Prevent seller from listing mounts below/above this skill level
-#    Default 0
+#        出售坐骑技能等级限制
+#    默认 0
 #
 #    AuctionHouseBot.Class.Glyph.ReqLevel.*
-#        Prevent seller from listing glyphs below/above this required level
-#    Default 0
+#        出售雕文等级需求限制
+#    默认 0
 #
 #    AuctionHouseBot.Class.Glyph.ItemLevel.*
-#        Prevent seller from listing glyphs below/above this item level
-#    Default 0
+#       出售雕文物品等级限制
+#    默认 0
 #
 #    AuctionHouseBot.Class.TradeGood.ItemLevel.*
-#        Prevent seller from listing trade good items below/above this item level
-#    Default 0
+#        出售物品等级限制
+#    默认 0
 #
 #    AuctionHouseBot.Class.Container.ItemLevel.*
-#        Prevent seller from listing contianers below/above this item level
-#    Default 0
+#        出售容器等级限制
+#    默认 0
 #
 #    AuctionHouseBot.forceIncludeItems
-#        Include these items and ignore ALL filters
-#        List of ids with delimiter ','
-#    Default ""
+#        例外物品,不受以上规则限制
+#        物品之间用 ',' 隔开
+#    默认 ""
 #
 #    AuctionHouseBot.forceExcludeItems
-#        Exclude these items even if they would pass the filters
-#        List of ids with delimiter ','
-#        Example "21878,27774,27811,28117,28122,43949" (this removes zzOld items)
-#    Default ""
+#        例外物品, 这些物品即使符合以上规则也不会出售
+#        列表之间用 ',' 隔开
+#        比如 "21878,27774,27811,28117,28122,43949"
+#    默认 ""
 #
 ###################################################################################################################
 
@@ -244,35 +237,29 @@ AuctionHouseBot.Bind.Use.Multiplier = 1
 AuctionHouseBot.Bind.Quest.Multiplier = 1
 
 ###################################################################################################################
-# Buyer config
+# 购买者配置
 #
 #    AuctionHouseBot.Buyer.Enabled
-#        General enable or disable AuctionHouseBot Buyer fonctionality
-#    Default 0 (Disabled)
+#        开启拍卖行机器人自动购买
+#    默认 0 (关闭)
 #
 #    AuctionHouseBot.DEBUG.Buyer
-#        Enable or disable AuctionHouseBot Buyer debug mode
-#    Default 0 (Disabled)
+#        开启调试模式
+#    默认 0 (关闭)
 #
 #    AuctionHouseBot.Buyer.FACTION.Enabled
-#        Enable or disable buyer independently by faction
+#        开启阵营限制
 #
 #    AuctionHouseBot.Buyer.BuyPrice
-#        Should the Buyer use BuyPrice or SellPrice to determine Bid Prices
-#    Default 0 (use SellPrice)
+#        允许自动购买竞标
+#    默认 0
 #
 #    AuctionHouseBot.Buyer.Recheck.Interval
-#        This specify time interval (in minute) between two evaluation of the same selled item.
-#        The less this value is, the more you give chance for item to be buyed by ahbot.
-#    Default 20 (20min.)
+#        自动购买间隔时间
+#    默认 20 (分钟.)
 #
 #    AuctionHouseBot.Buyer.Alliance.Chance.Ratio
-#       When the evaluation of the entry is done you will have "x" chance for this entry to be buyed.
-#       The chance ratio is simply (x/chance ratio)
-#       For ex : If the evaluation give you 5000(maximum chance) chance and ratio is set 3
-#       you will have 5000 chance on 15000(3*5000) random number
-#       This for every faction independently
-#    Default 3 (literaly 1 chance by 3)
+#    默认 3
 #
 ###################################################################################################################
 

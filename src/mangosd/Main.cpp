@@ -164,7 +164,7 @@ extern int main(int argc, char **argv)
 
     if (!sConfig.SetSource(cfg_file))
     {
-        sLog.outError("ÕÒ²»µ½ÅäÖÃÎÄ¼ş %s¡£ÇëÈ·ÈÏÄúµÄÅäÖÃÎÄ¼şÊÇ·ñÅäÖÃÕıÈ·£¡", cfg_file);
+        sLog.outError("æ‰¾ä¸åˆ°é…ç½®æ–‡ä»¶ %sã€‚è¯·ç¡®è®¤æ‚¨çš„é…ç½®æ–‡ä»¶æ˜¯å¦é…ç½®æ­£ç¡®ï¼", cfg_file);
         Log::WaitBeforeContinueIfNeed();
         return 1;
     }
@@ -181,10 +181,10 @@ extern int main(int argc, char **argv)
     }
 #endif
 
-    sLog.outString( "³õÊ¼»¯¡­¡­");
+    sLog.outString( "åˆå§‹åŒ–â€¦â€¦");
     sLog.outString( "==============================================================");
-    sLog.outString( "»¶Ó­Ê¹ÓÃ ChgMangos!              Chglove 2011.10.10"           );
-    sLog.outString( "Ê¹ÓÃ [Ctrl+C] ¹Ø±Õ·şÎñÆ÷"                                      );
+    sLog.outString( "æ¬¢è¿ä½¿ç”¨ ChgMangos!              Chglove 2011.10.10"           );
+    sLog.outString( "ä½¿ç”¨ [Ctrl+C] å…³é—­æœåŠ¡å™¨"                                      );
     sLog.outString();
     sLog.outString( "              C H G M A N G O S - P R O J E C T               ");    
     sLog.outString( "                    Enjoy your WOW Word!                      ");    
@@ -198,19 +198,19 @@ extern int main(int argc, char **argv)
     sLog.outString( "Mangos 11816, SD2 2307, ChgMDB_WoTLK_final_1.0_ACID 3.0.8     ");
     sLog.outString( "==============================================================");
     sLog.outString();
-    sLog.outString("ÓÎÏ··şÎñÆ÷Æô¶¯¿ªÊ¼¡­¡­");
+    sLog.outString("æ¸¸æˆæœåŠ¡å™¨å¯åŠ¨å¼€å§‹â€¦â€¦");
     sLog.outString( "==============================================================");
-    sLog.outString("¼ÓÔØÅäÖÃÎÄ¼ş %s¡­¡­", cfg_file);
+    sLog.outString("åŠ è½½é…ç½®æ–‡ä»¶ %sâ€¦â€¦", cfg_file);
     sLog.outString();
 
-    DETAIL_LOG("%s £¨¿âÎÄ¼ş°æ±¾£º %s£©", OPENSSL_VERSION_TEXT, SSLeay_version(SSLEAY_VERSION));
+    DETAIL_LOG("%s ï¼ˆåº“æ–‡ä»¶ç‰ˆæœ¬ï¼š %sï¼‰", OPENSSL_VERSION_TEXT, SSLeay_version(SSLEAY_VERSION));
     if (SSLeay() < 0x009080bfL )
     {
-        DETAIL_LOG("¾¯¸æ£º OpenSSL lib °æ±¾¹ıµÍ£¬ µÇÂ½·şÎñÆ÷½«ÎŞ·¨Õı³£¹¤×÷£¡ ");
-        DETAIL_LOG("¾¯¸æ£º ×îµÍ°æ±¾ĞèÇó  [OpenSSL 0.9.8k]");
+        DETAIL_LOG("è­¦å‘Šï¼š OpenSSL lib ç‰ˆæœ¬è¿‡ä½ï¼Œ ç™»é™†æœåŠ¡å™¨å°†æ— æ³•æ­£å¸¸å·¥ä½œï¼ ");
+        DETAIL_LOG("è­¦å‘Šï¼š æœ€ä½ç‰ˆæœ¬éœ€æ±‚  [OpenSSL 0.9.8k]");
     }
 
-    DETAIL_LOG("ACE °æ±¾£º %s", ACE_VERSION);
+    DETAIL_LOG("ACE ç‰ˆæœ¬ï¼š %s", ACE_VERSION);
 
     ///- Set progress bars show mode
     BarGoLink::SetOutputState(sConfig.GetBoolDefault("ShowProgressBars", true));

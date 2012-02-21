@@ -196,7 +196,7 @@ void Log::SetLogLevel(char* level)
 
     m_logLevel = LogLevel(newLevel);
 
-    printf("LogLevel is %u\n", m_logLevel);
+    printf("记录等级 %u\n", m_logLevel);
 }
 
 void Log::SetLogFileLevel(char* level)
@@ -210,7 +210,7 @@ void Log::SetLogFileLevel(char* level)
 
     m_logFileLevel = LogLevel(newLevel);
 
-    printf("LogFileLevel is %u\n", m_logFileLevel);
+    printf("日志等级 %u\n", m_logFileLevel);
 }
 
 void Log::Initialize()
@@ -425,7 +425,7 @@ void Log::outError( const char * err, ... )
     if (logfile)
     {
         outTimestamp(logfile);
-        fprintf(logfile, "ERROR:" );
+        fprintf(logfile, "错误:" );
 
         va_start(ap, err);
         vfprintf(logfile, err, ap);
@@ -448,7 +448,7 @@ void Log::outErrorDb()
     if (logfile)
     {
         outTimestamp(logfile);
-        fprintf(logfile, "ERROR:\n" );
+        fprintf(logfile, "错误:\n" );
         fflush(logfile);
     }
 
@@ -487,7 +487,7 @@ void Log::outErrorDb( const char * err, ... )
     if (logfile)
     {
         outTimestamp(logfile);
-        fprintf(logfile, "ERROR:" );
+        fprintf(logfile, "错误:" );
 
         va_start(ap, err);
         vfprintf(logfile, err, ap);
@@ -808,14 +808,14 @@ void Log::WaitBeforeContinueIfNeed()
 
     if (mode < 0)
     {
-        printf("\nPress <Enter> for continue\n");
+        printf("\n按下 <Enter> 键继续\n");
 
         std::string line;
         std::getline (std::cin, line);
     }
     else if (mode > 0)
     {
-        printf("\nWait %u secs for continue.\n",mode);
+        printf("\n等待 %u 秒后继续\n",mode);
         BarGoLink bar(mode);
         for(int i = 0; i < mode; ++i)
         {

@@ -166,7 +166,7 @@ extern int main(int argc, char **argv)
 
     if (!sConfig.SetSource(cfg_file))
     {
-        sLog.outError("ÕÒ²»µ½ÅäÖÃÎÄ¼ş %s¡£ÇëÈ·ÈÏÄúµÄÅäÖÃÎÄ¼şÊÇ·ñÅäÖÃÕıÈ·£¡", cfg_file);
+        sLog.outError("æ‰¾ä¸åˆ°é…ç½®æ–‡ä»¶ %sã€‚è¯·ç¡®è®¤æ‚¨çš„é…ç½®æ–‡ä»¶æ˜¯å¦é…ç½®æ­£ç¡®ï¼", cfg_file);
         Log::WaitBeforeContinueIfNeed();
         return 1;
     }
@@ -186,12 +186,12 @@ extern int main(int argc, char **argv)
     sLog.Initialize();
 
     sLog.outString( "========================================================");
-    sLog.outString( "»¶Ó­Ê¹ÓÃ ChgMangos!              Chglove 2011.10.10 "    );
-    sLog.outString( "Ê¹ÓÃ [Ctrl+C] ¹Ø±Õ·şÎñÆ÷"                                );
+    sLog.outString( "æ¬¢è¿ä½¿ç”¨ ChgMangos!              Chglove 2011.10.10 "    );
+    sLog.outString( "ä½¿ç”¨ [Ctrl+C] å…³é—­æœåŠ¡å™¨"                                );
     sLog.outString();
-    sLog.outString( "µÇÂ½·şÎñÆ÷Æô¶¯¿ªÊ¼¡­¡­"                                  );
+    sLog.outString( "ç™»é™†æœåŠ¡å™¨å¯åŠ¨å¼€å§‹â€¦â€¦"                                  );
     sLog.outString( "========================================================");
-    sLog.outString( "¼ÓÔØÅäÖÃÎÄ¼ş %s ¡­¡­", cfg_file                          );
+    sLog.outString( "åŠ è½½é…ç½®æ–‡ä»¶ %s â€¦â€¦", cfg_file                          );
     sLog.outString();
 
     ///- Check the version of the configuration file
@@ -199,21 +199,21 @@ extern int main(int argc, char **argv)
     if (confVersion < _REALMDCONFVERSION)
     {
         sLog.outError("*****************************************************************************");
-        sLog.outError(" ¾¯¸æ£º ÄãµÄ realmd.conf ÅäÖÃÎÄ¼ş°æ±¾ÒÑ¹ıÆÚ£¬»òÕß°æ±¾ºÅ²»ÕıÈ·£¡              ");
-        sLog.outError("        ÇëÈ·ÈÏÄúµÄÅäÖÃÎÄ¼şÊÇÔÚÕıÈ·µÄÄ¿Â¼ÏÂ£¬²¢ÇÒÊÇChgMangos¹Ù·½µÄ×îĞÂ°æ±¾¡£Çë");
-        sLog.outError("        ÎğÊ¹ÓÃ·Ç¹Ù·½×Ô´øµÄÅäÖÃÎÄ¼ş£¬·ñÔò¿ÉÄÜ²úÉúÑÏÖØµÄ´íÎó£¡");
+        sLog.outError(" è­¦å‘Šï¼š ä½ çš„ realmd.conf é…ç½®æ–‡ä»¶ç‰ˆæœ¬å·²è¿‡æœŸï¼Œæˆ–è€…ç‰ˆæœ¬å·ä¸æ­£ç¡®ï¼              ");
+        sLog.outError("        è¯·ç¡®è®¤æ‚¨çš„é…ç½®æ–‡ä»¶æ˜¯åœ¨æ­£ç¡®çš„ç›®å½•ä¸‹ï¼Œå¹¶ä¸”æ˜¯ChgMangoså®˜æ–¹çš„æœ€æ–°ç‰ˆæœ¬ã€‚è¯·");
+        sLog.outError("        å‹¿ä½¿ç”¨éå®˜æ–¹è‡ªå¸¦çš„é…ç½®æ–‡ä»¶ï¼Œå¦åˆ™å¯èƒ½äº§ç”Ÿä¸¥é‡çš„é”™è¯¯ï¼");
         sLog.outError("*****************************************************************************");
         Log::WaitBeforeContinueIfNeed();
     }
 
-    DETAIL_LOG("%s £¨¿âÎÄ¼ş°æ±¾£º %s£©", OPENSSL_VERSION_TEXT, SSLeay_version(SSLEAY_VERSION));
+    DETAIL_LOG("%s ï¼ˆåº“æ–‡ä»¶ç‰ˆæœ¬ï¼š %sï¼‰", OPENSSL_VERSION_TEXT, SSLeay_version(SSLEAY_VERSION));
     if (SSLeay() < 0x009080bfL )
     {
-        DETAIL_LOG("¾¯¸æ£º OpenSSL lib °æ±¾¹ıµÍ£¬ µÇÂ½·şÎñÆ÷½«ÎŞ·¨Õı³£¹¤×÷£¡ ");
-        DETAIL_LOG("¾¯¸æ£º ×îµÍ°æ±¾ĞèÇó  [OpenSSL 0.9.8k]");
+        DETAIL_LOG("è­¦å‘Šï¼š OpenSSL lib ç‰ˆæœ¬è¿‡ä½ï¼Œ ç™»é™†æœåŠ¡å™¨å°†æ— æ³•æ­£å¸¸å·¥ä½œï¼ ");
+        DETAIL_LOG("è­¦å‘Šï¼š æœ€ä½ç‰ˆæœ¬éœ€æ±‚  [OpenSSL 0.9.8k]");
     }
 
-    DETAIL_LOG("ACE °æ±¾£º %s", ACE_VERSION);
+    DETAIL_LOG("ACE ç‰ˆæœ¬ï¼š %s", ACE_VERSION);
 
 #if defined (ACE_HAS_EVENT_POLL) || defined (ACE_HAS_DEV_POLL)
     ACE_Reactor::instance(new ACE_Reactor(new ACE_Dev_Poll_Reactor(ACE::max_handles(), 1), 1), true);
@@ -221,7 +221,7 @@ extern int main(int argc, char **argv)
     ACE_Reactor::instance(new ACE_Reactor(new ACE_TP_Reactor(), true), true);
 #endif
 
-    sLog.outString("×î´óÔÊĞíÁ¬½ÓÊı£º%d", ACE::max_handles());
+    sLog.outString("æœ€å¤§å…è®¸è¿æ¥æ•°ï¼š%d", ACE::max_handles());
 
     /// realmd PID file creation
     std::string pidfile = sConfig.GetStringDefault("PidFile", "");
@@ -230,12 +230,12 @@ extern int main(int argc, char **argv)
         uint32 pid = CreatePIDFile(pidfile);
         if( !pid )
         {
-            sLog.outError( "ÎŞ·¨´´½¨ PIDÎÄ¼ş %s¡£\n", pidfile.c_str() );
+            sLog.outError( "æ— æ³•åˆ›å»º PIDæ–‡ä»¶ %sã€‚\n", pidfile.c_str() );
             Log::WaitBeforeContinueIfNeed();
             return 1;
         }
 
-        sLog.outString( "½ø³Ì PID£º %u\n", pid );
+        sLog.outString( "è¿›ç¨‹ PIDï¼š %u\n", pid );
     }
 
     ///- Initialize the database connection
@@ -249,7 +249,7 @@ extern int main(int argc, char **argv)
     sRealmList.Initialize(sConfig.GetIntDefault("RealmsStateUpdateDelay", 20));
     if (sRealmList.size() == 0)
     {
-        sLog.outError("ÕÒ²»µ½¿ÉÓÃµÄ·şÎñÆ÷¡£");
+        sLog.outError("æ‰¾ä¸åˆ°å¯ç”¨çš„æœåŠ¡å™¨ã€‚");
         Log::WaitBeforeContinueIfNeed();
         return 1;
     }
@@ -271,7 +271,7 @@ extern int main(int argc, char **argv)
 
     if(acceptor.open(bind_addr, ACE_Reactor::instance(), ACE_NONBLOCK) == -1)
     {
-        sLog.outError("ÎŞ·¨°ó¶¨µÇÂ½·şÎñÆ÷£º %s:%d", bind_ip.c_str(), rmport);
+        sLog.outError("æ— æ³•ç»‘å®šç™»é™†æœåŠ¡å™¨ï¼š %s:%d", bind_ip.c_str(), rmport);
         Log::WaitBeforeContinueIfNeed();
         return 1;
     }
@@ -296,14 +296,14 @@ extern int main(int argc, char **argv)
 
                 if(!curAff )
                 {
-                    sLog.outError("´¦ÀíÆ÷±êÊ¶ (hex) %x ²»¿ÉÓÃ¡£ ¿ÉÓÃ±êÊ¶ (hex): %x",Aff,appAff);
+                    sLog.outError("å¤„ç†å™¨æ ‡è¯† (hex) %x ä¸å¯ç”¨ã€‚ å¯ç”¨æ ‡è¯† (hex): %x",Aff,appAff);
                 }
                 else
                 {
                     if(SetProcessAffinityMask(hProcess,curAff))
-                        sLog.outString("Ê¹ÓÃ´¦ÀíÆ÷ (bitmask, hex): %x", curAff);
+                        sLog.outString("ä½¿ç”¨å¤„ç†å™¨ (bitmask, hex): %x", curAff);
                     else
-                        sLog.outError("²»ÄÜÉèÖÃ´¦ÀíÆ÷ (hex): %x", curAff);
+                        sLog.outError("ä¸èƒ½è®¾ç½®å¤„ç†å™¨ (hex): %x", curAff);
                 }
             }
             sLog.outString();
@@ -316,18 +316,18 @@ extern int main(int argc, char **argv)
             if(SetPriorityClass(hProcess,HIGH_PRIORITY_CLASS))
             {
                 sLog.outString();
-                sLog.outString( "µÇÂ½·şÎñÆ÷½ø³ÌÓÅÏÈ¼¶ÉèÖÃÎª ¸ß "                            );
+                sLog.outString( "ç™»é™†æœåŠ¡å™¨è¿›ç¨‹ä¼˜å…ˆçº§è®¾ç½®ä¸º é«˜ "                            );
                 sLog.outString();
-                sLog.outString( "µÇÂ½·şÎñÆ÷Æô¶¯Íê³É£¡"                                      );
+                sLog.outString( "ç™»é™†æœåŠ¡å™¨å¯åŠ¨å®Œæˆï¼"                                      );
                 sLog.outString( "========================================================  ");
-                sLog.outString( "¸ĞĞ»ÄúÊ¹ÓÃ  ChgMangos £¡×£ÄúÓÎÏ·Óä¿ì£¡"                    );
-                sLog.outString( "µ±Ç°°æ±¾Îª£ºChgMangos_WoTLK_final_1.0    2011.10.10 "      );
+                sLog.outString( "æ„Ÿè°¢æ‚¨ä½¿ç”¨  ChgMangos ï¼ç¥æ‚¨æ¸¸æˆæ„‰å¿«ï¼"                    );
+                sLog.outString( "å½“å‰ç‰ˆæœ¬ä¸ºï¼šChgMangos_WoTLK_final_1.0    2011.10.10 "      );
                 sLog.outString();
-                sLog.outString( "»¶Ó­·ÃÎÊ  £ºhttp://bbs.chglove.tk "                        );
+                sLog.outString( "æ¬¢è¿è®¿é—®  ï¼šhttp://bbs.chglove.tk "                        );
                 sLog.outString( "========================================================"  );
             }
             else
-                sLog.outError("ÉèÖÃ½ø³ÌÓÅÏÈ¼¶Ê§°Ü£¡ ");
+                sLog.outError("è®¾ç½®è¿›ç¨‹ä¼˜å…ˆçº§å¤±è´¥ï¼ ");
             sLog.outString();
         }
     }
@@ -355,7 +355,7 @@ extern int main(int argc, char **argv)
         if( (++loopCounter) == numLoops )
         {
             loopCounter = 0;
-            DETAIL_LOG("±£³Ö MySQL Á¬½Ó¡£");
+            DETAIL_LOG("ä¿æŒ MySQL è¿æ¥ã€‚");
             LoginDatabase.Ping();
         }
 #ifdef WIN32
@@ -370,7 +370,7 @@ extern int main(int argc, char **argv)
     ///- Remove signal handling before leaving
     UnhookSignals();
 
-    sLog.outString( "ÕıÔÚ¹Ø±Õ·şÎñÆ÷¡­¡­" );
+    sLog.outString( "æ­£åœ¨å…³é—­æœåŠ¡å™¨â€¦â€¦" );
     return 0;
 }
 
@@ -400,16 +400,16 @@ bool StartDB()
     std::string dbstring = sConfig.GetStringDefault("LoginDatabaseInfo", "");
     if(dbstring.empty())
     {
-        sLog.outError("Êı¾İ¿â²»¿ÉÓÃ£¡ ");
+        sLog.outError("æ•°æ®åº“ä¸å¯ç”¨ï¼ ");
         return false;
     }
 
-    sLog.outString("Êı¾İ¿âÁ¬½ÓĞÅÏ¢£º%i", 1 + 1);
+    sLog.outString("æ•°æ®åº“è¿æ¥ä¿¡æ¯ï¼š%i", 1 + 1);
     sLog.outString();
 
     if(!LoginDatabase.Initialize(dbstring.c_str()))
     {
-        sLog.outError("Á¬½ÓÊı¾İ¿âÊ§°Ü£¡");
+        sLog.outError("è¿æ¥æ•°æ®åº“å¤±è´¥ï¼");
         return false;
     }
 
