@@ -1233,9 +1233,9 @@ bool AuctionBotSeller::Initialize()
 
     LoadConfig();
 
-    sLog.outString("物品类型       \t劣质\t普通\t优秀\t精良\t史诗\t传说\t神器");
+    sLog.outString("物品类型        \t劣质\t普通\t优秀\t精良\t史诗\t传说\t神器");
     for (uint32 i = 0; i < MAX_ITEM_CLASS; ++i)
-        sLog.outString("%-15s\t" SIZEFMTD "\t" SIZEFMTD "\t" SIZEFMTD "\t" SIZEFMTD "\t" SIZEFMTD "\t" SIZEFMTD "\t" SIZEFMTD,
+        sLog.outString("%-16s\t" SIZEFMTD "\t" SIZEFMTD "\t" SIZEFMTD "\t" SIZEFMTD "\t" SIZEFMTD "\t" SIZEFMTD "\t" SIZEFMTD,
             sLog.Utf8ToUnicode(sAuctionBotConfig.GetItemClassName(ItemClass(i))),
             m_ItemPool[0][i].size(), m_ItemPool[1][i].size(), m_ItemPool[2][i].size(),
             m_ItemPool[3][i].size(), m_ItemPool[4][i].size(), m_ItemPool[5][i].size(),
@@ -1475,7 +1475,7 @@ uint32 AuctionBotSeller::SetStat(AHB_Seller_Config& config)
     DEBUG_FILTER_LOG(LOG_FILTER_AHBOT_SELLER, "拍卖行机器人: 丢失物品       \t劣质\t普通\t优秀\t精良\t史诗\t传说\t神器");
     for (uint32 i=0; i<MAX_ITEM_CLASS;++i)
     {
-        DEBUG_FILTER_LOG(LOG_FILTER_AHBOT_SELLER, "拍卖行机器人: %-15s\t%u\t%u\t%u\t%u\t%u\t%u\t%u",
+        DEBUG_FILTER_LOG(LOG_FILTER_AHBOT_SELLER, "拍卖行机器人: %-16s\t%u\t%u\t%u\t%u\t%u\t%u\t%u",
             sAuctionBotConfig.GetItemClassName(ItemClass(i)),
             config.GetMissedItemsPerClass(AUCTION_QUALITY_GREY, (ItemClass) i),
             config.GetMissedItemsPerClass(AUCTION_QUALITY_WHITE, (ItemClass) i),

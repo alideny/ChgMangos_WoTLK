@@ -2,6 +2,7 @@
 *.sln        eol=crlf
 *.vcproj     eol=crlf
 *.vcxproj*   eol=crlf
+*.cpp        set diff
 
 # Whitespace rules
 # strict (no trailing, no tabs)
