@@ -949,29 +949,12 @@ uint32 Unit::DealDamage(Unit *pVictim, DamageInfo* damageInfo, bool durabilityLo
             {
                 if (pVictim->GetTypeId() == TYPEID_PLAYER && pVictim != player_tap)
                 {
-                    std::string msg, msg0, msg1, msg2;
-                    std::string KillerName = player_tap->GetName();
-                    std::string KilledName = ((Player*)pVictim)->GetName();
-                    std::string MapName    = ( GetAreaEntryByAreaID(player_tap->GetZoneId()))->area_name[player_tap->GetSession()->GetSessionDbcLocale()];
+                    std::string Killer, Map, Killed;
+                    Killer = player_tap->GetName();
+                    Map    = (GetAreaEntryByAreaID(player_tap->GetZoneId()))->area_name[player_tap->GetSession()->GetSessionDbcLocale()];
+                    Killed = ((Player*)pVictim)->GetName();
 
-                    std::string KillerN = "[" + KillerName + "]";
-                    std::string KilledN = "[" + KilledName + "] |cFFf300fc好黄好暴力哇～！！　";
-                    std::string MapN    = "[" + MapName + "]";
-
-                    std::string KillerColor = sConfig.GetStringDefault("PvPAnnouncer.ColorKiller", "|CFFFFFF01");
-                    std::string KilledColor = sConfig.GetStringDefault("PvPAnnouncer.ColorKilled", "|CFFFFFF01");
-                    std::string AreaColor = sConfig.GetStringDefault("PvPAnnouncer.ColorArea", "|CFFFE8A0E");
-
-                    std::string KillerS = KillerColor + KillerN;
-                    std::string KilledS = KilledColor + KilledN;
-                    std::string MapS    = AreaColor + MapN;
-
-                    msg0 = KillerS + "　|cFFf300fc在区域　";
-                    msg1 = msg0 + MapS;
-                    msg2 = msg1 + "　|cFFf300fc击杀了玩家　";
-                    msg = msg2 + KilledS;
-
-                    sWorld.SendPvPAnnounce(msg);
+                    sWorld.SendPvPAnnounce(Killer, Map, Killed);
                 }
             }
 

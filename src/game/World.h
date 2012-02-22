@@ -589,7 +589,7 @@ class World
         void SendServerMessage(ServerMessageType type, const char *text = "", Player* player = NULL);
 
         //PVP Announcer
-        void SendPvPAnnounce(std::string str);
+        void SendPvPAnnounce(std::string Killer, std::string Map, std::string Killed);
 
         /// Are we in the middle of a shutdown?
         bool IsShutdowning() const { return m_ShutdownTimer > 0; }

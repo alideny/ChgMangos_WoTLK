@@ -650,7 +650,7 @@ void GameEventMgr::UnApplyEvent(uint16 event_id)
     m_ActiveEvents.erase(event_id);
     CharacterDatabase.PExecute("DELETE FROM game_event_status WHERE event = %u", event_id);
 
-    sLog.outString("GameEvent %u \"%s\" removed.", event_id, mGameEvent[event_id].description.c_str());
+    sLog.outString("移除游戏事件 %u%s \"%s\" ", event_id , (event_id > 9 ? "": " "), sLog.Utf8ToUnicode(mGameEvent[event_id].description.c_str()));
     // un-spawn positive event tagged objects
     GameEventUnspawn(event_id);
     // spawn negative event tagget objects
@@ -672,7 +672,8 @@ void GameEventMgr::ApplyNewEvent(uint16 event_id, bool resume)
     if (sWorld.getConfig(CONFIG_BOOL_EVENT_ANNOUNCE))
         sWorld.SendWorldText(LANG_EVENTMESSAGE, mGameEvent[event_id].description.c_str());
 
-    sLog.outString("GameEvent %u \"%s\" started.", event_id, mGameEvent[event_id].description.c_str());
+    sLog.outString("开始游戏事件 %u%s \"%s\" ", event_id, (event_id > 9 ? "": " "), sLog.Utf8ToUnicode(mGameEvent[event_id].description.c_str()));
+    sWorld.SendWorldText(LANG_EVENTMESSAGE, mGameEvent[event_id].description.c_str());
     // spawn positive event tagget objects
     GameEventSpawn(event_id);
     // un-spawn negative event tagged objects

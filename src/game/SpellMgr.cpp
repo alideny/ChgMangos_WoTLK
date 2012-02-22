@@ -3784,7 +3784,7 @@ SpellCastResult SpellMgr::GetSpellAllowedInLocationError(SpellEntry const *spell
             return SPELL_FAILED_NOT_HERE;
     }
     /* ÊÀ½ç·ÉÐÐ */
-    if (sWorld.getConfig(CONFIG_BOOL_ALLOW_FLYING_MOUNTS_EVERYWHERE))
+    if (sWorld.getConfig(CONFIG_BOOL_ALLOW_FLYING_MOUNTS_EVERYWHERE) && spellInfo->Id != 55164)
     {
         if(player && (player->isFlyingSpell(spellInfo) || player->isFlyingFormSpell(spellInfo)))
         {

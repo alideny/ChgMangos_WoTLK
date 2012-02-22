@@ -975,6 +975,22 @@ enum MangosStrings
     LANG_LOGIN_BROADCAST                = 1301,
     LANG_PVP_ANNOUNCER                  = 1302,
 
+    // PlayerBot
+    LANG_PLAYERBOT_CMD_DISABLE          = 1303,
+    LANG_PLAYERBOT_CMD_NOTHERE          = 1304,
+    LANG_PLAYERBOT_CMD_SYNTAX           = 1305,
+    LANG_PLAYERBOT_CMD_ACCOUNT          = 1306,
+    LANG_PLAYERBOT_CMD_NOTMORE          = 1307,
+    LANG_PLAYERBOT_CMD_LEVEL            = 1308,
+    LANG_PLAYERBOT_CMD_EXIST            = 1309,
+    LANG_PLAYERBOT_CMD_SUCCESS          = 1310,
+    LANG_PLAYERBOT_CMD_NOTEXT           = 1311,
+    LANG_PLAYERBOT_CMD_REMOVE           = 1312,
+    LANG_PLAYERBOT_CMD_COMBAT           = 1313,
+    LANG_PLAYERBOT_CMD_ORDER            = 1314,
+    LANG_PLAYERBOT_CMD_ERRTARGET        = 1315,
+    LANG_PLAYERBOT_CMD_ERRORDER         = 1316,
+
     // Use for not-in-offcial-sources patches
     //                                    10000-10999
 

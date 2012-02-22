@@ -87,9 +87,15 @@ float  World::m_relocation_lower_limit_sq     = 10.f * 10.f;
 uint32 World::m_relocation_ai_notify_delay    = 1000u;
 
 //PVP Announcer
-void World::SendPvPAnnounce(std::string str)
+void World::SendPvPAnnounce(std::string Killer, std::string Map, std::string Killed)
 {
-    SendWorldText(LANG_PVP_ANNOUNCER, str.c_str());
+    std::string KillerColor = sConfig.GetStringDefault("PvPAnnouncer.ColorKiller", "|CFFFFFF01");
+    std::string KilledColor = sConfig.GetStringDefault("PvPAnnouncer.ColorKilled", "|CFFFFFF01");
+    std::string AreaColor = sConfig.GetStringDefault("PvPAnnouncer.ColorArea", "|CFFFE8A0E");
+    Killer = KillerColor + Killer + "|r";
+    Map    = AreaColor + Map + "|r";
+    Killed = KilledColor + Killed + "|r";
+    SendWorldText(LANG_PVP_ANNOUNCER, Killer.c_str(), Map.c_str(), Killed.c_str());
 }
 
 /// World constructor
@@ -2240,7 +2246,7 @@ void World::SendBroadcast()
     {
         sWorld.SendWorldText(LANG_AUTO_BROADCAST, msg.c_str());
 
-        sLog.outString("AutoBroadcast: '%s'",msg.c_str());
+        sLog.outString("自动公告: '%s'",sLog.Utf8ToUnicode(msg.c_str()));
     }
     if (abcenter == 1)
     {
@@ -2248,7 +2254,7 @@ void World::SendBroadcast()
         data << msg;
         sWorld.SendGlobalMessage(&data);
 
-        sLog.outString("AutoBroadcast: '%s'",msg.c_str());
+        sLog.outString("自动公告: '%s'",sLog.Utf8ToUnicode(msg.c_str()));
     }
     if (abcenter == 2)
     {
@@ -2258,7 +2264,7 @@ void World::SendBroadcast()
         data << msg;
         sWorld.SendGlobalMessage(&data);
 
-        sLog.outString("AutoBroadcast: '%s'",msg.c_str());
+        sLog.outString("自动公告: '%s'",sLog.Utf8ToUnicode(msg.c_str()));
    }
 }
 

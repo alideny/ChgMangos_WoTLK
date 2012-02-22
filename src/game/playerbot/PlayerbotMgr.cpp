@@ -251,7 +251,7 @@ void PlayerbotMgr::HandleMasterIncomingPacket(const WorldPacket& packet)
             ObjectGuid guid;
             p >> guid;
             Player* const bot = GetPlayerBot(guid);
-            if (bot) bot->GetPlayerbotAI()->SendNotEquipList(*bot);
+            //if (bot) bot->GetPlayerbotAI()->SendNotEquipList(*bot);
             return;
         }
 
@@ -472,24 +472,24 @@ void PlayerbotMgr::HandleMasterIncomingPacket(const WorldPacket& packet)
                     Player* const bot = it->second;
 
                     if (bot->GetQuestStatus(quest) == QUEST_STATUS_COMPLETE)
-                        bot->GetPlayerbotAI()->TellMaster("I already completed that quest.");
+                        bot->GetPlayerbotAI()->TellMaster("　我已经完成那个任务啦~!　");
                     else if (!bot->CanTakeQuest(qInfo, false))
                     {
                         if (!bot->SatisfyQuestStatus(qInfo, false))
-                            bot->GetPlayerbotAI()->TellMaster("I already have that quest.");
+                            bot->GetPlayerbotAI()->TellMaster("　我已经接受了该任务　");
                         else
-                            bot->GetPlayerbotAI()->TellMaster("I can't take that quest.");
+                            bot->GetPlayerbotAI()->TellMaster("　我不能接受该任务　");
                     }
                     else if (!bot->SatisfyQuestLog(false))
-                        bot->GetPlayerbotAI()->TellMaster("My quest log is full.");
+                        bot->GetPlayerbotAI()->TellMaster("　任务记录满了．．　");
                     else if (!bot->CanAddQuest(qInfo, false))
-                        bot->GetPlayerbotAI()->TellMaster("I can't take that quest because it requires that I take items, but my bags are full!");
+                        bot->GetPlayerbotAI()->TellMaster("　我包包满了．．装不下任务物品，接不了任务！　");
 
                     else
                     {
                         p.rpos(0);         // reset reader
                         bot->GetSession()->HandleQuestgiverAcceptQuestOpcode(p);
-                        bot->GetPlayerbotAI()->TellMaster("Got the quest.");
+                        bot->GetPlayerbotAI()->TellMaster("　接受任务　");
 
                         // build needed items if quest contains any
                         for (int i = 0; i < QUEST_ITEM_OBJECTIVES_COUNT; i++)
@@ -1001,21 +1001,21 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
 {
     if (sWorld.getConfig(CONFIG_BOOL_PLAYERBOT_DISABLE))
     {
-        PSendSysMessage("|cffff0000Playerbot system is currently disabled!");
+        PSendSysMessage(LANG_PLAYERBOT_CMD_DISABLE);
         SetSentErrorMessage(true);
         return false;
     }
 
     if (!m_session)
     {
-        PSendSysMessage("|cffff0000You may only add bots from an active session");
+        PSendSysMessage(LANG_PLAYERBOT_CMD_NOTHERE);
         SetSentErrorMessage(true);
         return false;
     }
 
     if (!*args)
     {
-        PSendSysMessage("|cffff0000usage: add PLAYERNAME  or  remove PLAYERNAME");
+        PSendSysMessage(LANG_PLAYERBOT_CMD_NOTHERE);
         SetSentErrorMessage(true);
         return false;
     }
@@ -1024,7 +1024,7 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
     char *charname = strtok (NULL, " ");
     if (!cmd || !charname)
     {
-        PSendSysMessage("|cffff0000usage: add PLAYERNAME  or  remove PLAYERNAME");
+        PSendSysMessage(LANG_PLAYERBOT_CMD_SYNTAX);
         SetSentErrorMessage(true);
         return false;
     }
@@ -1048,7 +1048,7 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
     {
         if (!sWorld.getConfig(CONFIG_BOOL_PLAYERBOT_SHAREDBOTS))
         {
-            PSendSysMessage("|cffff0000You may only add bots from the same account.");
+            PSendSysMessage(LANG_PLAYERBOT_CMD_ACCOUNT);
             SetSentErrorMessage(true);
             return false;
         }
@@ -1059,7 +1059,7 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
             Field *fields = resultsocial->Fetch();
             if (fields[0].GetUInt32() == 0 && (cmdStr == "add" || cmdStr == "login"))
             {
-                PSendSysMessage("|cffff0000You may only add bots from the same account or a friend's character that contains 'shared' in the notes on their friend list while not online.");
+                PSendSysMessage(LANG_PLAYERBOT_CMD_ACCOUNT);
                 SetSentErrorMessage(true);
                 delete resultsocial;
                 return false;
@@ -1082,7 +1082,7 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
         int charcount = m_session->GetPlayer()->GetPlayerbotMgr()->GetBotCount();
         if (charcount >= maxnum && (cmdStr == "add" || cmdStr == "login"))
         {
-            PSendSysMessage("|cffff0000You cannot summon anymore bots.(Current Max: |cffffffff%u)",maxnum);
+            PSendSysMessage(LANG_PLAYERBOT_CMD_NOTMORE, maxnum);
             SetSentErrorMessage(true);
             return false;
         }
@@ -1104,7 +1104,7 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
         {
             if (charlvl > maxlvl)
             {
-                PSendSysMessage("|cffff0000You cannot summon |cffffffff[%s]|cffff0000, it's level is too high.(Current Max:lvl |cffffffff%u)", fields[1].GetString(), maxlvl);
+                PSendSysMessage(LANG_PLAYERBOT_CMD_LEVEL, fields[1].GetString(), maxlvl);
                 SetSentErrorMessage(true);
                 delete resultlvl;
                 return false;
@@ -1131,26 +1131,26 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
     {
         if (mgr->GetPlayerBot(guid))
         {
-            PSendSysMessage("Bot already exists in world.");
+            PSendSysMessage(LANG_PLAYERBOT_CMD_EXIST);
             SetSentErrorMessage(true);
             return false;
         }
         CharacterDatabase.DirectPExecute("UPDATE characters SET online = 1 WHERE guid = '%u'", guid.GetCounter());
         mgr->AddPlayerBot(guid);
-        PSendSysMessage("Bot added successfully.");
+        PSendSysMessage(LANG_PLAYERBOT_CMD_SUCCESS);
         ++mgr->m_botCount;
     }
     else if (cmdStr == "remove" || cmdStr == "logout")
     {
         if (!mgr->GetPlayerBot(guid))
         {
-            PSendSysMessage("|cffff0000Bot can not be removed because bot does not exist in world.");
+            PSendSysMessage(LANG_PLAYERBOT_CMD_NOTEXT);
             SetSentErrorMessage(true);
             return false;
         }
         CharacterDatabase.DirectPExecute("UPDATE characters SET online = 0 WHERE guid = '%u'", guid.GetCounter());
         mgr->LogoutPlayerBot(guid);
-        PSendSysMessage("Bot removed successfully.");
+        PSendSysMessage(LANG_PLAYERBOT_CMD_REMOVE);
         --mgr->m_botCount;
     }
     else if (cmdStr == "co" || cmdStr == "combatorder")
@@ -1159,7 +1159,7 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
         char *orderChar = strtok(NULL, " ");
         if (!orderChar)
         {
-            PSendSysMessage("|cffff0000Syntax error:|cffffffff .bot co <botName> <order=reset|tank|assist|heal|protect> [targetPlayer]");
+            PSendSysMessage(LANG_PLAYERBOT_CMD_COMBAT);
             SetSentErrorMessage(true);
             return false;
         }
@@ -1170,7 +1170,7 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
             ObjectGuid targetGuid = m_session->GetPlayer()->GetSelectionGuid();
             if (!targetChar && targetGuid.IsEmpty())
             {
-                PSendSysMessage("|cffff0000Combat orders protect and assist expect a target either by selection or by giving target player in command string!");
+                PSendSysMessage(LANG_PLAYERBOT_CMD_ORDER);
                 SetSentErrorMessage(true);
                 return false;
             }
@@ -1184,14 +1184,14 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
             target = ObjectAccessor::GetUnit(*m_session->GetPlayer(), targetGuid);
             if (!target)
             {
-                PSendSysMessage("|cffff0000Invalid target for combat order protect or assist!");
+                PSendSysMessage(LANG_PLAYERBOT_CMD_ERRTARGET);
                 SetSentErrorMessage(true);
                 return false;
             }
         }
         if (mgr->GetPlayerBot(guid) == NULL)
         {
-            PSendSysMessage("|cffff0000Bot can not receive combat order because bot does not exist in world.");
+            PSendSysMessage(LANG_PLAYERBOT_CMD_ERRORDER);
             SetSentErrorMessage(true);
             return false;
         }
