@@ -941,13 +941,13 @@ uint32 Unit::DealDamage(Unit *pVictim, DamageInfo* damageInfo, bool durabilityLo
 
             // PvP Token
             int8 leveldiff = player_tap->getLevel() - pVictim->getLevel();
-            if((pVictim->GetTypeId() == TYPEID_PLAYER) && leveldiff < 10)
+            if((pVictim->GetTypeId() == TYPEID_PLAYER) && leveldiff < 10 && pVictim != player_tap)
                 player_tap->ReceiveToken();
 
             // PvP Announcer
             if (sWorld.getConfig(CONFIG_BOOL_PVP_ANNOUNCER))
             {
-                if (pVictim->GetTypeId() == TYPEID_PLAYER)
+                if (pVictim->GetTypeId() == TYPEID_PLAYER && pVictim != player_tap)
                 {
                     std::string msg, msg0, msg1, msg2;
                     std::string KillerName = player_tap->GetName();

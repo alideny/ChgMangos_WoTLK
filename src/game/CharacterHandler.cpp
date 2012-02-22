@@ -785,6 +785,10 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder *holder)
     sObjectAccessor.AddObject(pCurrChar);
     //DEBUG_LOG("Player %s added to Map.",pCurrChar->GetName());
 
+    /* 世界飞行 */
+    //if (sWorld.getConfig(CONFIG_BOOL_ALLOW_FLYING_MOUNTS_EVERYWHERE))
+    //    pCurrChar->FlyingMountsSpellsToItems();
+
     pCurrChar->SendInitialPacketsAfterAddToMap();
 
     static SqlStatementID updChars;

@@ -28,6 +28,7 @@
 #include "ScriptMgr.h"
 #include "Totem.h"
 #include "SpellAuras.h"
+#include "World.h"
 
 #include <G3D/Vector3.h>
 
@@ -383,6 +384,17 @@ void WorldSession::HandleCastSpellOpcode(WorldPacket& recvPacket)
         return;
     }
 
+    if (sWorld.getConfig(CONFIG_BOOL_ALLOW_FLYING_MOUNTS_EVERYWHERE))
+    {
+        if (_player->isRunningSpell(spellInfo))
+        {
+            _player->Unmount();
+            _player->RemoveSpellsCausingAura(SPELL_AURA_MOUNTED);
+        }
+        else if (_player->isRunningFormSpell(spellInfo))
+            _player->RemoveFlyingSpells();
+    }
+
     //  Players on vehicles may cast many simple spells (like knock) from self
 
     Unit* mover = NULL;
@@ -537,6 +549,9 @@ void WorldSession::HandleCancelAuraOpcode( WorldPacket& recvPacket)
 
     // non channeled case
     _player->RemoveAurasDueToSpellByCancel(spellId);
+
+    if(_player->isFlyingSpell(spellInfo) || _player->isFlyingFormSpell(spellInfo))
+        _player->SetFlyingMountTimer();
 }
 
 void WorldSession::HandlePetCancelAuraOpcode( WorldPacket& recvPacket)

@@ -5630,6 +5630,17 @@ SpellCastResult Spell::CheckCast(bool strict)
     {
         if (m_caster->IsTaxiFlying())
             return SPELL_FAILED_NOT_ON_TAXI;
+        else if ((sWorld.getConfig(CONFIG_BOOL_ALLOW_FLYING_MOUNTS_EVERYWHERE)) && (m_spellInfo->Id==55884))
+        {
+            Player* player = (Player*)m_caster;
+            uint32 spellToLearn = ((m_spellInfo->Id==SPELL_ID_GENERIC_LEARN) || (m_spellInfo->Id==SPELL_ID_GENERIC_LEARN_PET)) ? damage : m_spellInfo->EffectTriggerSpell[0];
+            SpellEntry const *sEntry = sSpellStore.LookupEntry(spellToLearn);
+            if(sEntry)
+            {
+                if(player->isFlyingSpell(sEntry) || player->isFlyingFormSpell(sEntry))
+                    return SPELL_CAST_OK;
+            }
+        }
         else
             return SPELL_FAILED_NOT_MOUNTED;
     }
@@ -7073,6 +7084,17 @@ SpellCastResult Spell::CheckItems()
     Player* p_caster = (Player*)m_caster;
     bool isScrollItem = false;
     bool isVellumTarget = false;
+
+    if ((sWorld.getConfig(CONFIG_BOOL_ALLOW_FLYING_MOUNTS_EVERYWHERE)) && (m_spellInfo->Id==55884))
+    {
+        uint32 spellToLearn = ((m_spellInfo->Id==SPELL_ID_GENERIC_LEARN) || (m_spellInfo->Id==SPELL_ID_GENERIC_LEARN_PET)) ? damage : m_spellInfo->EffectTriggerSpell[0];
+        SpellEntry const *sEntry = sSpellStore.LookupEntry(spellToLearn);
+        if(sEntry)
+        {
+            if(p_caster->isFlyingSpell(sEntry) || p_caster->isFlyingFormSpell(sEntry))
+                return SPELL_CAST_OK;
+        }
+    }
 
     // cast item checks
     if (m_CastItem)

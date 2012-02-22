@@ -17,6 +17,7 @@
  */
 
 #include "SpellMgr.h"
+#include "SharedDefines.h"
 #include "ObjectMgr.h"
 #include "SpellAuraDefines.h"
 #include "ProgressBar.h"
@@ -3763,6 +3764,49 @@ void SpellMgr::LoadSpellAreas()
 
 SpellCastResult SpellMgr::GetSpellAllowedInLocationError(SpellEntry const *spellInfo, uint32 map_id, uint32 zone_id, uint32 area_id, Player const* player)
 {
+    if (spellInfo->Id == 76153 || spellInfo->Id == 31700)
+    {
+        if (player->GetTeam() == HORDE)
+        {
+            if (player->GetZoneId() == 1657 || player->GetZoneId() == 1537 || player->GetZoneId() == 1519 || player->GetZoneId() == 3557)
+                return SPELL_FAILED_NOT_HERE;
+            else
+                return SPELL_CAST_OK;
+        }
+        else if (player->GetTeam() == ALLIANCE)
+        {
+            if (player->GetZoneId() == 1638 || player->GetZoneId() == 1497 || player->GetZoneId() == 1637 || player->GetZoneId() == 3487)
+                return SPELL_FAILED_NOT_HERE;
+            else
+                return SPELL_CAST_OK;
+        }
+        else
+            return SPELL_FAILED_NOT_HERE;
+    }
+    /* ÊÀ½ç·ÉÐÐ */
+    if (sWorld.getConfig(CONFIG_BOOL_ALLOW_FLYING_MOUNTS_EVERYWHERE))
+    {
+        if(player && (player->isFlyingSpell(spellInfo) || player->isFlyingFormSpell(spellInfo)))
+        {
+            uint32 v_map = GetVirtualMapForMapAndZone(map_id, zone_id);
+            MapEntry const* mapEntry = sMapStore.LookupEntry(v_map);
+            if(!mapEntry)
+                return SPELL_FAILED_NOT_HERE;
+            /*else if(mapEntry->Instanceable())
+                return SPELL_FAILED_NOT_HERE;*/
+            else if(mapEntry->IsDungeon())
+                return SPELL_FAILED_NOT_HERE;
+            else if(mapEntry->IsRaid())
+                return SPELL_FAILED_NOT_HERE;
+            else if(mapEntry->IsBattleArena())
+                return SPELL_FAILED_NOT_HERE;
+            else if(mapEntry->IsBattleGround())
+                return SPELL_FAILED_NOT_HERE;
+            else
+                return SPELL_CAST_OK;
+        }
+    }
+
     // normal case
     int32 areaGroupId = spellInfo->AreaGroupId;
     if (areaGroupId > 0)
