@@ -3334,7 +3334,7 @@ bool ChatHandler::ExtractPlayerTarget(char** args, Player** player /*= NULL*/, O
             *player_name = pl ? pl->GetName() : "";
     }
 
-    // some from req. data must be provided (note: name is empty if player not exist)
+    // some from req. data must be provided (note: name ÊÇ¿ÕµÄ if player not exist)
     if((!player || !*player) && (!player_guid || !*player_guid) && (!player_name || player_name->empty()))
     {
         SendSysMessage(LANG_PLAYER_NOT_FOUND);

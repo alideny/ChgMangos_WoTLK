@@ -43,7 +43,7 @@ void GMTicketMgr::LoadGMTickets()
         bar.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded `character_ticket`, table is empty.");
+        sLog.outString(">> 加载 `character_ticket`, 数据表示空的.");
         return;
     }
 
@@ -76,7 +76,7 @@ void GMTicketMgr::LoadGMTickets()
     delete result;
 
     sLog.outString();
-    sLog.outString(">> Loaded " SIZEFMTD " GM tickets", GetTicketCount());
+    sLog.outString(">> 加载 " SIZEFMTD " GM tickets", GetTicketCount());
 }
 
 void GMTicketMgr::DeleteAll()

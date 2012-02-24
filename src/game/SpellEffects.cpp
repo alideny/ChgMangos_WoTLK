@@ -5031,7 +5031,7 @@ void Spell::EffectApplyAura(SpellEffectIndex eff_idx)
                     break;
                 default:
                     // default value for all other flasks/elixirs
-                    //TODO: add data to db table or find way of getting it from dbc
+                    //TODO: add data to 数据表 or find way of getting it from dbc
                     amount = aur->GetModifier()->m_amount * 30 / 100;
                     break;
             }
@@ -8583,7 +8583,7 @@ void Spell::EffectScriptEffect(SpellEffectIndex eff_idx)
                     // "escort" aura not present, so let nothing happen
                     if (!m_caster->HasAura(m_spellInfo->CalculateSimpleValue(eff_idx)))
                         return;
-                    // "escort" aura is present so break; and let DB table spell_scripts be used and process further.
+                    // "escort" aura is present so break; and let 数据表 spell_scripts be used and process further.
                     else
                         break;
                 }

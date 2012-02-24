@@ -101,14 +101,14 @@ void CreatureEventAIMgr::LoadCreatureEventAI_Texts(bool check_entry_use)
             CheckUnusedAITexts();
 
         sLog.outString();
-        sLog.outString(">> Loaded %u additional CreatureEventAI Texts data.", count);
+        sLog.outString(">> 加载了 %u 个 additional CreatureEventAI Texts data.", count);
     }
     else
     {
         BarGoLink bar(1);
         bar.step();
         sLog.outString();
-        sLog.outString(">> Loaded 0 additional CreatureEventAI Texts data. DB table `creature_ai_texts` is empty.");
+        sLog.outString(">> 加载 0 additional CreatureEventAI Texts data. 数据表 `creature_ai_texts` 是空的.");
     }
 }
 
@@ -194,13 +194,13 @@ void CreatureEventAIMgr::LoadCreatureEventAI_Summons(bool check_entry_use)
             CheckUnusedAISummons();
 
         sLog.outString();
-        sLog.outString(">> Loaded %u CreatureEventAI summon definitions", Count);
+        sLog.outString(">> 加载了 %u 个 CreatureEventAI summon definitions", Count);
     }else
     {
         BarGoLink bar(1);
         bar.step();
         sLog.outString();
-        sLog.outString(">> Loaded 0 CreatureEventAI Summon definitions. DB table `creature_ai_summons` is empty.");
+        sLog.outString(">> 加载 0 CreatureEventAI Summon definitions. 数据表 `creature_ai_summons` 是空的.");
     }
 }
 
@@ -834,12 +834,12 @@ void CreatureEventAIMgr::LoadCreatureEventAI_Scripts()
         CheckUnusedAISummons();
 
         sLog.outString();
-        sLog.outString(">> Loaded %u CreatureEventAI scripts", Count);
+        sLog.outString(">> 加载了 %u 个 CreatureEventAI scripts", Count);
     }else
     {
         BarGoLink bar(1);
         bar.step();
         sLog.outString();
-        sLog.outString(">> Loaded 0 CreatureEventAI scripts. DB table `creature_ai_scripts` is empty.");
+        sLog.outString(">> 加载 0 CreatureEventAI scripts. 数据表 `creature_ai_scripts` 是空的.");
     }
 }

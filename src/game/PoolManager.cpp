@@ -571,7 +571,7 @@ void PoolManager::LoadFromDB()
     QueryResult *result = WorldDatabase.Query("SELECT MAX(entry) FROM pool_template");
     if (!result)
     {
-        sLog.outString(">> Table pool_template is empty.");
+        sLog.outString(">> Table pool_template 是空的.");
         sLog.outString();
         return;
     }
@@ -588,7 +588,7 @@ void PoolManager::LoadFromDB()
     if (!result)
     {
         mPoolTemplate.clear();
-        sLog.outString(">> Table pool_template is empty:");
+        sLog.outString(">> Table pool_template 是空的:");
         sLog.outString();
         return;
     }
@@ -613,7 +613,7 @@ void PoolManager::LoadFromDB()
     } while (result->NextRow());
 
     sLog.outString();
-    sLog.outString( ">> Loaded %u objects pools", count );
+    sLog.outString( ">> 加载了 %u 个 objects pools", count );
     delete result;
 
     PoolMapChecker mapChecker(mPoolTemplate);
@@ -632,7 +632,7 @@ void PoolManager::LoadFromDB()
         bar2.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded %u creatures in pools from `pool_creature`", count );
+        sLog.outString(">> 加载了 %u 个 creatures in pools from `pool_creature`", count );
     }
     else
     {
@@ -681,7 +681,7 @@ void PoolManager::LoadFromDB()
 
         } while (result->NextRow());
         sLog.outString();
-        sLog.outString( ">> Loaded %u creatures in pools from `pool_creature`", count );
+        sLog.outString( ">> 加载了 %u 个 creatures in pools from `pool_creature`", count );
         delete result;
     }
 
@@ -694,7 +694,7 @@ void PoolManager::LoadFromDB()
         bar2.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded %u creatures in pools from `pool_creature_template`", count );
+        sLog.outString(">> 加载了 %u 个 creatures in pools from `pool_creature_template`", count );
     }
     else
     {
@@ -753,7 +753,7 @@ void PoolManager::LoadFromDB()
 
         } while (result->NextRow());
         sLog.outString();
-        sLog.outString(">> Loaded %u creatures in pools from `pool_creature_template`", count );
+        sLog.outString(">> 加载了 %u 个 creatures in pools from `pool_creature_template`", count );
         delete result;
     }
 
@@ -771,7 +771,7 @@ void PoolManager::LoadFromDB()
         bar2.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded %u gameobject in pools from `pool_gameobject`", count );
+        sLog.outString(">> 加载了 %u 个 gameobject in pools from `pool_gameobject`", count );
     }
     else
     {
@@ -828,7 +828,7 @@ void PoolManager::LoadFromDB()
 
         } while( result->NextRow() );
         sLog.outString();
-        sLog.outString(">> Loaded %u gameobject in pools from `pool_gameobject`", count );
+        sLog.outString(">> 加载了 %u 个 gameobject in pools from `pool_gameobject`", count );
         delete result;
     }
 
@@ -842,7 +842,7 @@ void PoolManager::LoadFromDB()
         bar2.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded %u gameobject in pools from `pool_gameobject_template`", count );
+        sLog.outString(">> 加载了 %u 个 gameobject in pools from `pool_gameobject_template`", count );
     }
     else
     {
@@ -910,7 +910,7 @@ void PoolManager::LoadFromDB()
 
         } while( result->NextRow() );
         sLog.outString();
-        sLog.outString(">> Loaded %u gameobject in pools from `pool_gameobject_template`", count );
+        sLog.outString(">> 加载了 %u 个 gameobject in pools from `pool_gameobject_template`", count );
         delete result;
     }
 
@@ -926,7 +926,7 @@ void PoolManager::LoadFromDB()
         bar2.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded %u pools in pools", count );
+        sLog.outString(">> 加载了 %u 个 pools in pools", count );
     }
     else
     {
@@ -1016,7 +1016,7 @@ void PoolManager::LoadFromDB()
         }
 
         sLog.outString();
-        sLog.outString( ">> Loaded %u pools in mother pools", count );
+        sLog.outString( ">> 加载了 %u 个 pools in mother pools", count );
         delete result;
     }
 

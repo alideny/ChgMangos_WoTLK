@@ -167,7 +167,7 @@ void LFGMgr::LoadRewards()
         bar.step();
 
         sLog.outString();
-        sLog.outErrorDb(">> Loaded 0 LFG dungeon rewards. DB table `lfg_dungeon_rewards` is empty!");
+        sLog.outErrorDb(">> 加载 0 LFG dungeon rewards. 数据表 `lfg_dungeon_rewards` 是空的!");
         return;
     }
 
@@ -217,7 +217,7 @@ void LFGMgr::LoadRewards()
     while (result->NextRow());
 
     sLog.outString();
-    sLog.outString(">> Loaded %u LFG dungeon rewards.", count);
+    sLog.outString(">> 加载了 %u 个 LFG dungeon rewards.", count);
 }
 
 LFGReward const* LFGMgr::GetRandomDungeonReward(LFGDungeonEntry const* dungeon, Player* player)
@@ -1340,7 +1340,7 @@ void LFGMgr::UpdateProposal(uint32 ID, ObjectGuid guid, bool accept)
         LFGQueueSet proposalGuidsTmp = pProposal->GetMembers();
         if (proposalGuidsTmp.empty())
         {
-            DEBUG_LOG("LFGMgr::UpdateProposal:%u cannot make group, guid set is empty!", pProposal->ID);
+            DEBUG_LOG("LFGMgr::UpdateProposal:%u cannot make group, guid set 是空的!", pProposal->ID);
             pProposal->SetDeleted();
             return;
         }
@@ -2471,7 +2471,7 @@ void LFGMgr::CompleteGroup(Group* group, LFGQueueSet* players)
 
     if (intersection.empty())
     {
-        DEBUG_LOG("LFGMgr:CompleteGroup: Try complete group %u but dungeon list is empty!", group->GetObjectGuid().GetCounter());
+        DEBUG_LOG("LFGMgr:CompleteGroup: Try complete group %u but dungeon list 是空的!", group->GetObjectGuid().GetCounter());
         return;
     }
 

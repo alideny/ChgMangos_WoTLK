@@ -41,7 +41,7 @@ void MapManager::LoadTransports()
         bar.step();
 
         sLog.outString();
-        sLog.outString( ">> Loaded %u transports", count );
+        sLog.outString( ">> 加载了 %u 个 transports", count );
         return;
     }
 
@@ -127,8 +127,8 @@ void MapManager::LoadTransports()
     delete result;
 
     sLog.outString();
-    sLog.outString( ">> Loaded %u transports", count );
-    sLog.outString( ">> Loaded " SIZEFMTD " transports with mapID's", m_mapOnTransportGO.size() );
+    sLog.outString( ">> 加载了 %u 个 transports", count );
+    sLog.outString( ">> 加载 " SIZEFMTD " transports with mapID's", m_mapOnTransportGO.size() );
 
     // check transport data DB integrity
     result = WorldDatabase.Query("SELECT gameobject.guid,gameobject.id,transports.name FROM gameobject,transports WHERE gameobject.id = transports.entry");

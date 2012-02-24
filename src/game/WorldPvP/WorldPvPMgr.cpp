@@ -131,7 +131,7 @@ void WorldPvPMgr::InitWorldPvP()
     }
 
     sLog.outString();
-    sLog.outString(">> Loaded %u World PvP zones", uiPvPZonesInitialized);
+    sLog.outString(">> ╪стьак %u ╦Ж World PvP zones", uiPvPZonesInitialized);
 }
 
 /**

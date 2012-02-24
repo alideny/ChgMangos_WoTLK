@@ -110,7 +110,7 @@ void WorldSession::SendNameQueryOpcodeFromDBCallBack(QueryResult *result, uint32
     data << uint8(pGender);                                 // gender
     data << uint8(pClass);                                  // class
 
-    // if the first declined name field (5) is empty, the rest must be too
+    // if the first declined name field (5) ÊÇ¿ÕµÄ, the rest must be too
     if(sWorld.getConfig(CONFIG_BOOL_DECLINED_NAMES_USED) && fields[5].GetCppString() != "")
     {
         data << uint8(1);                                   // is declined

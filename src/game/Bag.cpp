@@ -167,7 +167,7 @@ void Bag::BuildCreateUpdateBlockForPlayer(UpdateData* data, Player* target) cons
             m_bagslot[i]->BuildCreateUpdateBlockForPlayer(data, target);
 }
 
-// If the bag is empty returns true
+// If the bag ÊÇ¿ÕµÄ returns true
 bool Bag::IsEmpty() const
 {
     for (uint32 i = 0; i < GetBagSize(); ++i)

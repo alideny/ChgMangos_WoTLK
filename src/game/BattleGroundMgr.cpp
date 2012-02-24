@@ -110,7 +110,7 @@ bool BattleGroundQueue::SelectionPool::KickGroup(uint32 size)
         else if (!found && (*itr)->Players.size() >= (*groupToKick)->Players.size())
             groupToKick = itr;
     }
-    //if pool is empty, do nothing
+    //if pool 是空的, do nothing
     if (GetPlayerCount())
     {
         //update player count
@@ -301,7 +301,7 @@ uint32 BattleGroundQueue::GetAverageQueueWaitTime(GroupQueueInfo* ginfo, BattleG
         return 0;
 }
 
-//remove player from queue and from group info, if group info is empty then remove it too
+//remove player from queue and from group info, if group info 是空的 then remove it too
 void BattleGroundQueue::RemovePlayer(ObjectGuid guid, bool decreaseInvitedCount)
 {
     //Player *plr = sObjectMgr.GetPlayer(guid);
@@ -1653,7 +1653,7 @@ void BattleGroundMgr::CreateInitialBattleGrounds()
         bar.step();
 
         sLog.outString();
-        sLog.outErrorDb(">> Loaded 0 battlegrounds. DB table `battleground_template` is empty.");
+        sLog.outErrorDb(">> 加载 0 battlegrounds. 数据表 `battleground_template` 是空的.");
         return;
     }
 
@@ -1749,7 +1749,7 @@ void BattleGroundMgr::CreateInitialBattleGrounds()
     delete result;
 
     sLog.outString();
-    sLog.outString( ">> Loaded %u battlegrounds", count );
+    sLog.outString( ">> 加载了 %u 个 battlegrounds", count );
 }
 
 void BattleGroundMgr::InitAutomaticArenaPointDistribution()
@@ -2074,7 +2074,7 @@ void BattleGroundMgr::LoadBattleMastersEntry()
         bar.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded 0 battlemaster entries - table is empty!");
+        sLog.outString(">> 加载 0 battlemaster entries - 数据表示空的!");
         return;
     }
 
@@ -2102,7 +2102,7 @@ void BattleGroundMgr::LoadBattleMastersEntry()
     delete result;
 
     sLog.outString();
-    sLog.outString( ">> Loaded %u battlemaster entries", count );
+    sLog.outString( ">> 加载了 %u 个 battlemaster entries", count );
 }
 
 HolidayIds BattleGroundMgr::BGTypeToWeekendHolidayId(BattleGroundTypeId bgTypeId)
@@ -2186,7 +2186,7 @@ void BattleGroundMgr::LoadBattleEventIndexes()
         bar.step();
 
         sLog.outString();
-        sLog.outErrorDb(">> Loaded 0 battleground eventindexes.");
+        sLog.outErrorDb(">> 加载 0 battleground eventindexes.");
         return;
     }
 
@@ -2246,6 +2246,6 @@ void BattleGroundMgr::LoadBattleEventIndexes()
     } while(result->NextRow());
 
     sLog.outString();
-    sLog.outString( ">> Loaded %u battleground eventindexes", count);
+    sLog.outString( ">> 加载了 %u 个 battleground eventindexes", count);
     delete result;
 }

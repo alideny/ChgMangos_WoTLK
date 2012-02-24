@@ -357,7 +357,7 @@ void BattleGround::Update(uint32 diff)
 {
     if (!GetPlayersSize())
     {
-        // BG is empty
+        // BG ÊÇ¿ÕµÄ
         // if there are no players invited, delete BG
         // this will delete arena or bg object, where any player entered
         // [[   but if you use battleground object again (more battles possible to be played on 1 instance)

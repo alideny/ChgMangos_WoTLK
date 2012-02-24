@@ -148,7 +148,7 @@ class ReactorRunnable : protected ACE_Task_Base
 
         virtual int svc()
         {
-            DEBUG_LOG ("Network Thread Starting");
+            DEBUG_LOG ("线程开始");
 
             WorldDatabase.ThreadStart();
 
@@ -185,7 +185,7 @@ class ReactorRunnable : protected ACE_Task_Base
 
             WorldDatabase.ThreadEnd();
 
-            DEBUG_LOG ("Network Thread Exitting");
+            DEBUG_LOG ("线程退出");
 
             return 0;
         }
@@ -231,7 +231,7 @@ int WorldSocketMgr::StartReactiveIO (ACE_UINT16 port, const char* address)
 
     if (num_threads <= 0)
     {
-        sLog.outError ("Network.Threads is wrong in your config file");
+        sLog.outError ("Network.Threads 配置错误，请检查配置文件");
         return -1;
     }
 
@@ -239,8 +239,7 @@ int WorldSocketMgr::StartReactiveIO (ACE_UINT16 port, const char* address)
 
     m_NetThreads = new ReactorRunnable[m_NetThreadsCount];
 
-    BASIC_LOG("Max allowed socket connections %d", ACE::max_handles());
-
+    BASIC_LOG("最大允许连接数： %d", ACE::max_handles());
     // -1 means use default
     m_SockOutKBuff = sConfig.GetIntDefault("Network.OutKBuff", -1);
 
@@ -248,7 +247,7 @@ int WorldSocketMgr::StartReactiveIO (ACE_UINT16 port, const char* address)
 
     if (m_SockOutUBuff <= 0)
     {
-        sLog.outError ("Network.OutUBuff is wrong in your config file");
+        sLog.outError ("Network.OutUBuff 配置错误，请检查配置文件");
         return -1;
     }
 
@@ -259,7 +258,7 @@ int WorldSocketMgr::StartReactiveIO (ACE_UINT16 port, const char* address)
 
     if (acc->open (listen_addr, m_NetThreads[0].GetReactor(), ACE_NONBLOCK) == -1)
     {
-        sLog.outError ("Failed to open acceptor, check if the port is free");
+        sLog.outError ("打开通信端口失败，请检查该端口是否空闲， 或者防火墙是否阻止");
         return -1;
     }
 

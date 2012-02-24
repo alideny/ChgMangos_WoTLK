@@ -403,7 +403,7 @@ bool ArenaTeam::LoadMembersFromDB(QueryResult *arenaTeamMembersResult)
 
     if (Empty() || !captainPresentInTeam)
     {
-        // arena team is empty or captain is not in team, delete from db
+        // arena team ÊÇ¿ÕµÄ or captain is not in team, delete from db
         sLog.outErrorDb("ArenaTeam %u does not have any members or its captain is not in team, disbanding it...", m_TeamId);
         return false;
     }

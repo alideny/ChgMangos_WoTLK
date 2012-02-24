@@ -85,7 +85,7 @@ void LootStore::Verify() const
         i->second->Verify(*this, i->first);
 }
 
-// Loads a *_loot_template DB table into loot store
+// Loads a *_loot_template 数据表 into loot store
 // All checks of the loaded template are called from here, no error reports at loot generation required
 void LootStore::LoadLootTable()
 {
@@ -157,7 +157,7 @@ void LootStore::LoadLootTable()
                     tab = pr.first;
                 }
             }
-            // else is empty - template Id and iter are the same
+            // else 是空的 - template Id and iter are the same
             // finally iter refers to already existing or just created <entry, LootTemplate>
 
             // Adds current row to the template
@@ -171,12 +171,12 @@ void LootStore::LoadLootTable()
         Verify();                                           // Checks validity of the loot store
 
         sLog.outString();
-        sLog.outString( ">> Loaded %u loot definitions (%lu templates)", count, (unsigned long)m_LootTemplates.size());
+        sLog.outString( ">> 加载了 %u 个 loot definitions (%lu templates)", count, (unsigned long)m_LootTemplates.size());
     }
     else
     {
         sLog.outString();
-        sLog.outErrorDb( ">> Loaded 0 loot definitions. DB table `%s` is empty.",GetName() );
+        sLog.outErrorDb( ">> 加载 0 loot definitions. 数据表 `%s` 是空的.",GetName() );
     }
 }
 

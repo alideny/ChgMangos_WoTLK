@@ -239,7 +239,7 @@ class BIH
                 } // traversal loop
                 do
                 {
-                    // stack is empty?
+                    // stack 是空的?
                     if (stackPos == 0)
                         return;
                     // move back up the stack
@@ -323,7 +323,7 @@ class BIH
                     }
                 } // traversal loop
 
-                // stack is empty?
+                // stack 是空的?
                 if (stackPos == 0)
                     return;
                 // move back up the stack

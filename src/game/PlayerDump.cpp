@@ -295,7 +295,7 @@ void PlayerDumpWriter::DumpTableContent(std::string& dump, uint32 guid, char con
         default:            fieldname = "guid";                      break;
     }
 
-    // for guid set stop if set is empty
+    // for guid set stop if set ÊÇ¿ÕµÄ
     if (guids && guids->empty())
         return;                                             // nothing to do
 

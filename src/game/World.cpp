@@ -257,7 +257,7 @@ World::AddSession_ (WorldSession* s)
     {
         AddQueuedSession(s);
         UpdateMaxSessionCounters();
-        DETAIL_LOG("PlayerQueue: Account id %u is in Queue Position (%u).", s->GetAccountId (), ++QueueSize);
+        DETAIL_LOG("玩家队列: 账号 id %u 在队列位置 (%u).", s->GetAccountId (), ++QueueSize);
         return;
     }
 
@@ -266,7 +266,7 @@ World::AddSession_ (WorldSession* s)
     packet << uint32(0);                                    // BillingTimeRemaining
     packet << uint8(0);                                     // BillingPlanFlags
     packet << uint32(0);                                    // BillingTimeRested
-    packet << uint8(s->Expansion());                        // 0 - normal, 1 - TBC, 2 - WotLK. Must be set in database manually for each account.
+    packet << uint8(s->Expansion());                        // 0 - normal, 1 - TBC, 2 - WotLK. 必须 set in database manually for each account.
     s->SendPacket(&packet);
 
     s->SendAddonsInfo();
@@ -291,7 +291,7 @@ World::AddSession_ (WorldSession* s)
         SqlStatement stmt = LoginDatabase.CreateStatement(id, "UPDATE realmlist SET population = ? WHERE id = ?");
         stmt.PExecute(popu, realmID);
 
-        DETAIL_LOG("Server Population (%f).", popu);
+        DETAIL_LOG("服务器负载 (%f).", popu);
     }
 }
 
@@ -317,7 +317,7 @@ void World::AddQueuedSession(WorldSession* sess)
     packet << uint32(0);                                    // BillingTimeRemaining
     packet << uint8(0);                                     // BillingPlanFlags
     packet << uint32(0);                                    // BillingTimeRested
-    packet << uint8(sess->Expansion());                     // 0 - normal, 1 - TBC, must be set in database manually for each account
+    packet << uint8(sess->Expansion());                     // 0 - normal, 1 - TBC, 必须 set in database manually for each account
     packet << uint32(GetQueuedSessionPos(sess));            // position in queue
     packet << uint8(0);                                     // unk 3.3.0
     sess->SendPacket(&packet);
@@ -369,7 +369,7 @@ bool World::RemoveQueuedSession(WorldSession* sess)
 
         m_QueuedSessions.pop_front();
 
-        // update iter to point first queued socket or end() if queue is empty now
+        // update iter to point first queued socket or end() if queue 是空的 now
         iter = m_QueuedSessions.begin();
         position = 1;
     }
@@ -429,7 +429,7 @@ void World::LoadConfigSettings(bool reload)
     {
         if (!sConfig.Reload())
         {
-            sLog.outError("World settings reload fail: can't read settings from %s.",sConfig.GetFilename().c_str());
+            sLog.outError("重载服务器配置错误：不能读取文件 %s。",sConfig.GetFilename().c_str());
             return;
         }
     }
@@ -439,8 +439,8 @@ void World::LoadConfigSettings(bool reload)
     if (!confVersion)
     {
         sLog.outError("*****************************************************************************");
-        sLog.outError(" WARNING: mangosd.conf does not include a ConfVersion variable.");
-        sLog.outError("          Your configuration file may be out of date!");
+        sLog.outError("警告： mangosd.conf 没有包含文件版本的定义!");
+        sLog.outError("       你得配置文件版本可能已经过期了。");
         sLog.outError("*****************************************************************************");
         Log::WaitBeforeContinueIfNeed();
     }
@@ -449,9 +449,9 @@ void World::LoadConfigSettings(bool reload)
         if (confVersion < _MANGOSDCONFVERSION)
         {
             sLog.outError("*****************************************************************************");
-            sLog.outError(" WARNING: Your mangosd.conf version indicates your conf file is out of date!");
-            sLog.outError("          Please check for updates, as your current default values may cause");
-            sLog.outError("          unexpected behavior.");
+            sLog.outError(" 警告： 你的 mangosd.conf 配置文件版本已过期，或者版本号不正确！              ");
+            sLog.outError("        请确认您的配置文件是在正确的目录下，并且是ChgMangos官方的最新版本。请");
+            sLog.outError("        勿使用非官方自带的配置文件，否则可能产生严重的错误！");
             sLog.outError("*****************************************************************************");
             Log::WaitBeforeContinueIfNeed();
         }
@@ -608,7 +608,7 @@ void World::LoadConfigSettings(bool reload)
 
     setConfigMinMax(CONFIG_UINT32_CHARACTERS_PER_REALM, "CharactersPerRealm", 10, 1, 10);
 
-    // must be after CONFIG_UINT32_CHARACTERS_PER_REALM
+    // 必须 after CONFIG_UINT32_CHARACTERS_PER_REALM
     setConfigMin(CONFIG_UINT32_CHARACTERS_PER_ACCOUNT, "CharactersPerAccount", 50, getConfig(CONFIG_UINT32_CHARACTERS_PER_REALM));
 
     setConfigMinMax(CONFIG_UINT32_HEROIC_CHARACTERS_PER_REALM, "HeroicCharactersPerRealm", 1, 1, 10);
@@ -748,7 +748,7 @@ void World::LoadConfigSettings(bool reload)
     setConfig(CONFIG_UINT32_MAX_OVERSPEED_PINGS, "MaxOverspeedPings", 2);
     if (getConfig(CONFIG_UINT32_MAX_OVERSPEED_PINGS) != 0 && getConfig(CONFIG_UINT32_MAX_OVERSPEED_PINGS) < 2)
     {
-        sLog.outError("MaxOverspeedPings (%i) must be in range 2..infinity (or 0 to disable check). Set to 2.", getConfig(CONFIG_UINT32_MAX_OVERSPEED_PINGS));
+        sLog.outError("MaxOverspeedPings (%i) 必须 in range 2..infinity (or 0 to disable check). Set to 2.", getConfig(CONFIG_UINT32_MAX_OVERSPEED_PINGS));
         setConfig(CONFIG_UINT32_MAX_OVERSPEED_PINGS, 2);
     }
 
@@ -978,15 +978,19 @@ void World::LoadConfigSettings(bool reload)
     else if (dataPath.at(dataPath.length()-1) != '/' && dataPath.at(dataPath.length()-1) != '\\')
         dataPath.append("/");
 
+    sLog.outString("-----------------------------------------");
+    sLog.outString("世界数据&配置信息：");
+    sLog.outString("-----------------------------------------");
+
     if (reload)
     {
         if (dataPath != m_dataPath)
-            sLog.outError("DataDir option can't be changed at mangosd.conf reload, using current value (%s).", m_dataPath.c_str());
+            sLog.outError("DataDir 不能在重载时更改没使用当前配置 (%s)。", m_dataPath.c_str());
     }
     else
     {
         m_dataPath = dataPath;
-        sLog.outString("Using DataDir %s", m_dataPath.c_str());
+        sLog.outString("世界：Data 文件目录：%s", m_dataPath.c_str());
     }
 
     setConfig(CONFIG_BOOL_VMAP_INDOOR_CHECK, "vmap.enableIndoorCheck", true);
@@ -995,19 +999,20 @@ void World::LoadConfigSettings(bool reload)
     std::string ignoreSpellIds = sConfig.GetStringDefault("vmap.ignoreSpellIds", "");
 
     if (!enableHeight)
-        sLog.outError("VMAP height use disabled! Creatures movements and other things will be in broken state.");
+        sLog.outError("VMAP 高度检测关闭！可能会出现怪物飞天等异常现象，强烈建议仅在个人测试服务器上关闭该功能！");
 
     VMAP::VMapFactory::createOrGetVMapManager()->setEnableLineOfSightCalc(enableLOS);
     VMAP::VMapFactory::createOrGetVMapManager()->setEnableHeightCalc(enableHeight);
     VMAP::VMapFactory::preventSpellsFromBeingTestedForLoS(ignoreSpellIds.c_str());
-    sLog.outString( "WORLD: VMap support included. LineOfSight:%i, getHeight:%i, indoorCheck:%i",
+    sLog.outString( "世界：VMap 支持开启：视野计算:%i, 高度计算:%i, 户内检测:%i",
         enableLOS, enableHeight, getConfig(CONFIG_BOOL_VMAP_INDOOR_CHECK) ? 1 : 0);
-    sLog.outString( "WORLD: VMap data directory is: %svmaps",m_dataPath.c_str());
+    sLog.outString( "世界：VMap 文件目录：%svmaps",m_dataPath.c_str());
 
     setConfig(CONFIG_BOOL_MMAP_ENABLED, "mmap.enabled", true);
     std::string ignoreMapIds = sConfig.GetStringDefault("mmap.ignoreMapIds", "");
     MMAP::MMapFactory::preventPathfindingOnMaps(ignoreMapIds.c_str());
-    sLog.outString("WORLD: mmap pathfinding %sabled", getConfig(CONFIG_BOOL_MMAP_ENABLED) ? "en" : "dis");
+    sLog.outString("世界：Mmap 路径计算：%s", getConfig(CONFIG_BOOL_MMAP_ENABLED) ? "开启" : "关闭");
+    sLog.outString("-----------------------------------------");
 
     // chat log and lexics cutter settings
     if (reload)
@@ -1095,14 +1100,15 @@ void World::SetInitialWorldSettings()
         (m_configUint32Values[CONFIG_UINT32_EXPANSION] &&
         (!MapManager::ExistMapAndVMap(530,10349.6f,-6357.29f) || !MapManager::ExistMapAndVMap(530,-3961.64f,-13931.2f))))
     {
-        sLog.outError("Correct *.map files not found in path '%smaps' or *.vmtree/*.vmtile files in '%svmaps'. Please place *.map and vmap files in appropriate directories or correct the DataDir value in the mangosd.conf file.",m_dataPath.c_str(),m_dataPath.c_str());
+        sLog.outError("Maps文件目录 '%smaps' 和/或 VMaps 文件目录 '%svmaps'下找不到正确的 *.map 和/或 vmap 文件，请确认您是在ChgMangos官方下载的最新服务端版本，或者请检查您的地图版本是否正确！ ",m_dataPath.c_str(),m_dataPath.c_str());
         Log::WaitBeforeContinueIfNeed();
         exit(1);
     }
 
     ///- Loading strings. Getting no records means core load has to be canceled because no error message can be output.
-    sLog.outString();
-    sLog.outString("Loading MaNGOS strings...");
+    sLog.outString("开始加载数据库：");
+    sLog.outString("-----------------------------------------");
+    sLog.outString("加载 MaNGOS 词条...");
     if (!sObjectMgr.LoadMangosStrings())
     {
         Log::WaitBeforeContinueIfNeed();
@@ -1121,262 +1127,262 @@ void World::SetInitialWorldSettings()
     CharacterDatabase.PExecute("DELETE FROM corpse WHERE corpse_type = '0' OR time < (UNIX_TIMESTAMP()-'%u')", 3*DAY);
 
     ///- Load the DBC files
-    sLog.outString("Initialize data stores...");
+    sLog.outString("初始化 DBC 数据引擎...");
     LoadDBCStores(m_dataPath);
     DetectDBCLang();
     sObjectMgr.SetDBCLocaleIndex(GetDefaultDbcLocale());    // Get once for all the locale index of DBC language (console/broadcasts)
 
-    sLog.outString( "Loading Script Names...");
+    sLog.outString( "加载 脚本名称...");
     sScriptMgr.LoadScriptNames();
 
-    sLog.outString( "Loading WorldTemplate..." );
+    sLog.outString( "加载 世界框架..." );
     sObjectMgr.LoadWorldTemplate();
 
-    sLog.outString( "Loading InstanceTemplate..." );
+    sLog.outString( "加载 区域框架..." );
     sObjectMgr.LoadInstanceTemplate();
 
-    sLog.outString("Loading SkillLineAbilityMultiMap Data...");
+    sLog.outString("加载 非职业技能数据...");
     sSpellMgr.LoadSkillLineAbilityMap();
 
-    sLog.outString("Loading SkillRaceClassInfoMultiMap Data...");
+    sLog.outString("加载 职业技能数据...");
     sSpellMgr.LoadSkillRaceClassInfoMap();
 
     ///- Clean up and pack instances
-    sLog.outString( "Cleaning up instances..." );
-    sMapPersistentStateMgr.CleanupInstances();              // must be called before `creature_respawn`/`gameobject_respawn` tables
+    sLog.outString( "清理区域缓存..." );
+    sMapPersistentStateMgr.CleanupInstances();              // 必须 called before `creature_respawn`/`gameobject_respawn` tables
 
-    sLog.outString( "Packing instances..." );
+    sLog.outString( "压缩区域数据..." );
     sMapPersistentStateMgr.PackInstances();
 
-    sLog.outString( "Packing groups..." );
-    sObjectMgr.PackGroupIds();                              // must be after CleanupInstances
+    sLog.outString( "压缩团队信息..." );
+    sObjectMgr.PackGroupIds();                              // 必须 after CleanupInstances
 
     ///- Init highest guids before any guid using table loading to prevent using not initialized guids in some code.
-    sObjectMgr.SetHighestGuids();                           // must be after PackInstances() and PackGroupIds()
+    sObjectMgr.SetHighestGuids();                           // 必须 after PackInstances() and PackGroupIds()
     sLog.outString();
 
-    sLog.outString( "Loading Page Texts..." );
+    sLog.outString( "加载 文本数据..." );
     sObjectMgr.LoadPageTexts();
 
-    sLog.outString( "Loading Game Object Templates..." );   // must be after LoadPageTexts
+    sLog.outString( "加载 世界物体数据..." );   // 必须 after LoadPageTexts
     sObjectMgr.LoadGameobjectInfo();
 
-    sLog.outString( "Loading Spell Chain Data..." );
+    sLog.outString( "加载 技能链接数据..." );
     sSpellMgr.LoadSpellChains();
 
-    sLog.outString( "Loading Spell Elixir types..." );
+    sLog.outString( "加载 技能链接类型..." );
     sSpellMgr.LoadSpellElixirs();
 
-    sLog.outString( "Loading Spell Learn Skills..." );
-    sSpellMgr.LoadSpellLearnSkills();                       // must be after LoadSpellChains
+    sLog.outString( "加载 辅助技能数据..." );
+    sSpellMgr.LoadSpellLearnSkills();                       // 必须 after LoadSpellChains
 
-    sLog.outString( "Loading Spell Learn Spells..." );
+    sLog.outString( "加载 职业技能数据..." );
     sSpellMgr.LoadSpellLearnSpells();
 
-    sLog.outString( "Loading Spell Proc Event conditions..." );
+    sLog.outString( "加载 技能触发事件..." );
     sSpellMgr.LoadSpellProcEvents();
 
-    sLog.outString( "Loading Spell Bonus Data..." );
-    sSpellMgr.LoadSpellBonuses();                           // must be after LoadSpellChains
+    sLog.outString( "加载 技能奖励数据..." );
+    sSpellMgr.LoadSpellBonuses();                           // 必须 after LoadSpellChains
 
-    sLog.outString( "Loading Spell Proc Item Enchant..." );
-    sSpellMgr.LoadSpellProcItemEnchant();                   // must be after LoadSpellChains
+    sLog.outString( "加载 附魔技能奖励..." );
+    sSpellMgr.LoadSpellProcItemEnchant();                   // 必须 after LoadSpellChains
 
-    sLog.outString( "Loading Spell Linked definitions..." );
-    sSpellMgr.LoadSpellLinked();                            // must be after LoadSpellChains
+    sLog.outString( "加载 技能链接数据..." );
+    sSpellMgr.LoadSpellLinked();                            // 必须 after LoadSpellChains
 
-    sLog.outString( "Loading Aggro Spells Definitions...");
+    sLog.outString( "加载 技能目标定义...");
     sSpellMgr.LoadSpellThreats();
 
-    sLog.outString( "Loading NPC Texts..." );
+    sLog.outString( "加载 NPC 对话文本..." );
     sObjectMgr.LoadGossipText();
 
-    sLog.outString( "Loading Item Random Enchantments Table..." );
+    sLog.outString( "加载 物品随机附魔信息..." );
     LoadRandomEnchantmentsTable();
 
-    sLog.outString("Loading Items...");                     // must be after LoadRandomEnchantmentsTable and LoadPageTexts
+    sLog.outString("加载 物品信息...");                     // 必须 after LoadRandomEnchantmentsTable and LoadPageTexts
     sObjectMgr.LoadItemPrototypes();
 
-    sLog.outString("Loading Item converts...");             // must be after LoadItemPrototypes
+    sLog.outString("加载 物品转化信息...");             // 必须 after LoadItemPrototypes
     sObjectMgr.LoadItemConverts();
 
-    sLog.outString("Loading Item expire converts...");      // must be after LoadItemPrototypes
+    sLog.outString("加载 物品扩展转化信息...");      // 必须 after LoadItemPrototypes
     sObjectMgr.LoadItemExpireConverts();
 
-    sLog.outString( "Loading Creature Model Based Info Data..." );
+    sLog.outString( "加载 生物模型基础数据..." );
     sObjectMgr.LoadCreatureModelInfo();
 
-    sLog.outString( "Loading Equipment templates...");
+    sLog.outString( "加载 装备框架...");
     sObjectMgr.LoadEquipmentTemplates();
 
-    sLog.outString( "Loading Creature templates..." );
+    sLog.outString( "加载 生物属性..." );
     sObjectMgr.LoadCreatureTemplates();
 
-    sLog.outString( "Loading Creature spells..." );
+    sLog.outString( "加载 生物技能..." );
     sObjectMgr.LoadCreatureSpells();
 
-    sLog.outString( "Loading Creature Model for race..." ); // must be after creature templates
+    sLog.outString( "加载 生物职业模型..." ); // 必须 after creature templates
     sObjectMgr.LoadCreatureModelRace();
 
-    sLog.outString( "Loading SpellsScriptTarget...");
-    sSpellMgr.LoadSpellScriptTarget();                      // must be after LoadCreatureTemplates and LoadGameobjectInfo
+    sLog.outString( "加载 技能脚本目标...");
+    sSpellMgr.LoadSpellScriptTarget();                      // 必须 after LoadCreatureTemplates and LoadGameobjectInfo
 
-    sLog.outString( "Loading ItemRequiredTarget...");
+    sLog.outString( "加载 物品需求目标...");
     sObjectMgr.LoadItemRequiredTarget();
 
-    sLog.outString( "Loading Reputation Reward Rates...");
+    sLog.outString( "加载 声望奖励等级...");
     sObjectMgr.LoadReputationRewardRate();
 
-    sLog.outString( "Loading Creature Reputation OnKill Data..." );
+    sLog.outString( "加载 生物击杀声望奖励..." );
     sObjectMgr.LoadReputationOnKill();
 
-    sLog.outString( "Loading Reputation Spillover Data..." );
+    sLog.outString( "加载 声望扩展奖励..." );
     sObjectMgr.LoadReputationSpilloverTemplate();
 
-    sLog.outString( "Loading Points Of Interest Data..." );
+    sLog.outString( "加载 特殊地区数据..." );
     sObjectMgr.LoadPointsOfInterest();
 
-    sLog.outString( "Loading Creature Data..." );
+    sLog.outString( "加载 生物刷新点数据..." );
     sObjectMgr.LoadCreatures();
 
-    sLog.outString( "Loading pet levelup spells..." );
+    sLog.outString( "加载 宠物升级技能奖励..." );
     sSpellMgr.LoadPetLevelupSpellMap();
 
-    sLog.outString( "Loading pet default spell additional to levelup spells..." );
+    sLog.outString( "加载 宠物默认升级技能..." );
     sSpellMgr.LoadPetDefaultSpells();
 
-    sLog.outString( "Loading Creature Addon Data..." );
+    sLog.outString( "加载 生物扩展数据..." );
     sLog.outString();
-    sObjectMgr.LoadCreatureAddons();                        // must be after LoadCreatureTemplates() and LoadCreatures()
-    sLog.outString( ">>> Creature Addon Data loaded" );
+    sObjectMgr.LoadCreatureAddons();                        // 必须 after LoadCreatureTemplates() and LoadCreatures()
+    sLog.outString( ">>> 生物扩展数据加载完成." );
     sLog.outString();
 
-    sLog.outString("Loading Vehicle Accessories...");
+    sLog.outString("加载 交通数据...");
     sObjectMgr.LoadVehicleAccessories();
 
-    sLog.outString( "Loading Creature Respawn Data..." );   // must be after PackInstances()
+    sLog.outString( "加载 生物刷新信息..." );   // 必须 after PackInstances()
     sMapPersistentStateMgr.LoadCreatureRespawnTimes();
 
-    sLog.outString( "Loading Gameobject Data..." );
+    sLog.outString( "加载 世界物品信息..." );
     sObjectMgr.LoadGameObjects();
 
-    sLog.outString( "Loading Gameobject Addon Data..." );
+    sLog.outString( "加载 世界物品扩展信息..." );
     sObjectMgr.LoadGameObjectAddon();
 
-    sLog.outString( "Loading CreatureLinking Data..." );    // must be after Creatures
+    sLog.outString( "加载 生物链接信息..." );    // 必须 after Creatures
     sCreatureLinkingMgr.LoadFromDB();
 
-    sLog.outString( "Loading Objects Pooling Data...");
+    sLog.outString( "加载 物品刷新关系...");
     sPoolMgr.LoadFromDB();
 
-    sLog.outString( "Loading Weather Data..." );
+    sLog.outString( "加载 天气系统数据..." );
     sObjectMgr.LoadWeatherZoneChances();
 
-    sLog.outString( "Loading Quests..." );
-    sObjectMgr.LoadQuests();                                // must be loaded after DBCs, creature_template, item_template, gameobject tables
+    sLog.outString( "加载 任务信息..." );
+    sObjectMgr.LoadQuests();                                // 必须 loaded after DBCs, creature_template, item_template, gameobject tables
 
-    sLog.outString( "Loading Quest POI" );
+    sLog.outString( "加载 任务 POI ..." );
     sObjectMgr.LoadQuestPOI();
 
-    sLog.outString( "Loading Quests Relations..." );
+    sLog.outString( "加载 任务关系数据..." );
     sLog.outString();
-    sObjectMgr.LoadQuestRelations();                        // must be after quest load
-    sLog.outString( ">>> Quests Relations loaded" );
+    sObjectMgr.LoadQuestRelations();                        // 必须 after quest load
+    sLog.outString( ">>> 任务关系数据加载完成." );
     sLog.outString();
 
-    sLog.outString( "Loading Game Event Data...");          // must be after sPoolMgr.LoadFromDB and quests to properly load pool events and quests for events
+    sLog.outString( "加载 游戏时间数据...");          // 必须 after sPoolMgr.LoadFromDB and quests to properly load pool events and quests for events
     sLog.outString();
     sGameEventMgr.LoadFromDB();
-    sLog.outString( ">>> Game Event Data loaded" );
+    sLog.outString( ">>> 游戏时间数据加载完成." );
     sLog.outString();
 
-    sLog.outString( "Creating map persistent states for non-instanceable maps..." );   // must be after PackInstances(), LoadCreatures(), sPoolMgr.LoadFromDB(), sGameEventMgr.LoadFromDB();
+    sLog.outString( "为非区域地图创建永久对象..." );   // 必须 after PackInstances(), LoadCreatures(), sPoolMgr.LoadFromDB(), sGameEventMgr.LoadFromDB();
     sMapPersistentStateMgr.InitWorldMaps();
 
-    sLog.outString( "Loading Creature Respawn Data..." );   // must be after LoadCreatures(), and sMapPersistentStateMgr.InitWorldMaps()
+    sLog.outString( "加载 生物刷新时间信息..." );   // 必须 after LoadCreatures(), and sMapPersistentStateMgr.InitWorldMaps()
     sMapPersistentStateMgr.LoadCreatureRespawnTimes();
 
-    sLog.outString( "Loading Gameobject Respawn Data..." ); // must be after LoadGameObjects(), and sMapPersistentStateMgr.InitWorldMaps()
+    sLog.outString( "加载 世界物品刷新时间..." ); // 必须 after LoadGameObjects(), and sMapPersistentStateMgr.InitWorldMaps()
     sMapPersistentStateMgr.LoadGameobjectRespawnTimes();
 
-    sLog.outString( "Loading UNIT_NPC_FLAG_SPELLCLICK Data..." );
+    sLog.outString( "加载 UNIT_NPC_FLAG_SPELLCLICK 数据..." );
     sObjectMgr.LoadNPCSpellClickSpells();
 
-    sLog.outString( "Loading SpellArea Data..." );          // must be after quest load
+    sLog.outString( "加载 技能区域信息..." );          // 必须 after quest load
     sSpellMgr.LoadSpellAreas();
 
-    sLog.outString( "Loading AreaTrigger definitions..." );
-    sObjectMgr.LoadAreaTriggerTeleports();                  // must be after item template load
+    sLog.outString( "加载 区域传送触发器..." );
+    sObjectMgr.LoadAreaTriggerTeleports();                  // 必须 after item template load
 
-    sLog.outString( "Loading Quest Area Triggers..." );
-    sObjectMgr.LoadQuestAreaTriggers();                     // must be after LoadQuests
+    sLog.outString( "加载 任务区域触发器..." );
+    sObjectMgr.LoadQuestAreaTriggers();                     // 必须 after LoadQuests
 
-    sLog.outString( "Loading Tavern Area Triggers..." );
+    sLog.outString( "加载 旅店触发器..." );
     sObjectMgr.LoadTavernAreaTriggers();
 
-    sLog.outString( "Loading AreaTrigger script names..." );
+    sLog.outString( "加载 区域触发器脚本名..." );
     sScriptMgr.LoadAreaTriggerScripts();
 
-    sLog.outString( "Loading event id script names..." );
+    sLog.outString( "加载 事件ID脚本信息..." );
     sScriptMgr.LoadEventIdScripts();
 
-    sLog.outString( "Loading Graveyard-zone links...");
+    sLog.outString( "加载 墓地数据...");
     sObjectMgr.LoadGraveyardZones();
 
-    sLog.outString( "Loading spell target destination coordinates..." );
+    sLog.outString( "加载 技能目标坐标数据..." );
     sSpellMgr.LoadSpellTargetPositions();
 
-    sLog.outString( "Loading spell pet auras..." );
+    sLog.outString( "加载 技能宠物光环奖励..." );
     sSpellMgr.LoadSpellPetAuras();
 
-    sLog.outString( "Loading Player Create Info & Level Stats..." );
+    sLog.outString( "加载 角色创建数据 & 等级状态..." );
     sLog.outString();
     sObjectMgr.LoadPlayerInfo();
-    sLog.outString( ">>> Player Create Info & Level Stats loaded" );
+    sLog.outString( ">>> 角色创建数据 & 等级状态加载完成." );
     sLog.outString();
 
-    sLog.outString( "Loading Exploration BaseXP Data..." );
+    sLog.outString( "加载 探索地图经验奖励..." );
     sObjectMgr.LoadExplorationBaseXP();
 
-    sLog.outString( "Loading Pet Name Parts..." );
+    sLog.outString( "加载 宠物名称..." );
     sObjectMgr.LoadPetNames();
 
     CharacterDatabaseCleaner::CleanDatabase();
 
-    sLog.outString( "Loading the max pet number..." );
+    sLog.outString( "加载 最大宠物数量..." );
     sObjectMgr.LoadPetNumber();
 
-    sLog.outString( "Loading pet level stats..." );
+    sLog.outString( "加载 宠物等级属性..." );
     sObjectMgr.LoadPetLevelInfo();
 
-    sLog.outString( "Loading pet scaling data..." );
+    sLog.outString( "加载 宠物缩放数据..." );
     sObjectMgr.LoadPetScalingData();
 
-    sLog.outString( "Loading Player Corpses..." );
+    sLog.outString( "加载 角色尸体信息..." );
     sObjectMgr.LoadCorpses();
 
-    sLog.outString( "Loading Player level dependent mail rewards..." );
+    sLog.outString( "加载 升级邮件奖励..." );
     sObjectMgr.LoadMailLevelRewards();
 
-    sLog.outString( "Loading Spell disabled..." );
+    sLog.outString( "加载 禁止技能..." );
     sObjectMgr.LoadSpellDisabledEntrys();
 
-    sLog.outString( "Loading Loot Tables..." );
+    sLog.outString( "加载 物品掉落..." );
     sLog.outString();
     LoadLootTables();
-    sLog.outString( ">>> Loot Tables loaded" );
+    sLog.outString( ">>> 物品掉落数据加载完成." );
     sLog.outString();
 
-    sLog.outString( "Loading Skill Discovery Table..." );
+    sLog.outString( "加载 辅助技能搜寻信息..." );
     sSpellMgr.LoadSkillDiscoveryTable();
 
-    sLog.outString( "Loading Skill Extra Item Table..." );
+    sLog.outString( "加载 辅助技能扩展数据..." );
     sSpellMgr.LoadSkillExtraItemTable();
 
-    sLog.outString( "Loading Skill Fishing base level requirements..." );
+    sLog.outString( "加载 钓鱼技能需求..." );
     sObjectMgr.LoadFishingBaseSkillLevel();
 
-    sLog.outString( "Loading Achievements..." );
+    sLog.outString( "加载 成就数据..." );
     sLog.outString();
     sAchievementMgr.LoadAchievementReferenceList();
     sAchievementMgr.LoadAchievementCriteriaList();
@@ -1384,135 +1390,143 @@ void World::SetInitialWorldSettings()
     sAchievementMgr.LoadRewards();
     sAchievementMgr.LoadRewardLocales();
     sAchievementMgr.LoadCompletedAchievements();
-    sLog.outString( ">>> Achievements loaded" );
+    sLog.outString( ">>> 成就数据加载完成" );
     sLog.outString();
 
-    sLog.outString( "Loading Instance encounters data..." );  // must be after Creature loading
+    sLog.outString( "加载 区域查找索引..." );  // 必须 after Creature loading
     sObjectMgr.LoadInstanceEncounters();
 
-    sLog.outString( "Loading Npc Text Id..." );
-    sObjectMgr.LoadNpcGossips();                            // must be after load Creature and LoadGossipText
+    sLog.outString( "加载 Npc 文本ID..." );
+    sObjectMgr.LoadNpcGossips();                            // 必须 after load Creature and LoadGossipText
 
-    sLog.outString( "Loading Gossip scripts..." );
-    sScriptMgr.LoadGossipScripts();                         // must be before gossip menu options
+    sLog.outString( "加载 对话脚本..." );
+    sScriptMgr.LoadGossipScripts();                         // 必须 before gossip menu options
 
+    sLog.outString( "加载 对话菜单..." );
     sObjectMgr.LoadGossipMenus();
 
-    sLog.outString( "Loading Vendors..." );
-    sObjectMgr.LoadVendorTemplates();                       // must be after load ItemTemplate
-    sObjectMgr.LoadVendors();                               // must be after load CreatureTemplate, VendorTemplate, and ItemTemplate
+    sLog.outString( "加载 商人信息..." );
+    sObjectMgr.LoadVendorTemplates();                       // 必须 after load ItemTemplate
+    sObjectMgr.LoadVendors();                               // 必须 after load CreatureTemplate, VendorTemplate, and ItemTemplate
 
-    sLog.outString( "Loading Trainers..." );
-    sObjectMgr.LoadTrainerTemplates();                      // must be after load CreatureTemplate
-    sObjectMgr.LoadTrainers();                              // must be after load CreatureTemplate, TrainerTemplate
+    sLog.outString( "加载 训练师信息..." );
+    sObjectMgr.LoadTrainerTemplates();                      // 必须 after load CreatureTemplate
+    sObjectMgr.LoadTrainers();                              // 必须 after load CreatureTemplate, TrainerTemplate
 
-    sLog.outString( "Loading Waypoint scripts..." );        // before loading from creature_movement
+    sLog.outString( "加载 路径点脚本数据..." );        // before loading from creature_movement
     sScriptMgr.LoadCreatureMovementScripts();
 
-    sLog.outString( "Loading Waypoints..." );
+    sLog.outString( "加载 路近点信息..." );
     sLog.outString();
     sWaypointMgr.Load();
 
     ///- Loading localization data
-    sLog.outString( "Loading Localization strings..." );
-    sObjectMgr.LoadCreatureLocales();                       // must be after CreatureInfo loading
-    sObjectMgr.LoadGameObjectLocales();                     // must be after GameobjectInfo loading
-    sObjectMgr.LoadItemLocales();                           // must be after ItemPrototypes loading
-    sObjectMgr.LoadQuestLocales();                          // must be after QuestTemplates loading
-    sObjectMgr.LoadGossipTextLocales();                     // must be after LoadGossipText
-    sObjectMgr.LoadPageTextLocales();                       // must be after PageText loading
-    sObjectMgr.LoadGossipMenuItemsLocales();                // must be after gossip menu items loading
-    sObjectMgr.LoadPointOfInterestLocales();                // must be after POI loading
-    sLog.outString( ">>> Localization strings loaded" );
+    sLog.outString( "加载 本地化词条..." );
+    sObjectMgr.LoadCreatureLocales();                       // 必须 after CreatureInfo loading
+    sObjectMgr.LoadGameObjectLocales();                     // 必须 after GameobjectInfo loading
+    sObjectMgr.LoadItemLocales();                           // 必须 after ItemPrototypes loading
+    sObjectMgr.LoadQuestLocales();                          // 必须 after QuestTemplates loading
+    sObjectMgr.LoadGossipTextLocales();                     // 必须 after LoadGossipText
+    sObjectMgr.LoadPageTextLocales();                       // 必须 after PageText loading
+    sObjectMgr.LoadGossipMenuItemsLocales();                // 必须 after gossip menu items loading
+    sObjectMgr.LoadPointOfInterestLocales();                // 必须 after POI loading
+    sLog.outString( ">>> 本地化词条加载完成" );
     sLog.outString();
 
-    sLog.outString("Loading LFG rewards...");               // After load all static data
+    sLog.outString("加载 随机副本奖励...");               // After load all static data
     sLFGMgr.LoadRewards();
 
     ///- Load dynamic data tables from the database
-    sLog.outString( "Loading Auctions..." );
+    sLog.outString( "加载 拍卖行..." );
     sLog.outString();
     sAuctionMgr.LoadAuctionItems();
     sAuctionMgr.LoadAuctions();
-    sLog.outString( ">>> Auctions loaded" );
+    sLog.outString( ">>> 拍卖行加载完成." );
     sLog.outString();
 
-    sLog.outString( "Loading Guilds..." );
+    sLog.outString( "加载 公会信息..." );
     sGuildMgr.LoadGuilds();
 
-    sLog.outString( "Loading ArenaTeams..." );
+    sLog.outString( "加载 竞技场队伍信息..." );
     sObjectMgr.LoadArenaTeams();
 
-    sLog.outString( "Loading Groups..." );
+    sLog.outString( "加载 团队信息..." );
     sObjectMgr.LoadGroups();
 
-    sLog.outString( "Loading ReservedNames..." );
+    sLog.outString( "加载 重命名信息..." );
     sObjectMgr.LoadReservedPlayersNames();
 
-    sLog.outString( "Loading GameObjects for quests..." );
+    sLog.outString( "加载 任务物体对象..." );
     sObjectMgr.LoadGameObjectForQuests();
 
-    sLog.outString( "Loading BattleMasters..." );
+    sLog.outString( "加载 战场指挥官..." );
     sBattleGroundMgr.LoadBattleMastersEntry();
 
-    sLog.outString( "Loading BattleGround event indexes..." );
+    sLog.outString( "加载 战场事件索引..." );
     sBattleGroundMgr.LoadBattleEventIndexes();
 
-    sLog.outString( "Loading GameTeleports..." );
+    sLog.outString( "加载 游戏传送数据..." );
     sObjectMgr.LoadGameTele();
 
-    sLog.outString( "Loading GM tickets...");
+    sLog.outString( "加载 GM 求助信息...");
     sTicketMgr.LoadGMTickets();
 
-    sLog.outString( "Loading AntiCheat config..." );
+    sLog.outString( "加载 外挂监测系统..." );
     sObjectMgr.LoadAntiCheatConfig();
 
     ///- Handle outdated emails (delete/return)
-    sLog.outString( "Returning old mails..." );
+    sLog.outString( "退回过期邮件..." );
     sObjectMgr.ReturnOrDeleteOldMails(false);
 
     ///- Load and initialize scripts
-    sLog.outString( "Loading Scripts..." );
+    sLog.outString( "加载 脚本数据..." );
     sLog.outString();
-    sScriptMgr.LoadQuestStartScripts();                         // must be after load Creature/Gameobject(Template/Data) and QuestTemplate
-    sScriptMgr.LoadQuestEndScripts();                           // must be after load Creature/Gameobject(Template/Data) and QuestTemplate
-    sScriptMgr.LoadSpellScripts();                              // must be after load Creature/Gameobject(Template/Data)
-    sScriptMgr.LoadGameObjectScripts();                         // must be after load Creature/Gameobject(Template/Data)
-    sScriptMgr.LoadEventScripts();                              // must be after load Creature/Gameobject(Template/Data)
-    sLog.outString( ">>> Scripts loaded" );
+    sScriptMgr.LoadQuestStartScripts();                         // 必须 after load Creature/Gameobject(Template/Data) and QuestTemplate
+    sScriptMgr.LoadQuestEndScripts();                           // 必须 after load Creature/Gameobject(Template/Data) and QuestTemplate
+    sScriptMgr.LoadSpellScripts();                              // 必须 after load Creature/Gameobject(Template/Data)
+    sScriptMgr.LoadGameObjectScripts();                         // 必须 after load Creature/Gameobject(Template/Data)
+    sScriptMgr.LoadEventScripts();                              // 必须 after load Creature/Gameobject(Template/Data)
+    sLog.outString( ">>> 脚本数据加载完成." );
     sLog.outString();
 
-    sLog.outString( "Loading Scripts text locales..." );    // must be after Load*Scripts calls
+    sLog.outString( "加载 本地化脚本文本..." );    // 必须 after Load*Scripts calls
     sScriptMgr.LoadDbScriptStrings();
 
-    sLog.outString( "Loading CreatureEventAI Texts...");
+    sLog.outString( "加载 CreatureEventAI 文本信息...");
     sEventAIMgr.LoadCreatureEventAI_Texts(false);       // false, will checked in LoadCreatureEventAI_Scripts
 
-    sLog.outString( "Loading CreatureEventAI Summons...");
+    sLog.outString( "加载 CreatureEventAI 召唤信息...");
     sEventAIMgr.LoadCreatureEventAI_Summons(false);     // false, will checked in LoadCreatureEventAI_Scripts
 
-    sLog.outString( "Loading CreatureEventAI Scripts...");
+    sLog.outString( "加载 CreatureEventAI 脚本信息...");
     sEventAIMgr.LoadCreatureEventAI_Scripts();
 
-    sLog.outString("Initializing Scripts...");
+    sLog.outString("-----------------------------------------");
+    sLog.outString("加载脚本库：");
+    sLog.outString("-----------------------------------------");
+
     switch(sScriptMgr.LoadScriptLibrary(MANGOS_SCRIPT_NAME))
     {
         case SCRIPT_LOAD_OK:
-            sLog.outString("Scripting library loaded.");
+            sLog.outString("脚本库加载完成.");
             break;
         case SCRIPT_LOAD_ERR_NOT_FOUND:
-            sLog.outError("Scripting library not found or not accessible.");
+            sLog.outError("未找到脚本库文件或者脚本库不存在!");
             break;
         case SCRIPT_LOAD_ERR_WRONG_API:
-            sLog.outError("Scripting library has wrong list functions (outdated?).");
+            sLog.outError("脚本库函数列表不一致(过期了吗?).");
             break;
         case SCRIPT_LOAD_ERR_OUTDATED:
-            sLog.outError("Scripting library build for old mangosd revision. You need rebuild it.");
+            sLog.outError("脚本库版本过低,请更新脚本库.");
             break;
     }
+    sLog.outString("-----------------------------------------");
+    sLog.outString("初始化游戏世界：");
+    sLog.outString("-----------------------------------------");
 
     ///- Initialize game time and timers
-    sLog.outString( "DEBUG:: Initialize game time and timers" );
+    sLog.outString( "初始化世界时间和计时器." );
+    sLog.outString();
     m_gameTime = time(NULL);
     m_startTime=m_gameTime;
 
@@ -1546,63 +1560,78 @@ void World::SetInitialWorldSettings()
     mail_timer = uint32((((localtime( &m_gameTime )->tm_hour + 20) % 24)* HOUR * IN_MILLISECONDS) / m_timers[WUPDATE_AUCTIONS].GetInterval() );
                                                             //1440
     mail_timer_expires = uint32( (DAY * IN_MILLISECONDS) / (m_timers[WUPDATE_AUCTIONS].GetInterval()));
-    DEBUG_LOG("Mail timer set to: %u, mail return is called every %u minutes", mail_timer, mail_timer_expires);
+    DEBUG_LOG("邮件时间设置为: %u, 退回邮件时间设置为 %u 分钟.", mail_timer, mail_timer_expires);
 
     ///- Initialize static helper structures
     AIRegistry::Initialize();
     Player::InitVisibleBits();
 
     ///- Initialize MapManager
-    sLog.outString( "Starting Map System" );
+    sLog.outString( "初始化 地图系统" );
     sMapMgr.Initialize();
 
     ///- Initialize Battlegrounds
-    sLog.outString( "Starting BattleGround System" );
+    sLog.outString( "初始化 战场系统" );
     sBattleGroundMgr.CreateInitialBattleGrounds();
     sBattleGroundMgr.InitAutomaticArenaPointDistribution();
 
     ///- Initialize World PvP
-    sLog.outString( "Starting World PvP System" );
+    sLog.outString( "初始化世界 PVP 系统" );
     sWorldPvPMgr.InitWorldPvP();
 
     //Not sure if this can be moved up in the sequence (with static data loading) as it uses MapManager
-    sLog.outString( "Loading Transports..." );
+    sLog.outString( "初始化 交通数据..." );
     sMapMgr.LoadTransports();
 
-    sLog.outString("Deleting expired bans..." );
+    sLog.outString();
+    sLog.outString("删除过期禁止列表..." );
     LoginDatabase.Execute("DELETE FROM ip_banned WHERE unbandate<=UNIX_TIMESTAMP() AND unbandate<>bandate");
 
-    sLog.outString("Calculate next daily quest reset time..." );
+    sLog.outString("计算下一个日常任务重置时间..." );
     InitDailyQuestResetTime();
 
-    sLog.outString("Calculate next weekly quest reset time..." );
+    sLog.outString("计算下一个周长任务重置时间..." );
     InitWeeklyQuestResetTime();
 
-    sLog.outString("Calculate next monthly quest reset time..." );
+    sLog.outString("计算下一个月度任务重置时间..." );
     SetMonthlyQuestResetTime();
 
-    sLog.outString("Calculate random battleground reset time..." );
+    sLog.outString("计算下一次随机战场重置时间..." );
     InitRandomBGResetTime();
 
-    sLog.outString("Starting Game Event system..." );
+    sLog.outString();
+    sLog.outString("初始化 游戏事件系统..." );
+    sLog.outString();
+
     uint32 nextGameEvent = sGameEventMgr.Initialize();
     m_timers[WUPDATE_EVENTS].SetInterval(nextGameEvent);    //depend on next event
 
-    sLog.outString("Loading Warden Data..." );
+    sLog.outString();
+    sLog.outString("初始化 外挂检测数据信息..." );
+
     WardenDataStorage.Init();
 
     // Delete all characters which have been deleted X days before
     Player::DeleteOldCharacters();
+    sLog.outString();
 
-    sLog.outString("Starting Autobroadcast system by Xeross..." );
+    sLog.outString("初始化 自动公告系统 作者: Xeross..." );
 
-    sLog.outString("Initialize AuctionHouseBot...");
+    sLog.outString("初始化 拍卖行机器人系统...");
     sAuctionBot.Initialize();
 
-    sLog.outString( "WORLD: World initialized" );
+    sLog.outString("");
+    sLog.outString("-----------------------------------------");
+    sLog.outString( "世界：世界服务器启动完成." );
 
     uint32 uStartInterval = WorldTimer::getMSTimeDiff(uStartTime, WorldTimer::getMSTime());
-    sLog.outString( "SERVER STARTUP TIME: %i minutes %i seconds", uStartInterval / 60000, (uStartInterval % 60000) / 1000 );
+    sLog.outString( "服务器启动用时: %i 分 %i 秒", uStartInterval / 60000, (uStartInterval % 60000) / 1000 );
+    sLog.outString( "==============================================================");
+    sLog.outString( "感谢您使用  ChgMangos ！祝您游戏愉快！"                        );
+    sLog.outString( "当前版本为：ChgMangos_WoTLK_final_1.0    2012.02.25 "          );
+    sLog.outString();
+    sLog.outString( "欢迎访问  ：http://bbs.chglove.tk "                            );
+    sLog.outString( "==============================================================");
 }
 
 void World::DetectDBCLang()
@@ -1611,7 +1640,7 @@ void World::DetectDBCLang()
 
     if (m_lang_confid != 255 && m_lang_confid >= MAX_LOCALE)
     {
-        sLog.outError("Incorrect DBC.Locale! Must be >= 0 and < %d (set to 0)",MAX_LOCALE);
+        sLog.outError("错误的DBC.Locale! 必须 >= 0 并且 < %d (设置为 0)",MAX_LOCALE);
         m_lang_confid = LOCALE_enUS;
     }
 
@@ -1640,14 +1669,14 @@ void World::DetectDBCLang()
 
     if (default_locale >= MAX_LOCALE)
     {
-        sLog.outError("Unable to determine your DBC Locale! (corrupt DBC?)");
+        sLog.outError("载入 DBC Locale 数据错误! (错误的DBC文件嘛？)");
         Log::WaitBeforeContinueIfNeed();
         exit(1);
     }
 
     m_defaultDbcLocale = LocaleConstant(default_locale);
 
-    sLog.outString("Using %s DBC Locale as default. All available DBC locales: %s",localeNames[m_defaultDbcLocale],availableLocalsStr.empty() ? "<none>" : availableLocalsStr.c_str());
+    sLog.outString("使用 %s 作为默认 DBC Locale. 所有允许的 DBC locales: %s",localeNames[m_defaultDbcLocale],availableLocalsStr.empty() ? "<none>" : availableLocalsStr.c_str());
     sLog.outString();
 }
 
@@ -2137,7 +2166,7 @@ void World::ShutdownMsg(bool show, Player* player)
         ServerMessageType msgid = (m_ShutdownMask & SHUTDOWN_MASK_RESTART) ? SERVER_MSG_RESTART_TIME : SERVER_MSG_SHUTDOWN_TIME;
 
         SendServerMessage(msgid,str.c_str(),player);
-        DEBUG_LOG("Server is %s in %s",(m_ShutdownMask & SHUTDOWN_MASK_RESTART ? "restart" : "shutting down"),str.c_str());
+        DEBUG_LOG("服务器将在 %s 内 %s", str.c_str(), (m_ShutdownMask & SHUTDOWN_MASK_RESTART ? "重启" : "关闭"));
     }
 }
 
@@ -2155,7 +2184,7 @@ void World::ShutdownCancel()
     m_ExitCode = SHUTDOWN_EXIT_CODE;                       // to default value
     SendServerMessage(msgid);
 
-    DEBUG_LOG("Server %s cancelled.",(m_ShutdownMask & SHUTDOWN_MASK_RESTART ? "restart" : "shutdown"));
+    DEBUG_LOG("服务器 %s 取消.",(m_ShutdownMask & SHUTDOWN_MASK_RESTART ? "重启" : "关闭"));
 }
 
 /// Send a server message to the user(s)
@@ -2204,7 +2233,7 @@ void World::ProcessCliCommands()
     CliCommandHolder* command;
     while (cliCmdQueue.next(command))
     {
-        DEBUG_LOG("CLI command under processing...");
+        DEBUG_LOG("CLI 命令执行...");
         zprint = command->m_print;
         callbackArg = command->m_callbackArg;
         CliHandler handler(command->m_cliAccountId, command->m_cliAccessLevel, callbackArg, zprint);
@@ -2445,7 +2474,7 @@ void World::SetMonthlyQuestResetTime(bool initialize)
 
 void World::ResetDailyQuests()
 {
-    DETAIL_LOG("Daily quests reset for all characters.");
+    DETAIL_LOG("重置所有角色的 日常任务");
     CharacterDatabase.Execute("DELETE FROM character_queststatus_daily");
     for(SessionMap::const_iterator itr = m_sessions.begin(); itr != m_sessions.end(); ++itr)
         if (itr->second->GetPlayer())
@@ -2457,7 +2486,7 @@ void World::ResetDailyQuests()
 
 void World::ResetWeeklyQuests()
 {
-    DETAIL_LOG("Weekly quests reset for all characters.");
+    DETAIL_LOG("重置所有角色的 周常任务");
     CharacterDatabase.Execute("DELETE FROM character_queststatus_weekly");
     for(SessionMap::const_iterator itr = m_sessions.begin(); itr != m_sessions.end(); ++itr)
         if (itr->second->GetPlayer())
@@ -2469,7 +2498,7 @@ void World::ResetWeeklyQuests()
 
 void World::ResetRandomBG()
 {
-    sLog.outDetail("Random BG status reset for all characters.");
+    sLog.outDetail("重置所有角色的 随机战场状态");
     CharacterDatabase.Execute("DELETE FROM character_battleground_random");
     for(SessionMap::const_iterator itr = m_sessions.begin(); itr != m_sessions.end(); ++itr)
         if (itr->second->GetPlayer())
@@ -2481,7 +2510,7 @@ void World::ResetRandomBG()
 
 void World::ResetMonthlyQuests()
 {
-    DETAIL_LOG("Monthly quests reset for all characters.");
+    DETAIL_LOG("重置所有角色的 月度任务");
     CharacterDatabase.Execute("TRUNCATE character_queststatus_monthly");
 
     for(SessionMap::const_iterator itr = m_sessions.begin(); itr != m_sessions.end(); ++itr)
@@ -2528,10 +2557,10 @@ void World::LoadDBVersion()
     }
 
     if (m_DBVersion.empty())
-        m_DBVersion = "Unknown world database.";
+        m_DBVersion = "未知的世界数据库";
 
     if (m_CreatureEventAIVersion.empty())
-        m_CreatureEventAIVersion = "Unknown creature EventAI.";
+        m_CreatureEventAIVersion = "未知的 EventAI";
 }
 
 void World::setConfig(eConfigUInt32Values index, char const* fieldname, uint32 defvalue)
@@ -2539,7 +2568,7 @@ void World::setConfig(eConfigUInt32Values index, char const* fieldname, uint32 d
     setConfig(index, sConfig.GetIntDefault(fieldname,defvalue));
     if (int32(getConfig(index)) < 0)
     {
-        sLog.outError("%s (%i) can't be negative. Using %u instead.", fieldname, int32(getConfig(index)), defvalue);
+        sLog.outError("%s (%i) 不能加载，使用 %u .", fieldname, int32(getConfig(index)), defvalue);
         setConfig(index, defvalue);
     }
 }
@@ -2564,7 +2593,7 @@ void World::setConfigPos(eConfigFloatValues index, char const* fieldname, float 
     setConfig(index, fieldname, defvalue);
     if (getConfig(index) < 0.0f)
     {
-        sLog.outError("%s (%f) can't be negative. Using %f instead.", fieldname, getConfig(index), defvalue);
+        sLog.outError("%s (%f) 不能加载，使用 %f 代替.", fieldname, getConfig(index), defvalue);
         setConfig(index, defvalue);
     }
 }
@@ -2574,7 +2603,7 @@ void World::setConfigMin(eConfigUInt32Values index, char const* fieldname, uint3
     setConfig(index, fieldname, defvalue);
     if (getConfig(index) < minvalue)
     {
-        sLog.outError("%s (%u) must be >= %u. Using %u instead.", fieldname, getConfig(index), minvalue, minvalue);
+        sLog.outError("%s (%u) 必须 >= %u. 使用 %u 代替.", fieldname, getConfig(index), minvalue, minvalue);
         setConfig(index, minvalue);
     }
 }
@@ -2584,7 +2613,7 @@ void World::setConfigMin(eConfigInt32Values index, char const* fieldname, int32 
     setConfig(index, fieldname, defvalue);
     if (getConfig(index) < minvalue)
     {
-        sLog.outError("%s (%i) must be >= %i. Using %i instead.", fieldname, getConfig(index), minvalue, minvalue);
+        sLog.outError("%s (%i) 必须 >= %i. 使用 %i 代替.", fieldname, getConfig(index), minvalue, minvalue);
         setConfig(index, minvalue);
     }
 }
@@ -2594,7 +2623,7 @@ void World::setConfigMin(eConfigFloatValues index, char const* fieldname, float 
     setConfig(index, fieldname, defvalue);
     if (getConfig(index) < minvalue)
     {
-        sLog.outError("%s (%f) must be >= %f. Using %f instead.", fieldname, getConfig(index), minvalue, minvalue);
+        sLog.outError("%s (%f) 必须 >= %f. 使用 %f 代替.", fieldname, getConfig(index), minvalue, minvalue);
         setConfig(index, minvalue);
     }
 }
@@ -2604,12 +2633,12 @@ void World::setConfigMinMax(eConfigUInt32Values index, char const* fieldname, ui
     setConfig(index, fieldname, defvalue);
     if (getConfig(index) < minvalue)
     {
-        sLog.outError("%s (%u) must be in range %u...%u. Using %u instead.", fieldname, getConfig(index), minvalue, maxvalue, minvalue);
+        sLog.outError("%s (%u) 必须 介于 %u...%u. 使用 %u 代替.", fieldname, getConfig(index), minvalue, maxvalue, minvalue);
         setConfig(index, minvalue);
     }
     else if (getConfig(index) > maxvalue)
     {
-        sLog.outError("%s (%u) must be in range %u...%u. Using %u instead.", fieldname, getConfig(index), minvalue, maxvalue, maxvalue);
+        sLog.outError("%s (%u) 必须 介于 %u...%u. 使用 %u 代替.", fieldname, getConfig(index), minvalue, maxvalue, maxvalue);
         setConfig(index, maxvalue);
     }
 }
@@ -2619,12 +2648,12 @@ void World::setConfigMinMax(eConfigInt32Values index, char const* fieldname, int
     setConfig(index, fieldname, defvalue);
     if (getConfig(index) < minvalue)
     {
-        sLog.outError("%s (%i) must be in range %i...%i. Using %i instead.", fieldname, getConfig(index), minvalue, maxvalue, minvalue);
+        sLog.outError("%s (%i) 必须 介于 %i...%i. 使用 %i 代替.", fieldname, getConfig(index), minvalue, maxvalue, minvalue);
         setConfig(index, minvalue);
     }
     else if (getConfig(index) > maxvalue)
     {
-        sLog.outError("%s (%i) must be in range %i...%i. Using %i instead.", fieldname, getConfig(index), minvalue, maxvalue, maxvalue);
+        sLog.outError("%s (%i) 必须 介于 %i...%i. 使用 %i 代替.", fieldname, getConfig(index), minvalue, maxvalue, maxvalue);
         setConfig(index, maxvalue);
     }
 }
@@ -2634,12 +2663,12 @@ void World::setConfigMinMax(eConfigFloatValues index, char const* fieldname, flo
     setConfig(index, fieldname, defvalue);
     if (getConfig(index) < minvalue)
     {
-        sLog.outError("%s (%f) must be in range %f...%f. Using %f instead.", fieldname, getConfig(index), minvalue, maxvalue, minvalue);
+        sLog.outError("%s (%f) 必须 介于 %f...%f. 使用 %f 代替.", fieldname, getConfig(index), minvalue, maxvalue, minvalue);
         setConfig(index, minvalue);
     }
     else if (getConfig(index) > maxvalue)
     {
-        sLog.outError("%s (%f) must be in range %f...%f. Using %f instead.", fieldname, getConfig(index), minvalue, maxvalue, maxvalue);
+        sLog.outError("%s (%f) 必须 介于 %f...%f. 使用 %f 代替.", fieldname, getConfig(index), minvalue, maxvalue, maxvalue);
         setConfig(index, maxvalue);
     }
 }
@@ -2651,7 +2680,7 @@ bool World::configNoReload(bool reload, eConfigUInt32Values index, char const* f
 
     uint32 val = sConfig.GetIntDefault(fieldname, defvalue);
     if (val != getConfig(index))
-        sLog.outError("%s option can't be changed at mangosd.conf reload, using current value (%u).", fieldname, getConfig(index));
+        sLog.outError("%s 设置不能在 mangosd.conf 重新载入时更改, 使用 当前值 (%u).", fieldname, getConfig(index));
 
     return false;
 }
@@ -2663,7 +2692,7 @@ bool World::configNoReload(bool reload, eConfigInt32Values index, char const* fi
 
     int32 val = sConfig.GetIntDefault(fieldname, defvalue);
     if (val != getConfig(index))
-        sLog.outError("%s option can't be changed at mangosd.conf reload, using current value (%i).", fieldname, getConfig(index));
+        sLog.outError("%s 设置不能在 mangosd.conf 重新载入时更改, 使用 当前值 (%i).", fieldname, getConfig(index));
 
     return false;
 }
@@ -2675,7 +2704,7 @@ bool World::configNoReload(bool reload, eConfigFloatValues index, char const* fi
 
     float val = sConfig.GetFloatDefault(fieldname, defvalue);
     if (val != getConfig(index))
-        sLog.outError("%s option can't be changed at mangosd.conf reload, using current value (%f).", fieldname, getConfig(index));
+        sLog.outError("%s 设置不能在 mangosd.conf 重新载入时更改, 使用 当前值 (%f).", fieldname, getConfig(index));
 
     return false;
 }
@@ -2687,7 +2716,7 @@ bool World::configNoReload(bool reload, eConfigBoolValues index, char const* fie
 
     bool val = sConfig.GetBoolDefault(fieldname, defvalue);
     if (val != getConfig(index))
-        sLog.outError("%s option can't be changed at mangosd.conf reload, using current value (%s).", fieldname, getConfig(index) ? "'true'" : "'false'");
+        sLog.outError("%s 设置不能在 mangosd.conf 重新载入时更改, 使用 当前值 (%s).", fieldname, getConfig(index) ? "'true'" : "'false'");
 
     return false;
 }

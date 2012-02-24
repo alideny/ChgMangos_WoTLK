@@ -70,7 +70,7 @@ void CreatureLinkingMgr::LoadFromDB()
         BarGoLink bar(1);
         bar.step();
 
-        sLog.outString(">> Table creature_linking_template is empty.");
+        sLog.outString(">> Table creature_linking_template ÊÇ¿ÕµÄ.");
         sLog.outString();
 
         return;
@@ -116,7 +116,7 @@ void CreatureLinkingMgr::LoadFromDB()
     while (result->NextRow());
 
     sLog.outString();
-    sLog.outString(">> Loaded creature linking for %u creature-IDs", count);
+    sLog.outString(">> ¼ÓÔØ creature linking for %u creature-IDs", count);
     delete result;
 }
 

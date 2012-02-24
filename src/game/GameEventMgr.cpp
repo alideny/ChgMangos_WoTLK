@@ -96,7 +96,7 @@ void GameEventMgr::LoadFromDB()
         QueryResult *result = WorldDatabase.Query("SELECT MAX(entry) FROM game_event");
         if( !result )
         {
-            sLog.outString(">> Table game_event is empty.");
+            sLog.outString(">> Table game_event 是空的.");
             sLog.outString();
             return;
         }
@@ -113,7 +113,7 @@ void GameEventMgr::LoadFromDB()
     if (!result)
     {
         mGameEvent.clear();
-        sLog.outString(">> Table game_event is empty!");
+        sLog.outString(">> Table game_event 是空的!");
         sLog.outString();
         return;
     }
@@ -167,7 +167,7 @@ void GameEventMgr::LoadFromDB()
         delete result;
 
         sLog.outString();
-        sLog.outString( ">> Loaded %u game events", count );
+        sLog.outString( ">> 加载了 %u 个 game events", count );
     }
 
     std::map<uint16,int16> pool2event;                      // for check unique spawn event associated with pool
@@ -189,7 +189,7 @@ void GameEventMgr::LoadFromDB()
         bar.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded %u creatures in game events", count );
+        sLog.outString(">> 加载了 %u 个 creatures in game events", count );
     }
     else
     {
@@ -252,7 +252,7 @@ void GameEventMgr::LoadFromDB()
         delete result;
 
         sLog.outString();
-        sLog.outString( ">> Loaded %u creatures in game events", count );
+        sLog.outString( ">> 加载了 %u 个 creatures in game events", count );
     }
 
     mGameEventGameobjectGuids.resize(mGameEvent.size()*2-1);
@@ -267,7 +267,7 @@ void GameEventMgr::LoadFromDB()
         bar.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded %u gameobjects in game events", count );
+        sLog.outString(">> 加载了 %u 个 gameobjects in game events", count );
     }
     else
     {
@@ -330,7 +330,7 @@ void GameEventMgr::LoadFromDB()
         delete result;
 
         sLog.outString();
-        sLog.outString( ">> Loaded %u gameobjects in game events", count );
+        sLog.outString( ">> 加载了 %u 个 gameobjects in game events", count );
     }
 
     // now recheck that all eventPools linked with events after our skip pools with parents
@@ -358,7 +358,7 @@ void GameEventMgr::LoadFromDB()
         bar.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded %u creature reactions at game events", count );
+        sLog.outString(">> 加载了 %u 个 creature reactions at game events", count );
     }
     else
     {
@@ -424,7 +424,7 @@ void GameEventMgr::LoadFromDB()
         delete result;
 
         sLog.outString();
-        sLog.outString(">> Loaded %u creature reactions at game events", count );
+        sLog.outString(">> 加载了 %u 个 creature reactions at game events", count );
     }
 
     mGameEventQuests.resize(mGameEvent.size());
@@ -438,7 +438,7 @@ void GameEventMgr::LoadFromDB()
         bar.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded %u quests additions in game events", count );
+        sLog.outString(">> 加载了 %u 个 quests additions in game events", count );
     }
     else
     {
@@ -484,7 +484,7 @@ void GameEventMgr::LoadFromDB()
         delete result;
 
         sLog.outString();
-        sLog.outString( ">> Loaded %u quest additions in game events", count );
+        sLog.outString( ">> 加载了 %u 个 quest additions in game events", count );
     }
 
     mGameEventMails.resize(mGameEvent.size()*2-1);
@@ -498,7 +498,7 @@ void GameEventMgr::LoadFromDB()
         bar.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded %u start/end game event mails", count );
+        sLog.outString(">> 加载了 %u 个 start/end game event mails", count );
     }
     else
     {
@@ -564,7 +564,7 @@ void GameEventMgr::LoadFromDB()
         delete result;
 
         sLog.outString();
-        sLog.outString(">> Loaded %u start/end game event mails", count );
+        sLog.outString(">> 加载了 %u 个 start/end game event mails", count );
     }
 }
 

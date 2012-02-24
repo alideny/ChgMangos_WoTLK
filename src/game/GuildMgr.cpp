@@ -100,7 +100,7 @@ void GuildMgr::LoadGuilds()
         bar.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded %u guild definitions", count);
+        sLog.outString(">> 加载了 %u 个 guild definitions", count);
         return;
     }
 
@@ -162,5 +162,5 @@ void GuildMgr::LoadGuilds()
     CharacterDatabase.PExecute("DELETE FROM guild_bank_eventlog WHERE LogGuid > '%u'", sWorld.getConfig(CONFIG_UINT32_GUILD_BANK_EVENT_LOG_COUNT));
 
     sLog.outString();
-    sLog.outString(">> Loaded %u guild definitions", count);
+    sLog.outString(">> 加载了 %u 个 guild definitions", count);
 }

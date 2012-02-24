@@ -113,7 +113,7 @@ CreatureEventAI::CreatureEventAI(Creature *c ) : CreatureAI(c)
         }
     }
     else
-        sLog.outError("CreatureEventAI: EventMap for Creature %u is empty but creature is using CreatureEventAI.", m_creature->GetEntry());
+        sLog.outError("CreatureEventAI: EventMap for Creature %u 是空的 but creature is using CreatureEventAI.", m_creature->GetEntry());
 
     m_bEmptyList = m_CreatureEventAIList.empty();
     m_Phase = 0;
@@ -259,7 +259,7 @@ bool CreatureEventAI::ProcessEvent(CreatureEventAIHolder& pHolder, Unit* pAction
             std::list<Creature*> pList;
             DoFindFriendlyCC(pList, (float)event.friendly_is_cc.radius);
 
-            //List is empty
+            //List 是空的
             if (pList.empty())
                 return false;
 
@@ -275,7 +275,7 @@ bool CreatureEventAI::ProcessEvent(CreatureEventAIHolder& pHolder, Unit* pAction
             std::list<Creature*> pList;
             DoFindFriendlyMissingBuff(pList, (float)event.friendly_buff.radius, event.friendly_buff.spellId);
 
-            //List is empty
+            //List 是空的
             if (pList.empty())
                 return false;
 

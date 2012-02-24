@@ -77,12 +77,12 @@ void LoadRandomEnchantmentsTable()
         delete result;
 
         sLog.outString();
-        sLog.outString( ">> Loaded %u Item Enchantment definitions", count );
+        sLog.outString( ">> 加载了 %u 个 Item Enchantment definitions", count );
     }
     else
     {
         sLog.outString();
-        sLog.outErrorDb( ">> Loaded 0 Item Enchantment definitions. DB table `item_enchantment_template` is empty.");
+        sLog.outErrorDb( ">> 加载 0 Item Enchantment definitions. 数据表 `item_enchantment_template` 是空的.");
     }
 }
 

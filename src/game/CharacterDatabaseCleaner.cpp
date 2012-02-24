@@ -55,7 +55,7 @@ void CharacterDatabaseCleaner::CheckUnique(const char* column, const char* table
     QueryResult* result = CharacterDatabase.PQuery("SELECT DISTINCT %s FROM %s", column, table);
     if(!result)
     {
-        sLog.outString( "Table %s is empty.", table );
+        sLog.outString( "Table %s ÊÇ¿ÕµÄ.", table );
         return;
     }
 

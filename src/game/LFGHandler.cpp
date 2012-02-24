@@ -1018,7 +1018,7 @@ void WorldSession::SendLfgBootPlayer()
 
     if (votes->empty())
     {
-        sLog.outError("ERROR:SendLfgBootPlayer %u failed - votes map is empty!", GetPlayer()->GetObjectGuid().GetCounter());
+        sLog.outError("ERROR:SendLfgBootPlayer %u failed - votes map ÊÇ¿ÕµÄ!", GetPlayer()->GetObjectGuid().GetCounter());
         return;
     }
 

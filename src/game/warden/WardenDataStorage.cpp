@@ -59,7 +59,7 @@ void CWardenDataStorage::LoadWardenDataResult()
         bar.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded %u warden data and results", count);
+        sLog.outString(">> 加载了 %u 个 warden data and results", count);
         return;
     }
 
@@ -130,7 +130,7 @@ void CWardenDataStorage::LoadWardenDataResult()
     delete result;
 
     sLog.outString();
-    sLog.outString(">> Loaded %u warden data and results", count);
+    sLog.outString(">> 加载了 %u 个 warden data and results", count);
 }
 
 WardenData *CWardenDataStorage::GetWardenDataById(uint32 Id)

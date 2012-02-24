@@ -70,7 +70,7 @@ void WaypointManager::Load()
         BarGoLink bar(1);
         bar.step();
         sLog.outString();
-        sLog.outString( ">> Loaded 0 paths. DB table `creature_movement` is empty." );
+        sLog.outString( ">> 加载 0 paths. 数据表 `creature_movement` 是空的." );
     }
     else
     {
@@ -233,7 +233,7 @@ void WaypointManager::Load()
         sLog.outString();
         sLog.outString( ">> Waypoints and behaviors loaded" );
         sLog.outString();
-        sLog.outString( ">>> Loaded %u paths, %u nodes and %u behaviors", total_paths, total_nodes, total_behaviors);
+        sLog.outString( ">>> 加载 %u paths, %u nodes and %u behaviors", total_paths, total_nodes, total_behaviors);
 
         delete result;
     }
@@ -246,7 +246,7 @@ void WaypointManager::Load()
         BarGoLink bar(1);
         bar.step();
         sLog.outString();
-        sLog.outString( ">> Loaded 0 path templates. DB table `creature_movement_template` is empty." );
+        sLog.outString( ">> 加载 0 path templates. 数据表 `creature_movement_template` 是空的." );
     }
     else
     {
@@ -384,7 +384,7 @@ void WaypointManager::Load()
         sLog.outString();
         sLog.outString( ">> Waypoint templates loaded" );
         sLog.outString();
-        sLog.outString( ">>> Loaded %u path templates with %u nodes and %u behaviors", total_paths, total_nodes, total_behaviors);
+        sLog.outString( ">>> 加载 %u path templates with %u nodes and %u behaviors", total_paths, total_nodes, total_behaviors);
     }
 
     if (!movementScriptSet.empty())

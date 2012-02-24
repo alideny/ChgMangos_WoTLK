@@ -1044,7 +1044,7 @@ void MapPersistentStateManager::LoadCreatureRespawnTimes()
         bar.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded 0 creature respawn time.");
+        sLog.outString(">> 加载 0 creature respawn time.");
         return;
     }
 
@@ -1089,7 +1089,7 @@ void MapPersistentStateManager::LoadCreatureRespawnTimes()
 
     delete result;
 
-    sLog.outString(">> Loaded %u creature respawn times", count);
+    sLog.outString(">> 加载了 %u 个 creature respawn times", count);
     sLog.outString();
 }
 
@@ -1110,7 +1110,7 @@ void MapPersistentStateManager::LoadGameobjectRespawnTimes()
         bar.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded 0 gameobject respawn time.");
+        sLog.outString(">> 加载 0 gameobject respawn time.");
         return;
     }
 
@@ -1155,6 +1155,6 @@ void MapPersistentStateManager::LoadGameobjectRespawnTimes()
 
     delete result;
 
-    sLog.outString(">> Loaded %u gameobject respawn times", count);
+    sLog.outString(">> 加载了 %u 个 gameobject respawn times", count);
     sLog.outString();
 }

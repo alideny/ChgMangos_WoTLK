@@ -247,7 +247,7 @@ void ObjectMgr::LoadCreatureLocales()
         bar.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded 0 creature locale strings. DB table `locales_creature` is empty.");
+        sLog.outString(">> 加载 0 creature locale strings. 数据表 `locales_creature` 是空的.");
         return;
     }
 
@@ -300,7 +300,7 @@ void ObjectMgr::LoadCreatureLocales()
     delete result;
 
     sLog.outString();
-    sLog.outString( ">> Loaded %lu creature locale strings", (unsigned long)mCreatureLocaleMap.size() );
+    sLog.outString( ">> 加载 %lu creature locale strings", (unsigned long)mCreatureLocaleMap.size() );
 }
 
 void ObjectMgr::LoadGossipMenuItemsLocales()
@@ -321,7 +321,7 @@ void ObjectMgr::LoadGossipMenuItemsLocales()
         bar.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded 0 gossip_menu_option locale strings. DB table `locales_gossip_menu_option` is empty.");
+        sLog.outString(">> 加载 0 gossip_menu_option locale strings. 数据表 `locales_gossip_menu_option` 是空的.");
         return;
     }
 
@@ -390,7 +390,7 @@ void ObjectMgr::LoadGossipMenuItemsLocales()
     delete result;
 
     sLog.outString();
-    sLog.outString( ">> Loaded %lu gossip_menu_option locale strings", (unsigned long)mGossipMenuItemsLocaleMap.size() );
+    sLog.outString( ">> 加载 %lu gossip_menu_option locale strings", (unsigned long)mGossipMenuItemsLocaleMap.size() );
 }
 
 void ObjectMgr::LoadPointOfInterestLocales()
@@ -406,7 +406,7 @@ void ObjectMgr::LoadPointOfInterestLocales()
         bar.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded 0 points_of_interest locale strings. DB table `locales_points_of_interest` is empty.");
+        sLog.outString(">> 加载 0 points_of_interest locale strings. 数据表 `locales_points_of_interest` 是空的.");
         return;
     }
 
@@ -447,7 +447,7 @@ void ObjectMgr::LoadPointOfInterestLocales()
     delete result;
 
     sLog.outString();
-    sLog.outString( ">> Loaded %lu points_of_interest locale strings", (unsigned long)mPointOfInterestLocaleMap.size() );
+    sLog.outString( ">> 加载 %lu points_of_interest locale strings", (unsigned long)mPointOfInterestLocaleMap.size() );
 }
 
 struct SQLCreatureLoader : public SQLStorageLoaderBase<SQLCreatureLoader>
@@ -464,7 +464,7 @@ void ObjectMgr::LoadCreatureTemplates()
     SQLCreatureLoader loader;
     loader.Load(sCreatureStorage);
 
-    sLog.outString( ">> Loaded %u creature definitions", sCreatureStorage.RecordCount );
+    sLog.outString( ">> 加载了 %u 个 creature definitions", sCreatureStorage.RecordCount );
     sLog.outString();
 
     std::set<uint32> difficultyEntries[MAX_DIFFICULTY - 1]; // already loaded difficulty 1 value in creatures
@@ -792,7 +792,7 @@ void ObjectMgr::LoadCreatureAddons(SQLStorage& creatureaddons, char const* entry
 {
     creatureaddons.Load();
 
-    sLog.outString(">> Loaded %u %s", creatureaddons.RecordCount, comment);
+    sLog.outString(">> 加载了 %u 个 %s", creatureaddons.RecordCount, comment);
     sLog.outString();
 
     // check data correctness and convert 'auras'
@@ -889,7 +889,7 @@ void ObjectMgr::LoadEquipmentTemplates()
             }
         }
     }
-    sLog.outString( ">> Loaded %u equipment template", sEquipmentStorage.RecordCount );
+    sLog.outString( ">> 加载了 %u 个 equipment template", sEquipmentStorage.RecordCount );
     sLog.outString();
 }
 
@@ -1061,7 +1061,7 @@ void ObjectMgr::LoadCreatureModelInfo()
 
     }
 
-    sLog.outString( ">> Loaded %u creature model based info", sCreatureModelStorage.RecordCount );
+    sLog.outString( ">> 加载了 %u 个 creature model based info", sCreatureModelStorage.RecordCount );
     sLog.outString();
 }
 
@@ -1078,7 +1078,7 @@ void ObjectMgr::LoadCreatureModelRace()
         bar.step();
 
         sLog.outString();
-        sLog.outErrorDb(">> Loaded creature_model_race, table is empty!");
+        sLog.outErrorDb(">> 加载 creature_model_race, 数据表示空的!");
         return;
     }
 
@@ -1181,7 +1181,7 @@ void ObjectMgr::LoadCreatureModelRace()
     delete result;
 
     sLog.outString();
-    sLog.outString( ">> Loaded %u creature_model_race entries", count);
+    sLog.outString( ">> 加载了 %u 个 creature_model_race entries", count);
 }
 
 void ObjectMgr::LoadCreatures()
@@ -1207,7 +1207,7 @@ void ObjectMgr::LoadCreatures()
         bar.step();
 
         sLog.outString();
-        sLog.outErrorDb(">> Loaded 0 creature. DB table `creature` is empty.");
+        sLog.outErrorDb(">> 加载 0 creature. 数据表 `creature` 是空的.");
         return;
     }
 
@@ -1369,7 +1369,7 @@ void ObjectMgr::LoadCreatures()
     delete result;
 
     sLog.outString();
-    sLog.outString( ">> Loaded %lu creatures", (unsigned long)mCreatureDataMap.size() );
+    sLog.outString( ">> 加载 %lu creatures", (unsigned long)mCreatureDataMap.size() );
 }
 
 void ObjectMgr::AddCreatureToGrid(uint32 guid, CreatureData const* data)
@@ -1424,7 +1424,7 @@ void ObjectMgr::LoadVehicleAccessories()
         bar.step();
 
         sLog.outString();
-        sLog.outErrorDb(">> Loaded 0 vehicle accessories. DB table `vehicle_accessory` is empty.");
+        sLog.outErrorDb(">> 加载 0 vehicle accessories. 数据表 `vehicle_accessory` 是空的.");
         return;
     }
 
@@ -1468,7 +1468,7 @@ void ObjectMgr::LoadVehicleAccessories()
     delete result;
 
     sLog.outString();
-    sLog.outString(">> Loaded %u Vehicle Accessories", count);
+    sLog.outString(">> 加载了 %u 个 Vehicle Accessories", count);
 }
 
 void ObjectMgr::LoadGameObjects()
@@ -1493,7 +1493,7 @@ void ObjectMgr::LoadGameObjects()
         bar.step();
 
         sLog.outString();
-        sLog.outErrorDb(">> Loaded 0 gameobjects. DB table `gameobject` is empty.");
+        sLog.outErrorDb(">> 加载 0 gameobjects. 数据表 `gameobject` 是空的.");
         return;
     }
 
@@ -1630,14 +1630,14 @@ void ObjectMgr::LoadGameObjects()
     delete result;
 
     sLog.outString();
-    sLog.outString( ">> Loaded %lu gameobjects", (unsigned long)mGameObjectDataMap.size());
+    sLog.outString( ">> 加载 %lu gameobjects", (unsigned long)mGameObjectDataMap.size());
 }
 
 void ObjectMgr::LoadGameObjectAddon()
 {
     sGameObjectDataAddonStorage.Load();
 
-    sLog.outString(">> Loaded %u gameobject addons", sGameObjectDataAddonStorage.RecordCount);
+    sLog.outString(">> 加载了 %u 个 gameobject addons", sGameObjectDataAddonStorage.RecordCount);
     sLog.outString();
 
     for(uint32 i = 1; i < sGameObjectDataAddonStorage.MaxEntry; ++i)
@@ -1802,7 +1802,7 @@ void ObjectMgr::LoadItemLocales()
         bar.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded 0 Item locale strings. DB table `locales_item` is empty.");
+        sLog.outString(">> 加载 0 Item locale strings. 数据表 `locales_item` 是空的.");
         return;
     }
 
@@ -1856,7 +1856,7 @@ void ObjectMgr::LoadItemLocales()
     delete result;
 
     sLog.outString();
-    sLog.outString( ">> Loaded %lu Item locale strings", (unsigned long)mItemLocaleMap.size() );
+    sLog.outString( ">> 加载 %lu Item locale strings", (unsigned long)mItemLocaleMap.size() );
 }
 
 struct SQLItemLoader : public SQLStorageLoaderBase<SQLItemLoader>
@@ -1872,7 +1872,7 @@ void ObjectMgr::LoadItemPrototypes()
 {
     SQLItemLoader loader;
     loader.Load(sItemStorage);
-    sLog.outString( ">> Loaded %u item prototypes", sItemStorage.RecordCount );
+    sLog.outString( ">> 加载了 %u 个 item prototypes", sItemStorage.RecordCount );
     sLog.outString();
 
     // check data correctness
@@ -2184,7 +2184,7 @@ void ObjectMgr::LoadItemPrototypes()
                 }
             }
 
-            // spell_3*,spell_4*,spell_5* is empty
+            // spell_3*,spell_4*,spell_5* 是空的
             for (int j = 2; j < MAX_ITEM_PROTO_SPELLS; ++j)
             {
                 if(proto->Spells[j].SpellTrigger != ITEM_SPELLTRIGGER_ON_USE)
@@ -2471,7 +2471,7 @@ void ObjectMgr::LoadItemConverts()
         bar.step();
 
         sLog.outString();
-        sLog.outErrorDb(">> Loaded 0 Item converts . DB table `item_convert` is empty.");
+        sLog.outErrorDb(">> 加载 0 Item converts . 数据表 `item_convert` 是空的.");
         return;
     }
 
@@ -2517,7 +2517,7 @@ void ObjectMgr::LoadItemConverts()
     delete result;
 
     sLog.outString();
-    sLog.outString(">> Loaded %u Item converts", count);
+    sLog.outString(">> 加载了 %u 个 Item converts", count);
 }
 
 void ObjectMgr::LoadItemExpireConverts()
@@ -2535,7 +2535,7 @@ void ObjectMgr::LoadItemExpireConverts()
         bar.step();
 
         sLog.outString();
-        sLog.outErrorDb(">> Loaded 0 Item expire converts . DB table `item_expire_convert` is empty.");
+        sLog.outErrorDb(">> 加载 0 Item expire converts . 数据表 `item_expire_convert` 是空的.");
         return;
     }
 
@@ -2578,7 +2578,7 @@ void ObjectMgr::LoadItemExpireConverts()
     delete result;
 
     sLog.outString();
-    sLog.outString(">> Loaded %u Item expire converts", count);
+    sLog.outString(">> 加载了 %u 个 Item expire converts", count);
 }
 
 void ObjectMgr::LoadItemRequiredTarget()
@@ -2596,7 +2596,7 @@ void ObjectMgr::LoadItemRequiredTarget()
         bar.step();
 
         sLog.outString();
-        sLog.outErrorDb(">> Loaded 0 ItemRequiredTarget. DB table `item_required_target` is empty.");
+        sLog.outErrorDb(">> 加载 0 ItemRequiredTarget. 数据表 `item_required_target` 是空的.");
         return;
     }
 
@@ -2680,7 +2680,7 @@ void ObjectMgr::LoadItemRequiredTarget()
     delete result;
 
     sLog.outString();
-    sLog.outString(">> Loaded %u Item required targets", count);
+    sLog.outString(">> 加载了 %u 个 Item required targets", count);
 }
 
 void ObjectMgr::LoadPetLevelInfo()
@@ -2698,7 +2698,7 @@ void ObjectMgr::LoadPetLevelInfo()
             bar.step();
 
             sLog.outString();
-            sLog.outString(">> Loaded %u level pet stats definitions", count);
+            sLog.outString(">> 加载了 %u 个 level pet stats definitions", count);
             sLog.outErrorDb("Error loading `pet_levelstats` table or empty table.");
             return;
         }
@@ -2762,7 +2762,7 @@ void ObjectMgr::LoadPetLevelInfo()
         delete result;
 
         sLog.outString();
-        sLog.outString( ">> Loaded %u level pet stats definitions", count );
+        sLog.outString( ">> 加载了 %u 个 level pet stats definitions", count );
     }
 
     PetLevelInfo* petBaseInfo = petInfo[1];
@@ -2859,8 +2859,8 @@ void ObjectMgr::LoadPetScalingData()
         bar.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded %u pet scaling data definitions", count);
-        sLog.outErrorDb("Error loading `pet_scaling_data` table or table is empty.");
+        sLog.outString(">> 加载了 %u 个 pet scaling data definitions", count);
+        sLog.outErrorDb("Error loading `pet_scaling_data` table or 数据表示空的.");
         return;
     }
 
@@ -2922,7 +2922,7 @@ void ObjectMgr::LoadPetScalingData()
     delete result;
 
     sLog.outString();
-    sLog.outString( ">> Loaded %u level pet scaling data definitions", count );
+    sLog.outString( ">> 加载了 %u 个 level pet scaling data definitions", count );
 }
 
 PetScalingDataList const* ObjectMgr::GetPetScalingData(uint32 creature_id) const
@@ -2954,8 +2954,8 @@ void ObjectMgr::LoadAntiCheatConfig()
         bar.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded %u anticheat config definitions", count);
-        sLog.outErrorDb("Error loading `anticheat_config` table or table is empty.");
+        sLog.outString(">> 加载了 %u 个 anticheat config definitions", count);
+        sLog.outErrorDb("Error loading `anticheat_config` table or 数据表示空的.");
         return;
     }
 
@@ -3018,7 +3018,7 @@ void ObjectMgr::LoadAntiCheatConfig()
     delete result;
 
     sLog.outString();
-    sLog.outString( ">> Loaded %u anticheat config definitions", count );
+    sLog.outString( ">> 加载了 %u 个 anticheat config definitions", count );
 
 }
 
@@ -3045,7 +3045,7 @@ void ObjectMgr::LoadCreatureSpells()
         bar.step();
 
         sLog.outString();
-        sLog.outErrorDb("Error loading creature_spell table or table is empty.");
+        sLog.outErrorDb("Error loading creature_spell table or 数据表示空的.");
         return;
     }
 
@@ -3090,7 +3090,7 @@ void ObjectMgr::LoadCreatureSpells()
 
     delete result;
     sLog.outString();
-    sLog.outString( ">> Loaded %u creature spell definitions", count );
+    sLog.outString( ">> 加载了 %u 个 creature spell definitions", count );
 }
 
 CreatureSpellsList const* ObjectMgr::GetCreatureSpells(uint32 creature_id, uint8 activeState)
@@ -3116,7 +3116,7 @@ void ObjectMgr::LoadPlayerInfo()
             BarGoLink bar(1);
 
             sLog.outString();
-            sLog.outString( ">> Loaded %u player create definitions", count );
+            sLog.outString( ">> 加载了 %u 个 player create definitions", count );
             sLog.outErrorDb( "Error loading `playercreateinfo` table or empty table.");
             Log::WaitBeforeContinueIfNeed();
             exit(1);
@@ -3184,7 +3184,7 @@ void ObjectMgr::LoadPlayerInfo()
         delete result;
 
         sLog.outString();
-        sLog.outString( ">> Loaded %u player create definitions", count );
+        sLog.outString( ">> 加载了 %u 个 player create definitions", count );
     }
 
     // Load playercreate items
@@ -3201,7 +3201,7 @@ void ObjectMgr::LoadPlayerInfo()
             bar.step();
 
             sLog.outString();
-            sLog.outString( ">> Loaded %u custom player create items", count );
+            sLog.outString( ">> 加载了 %u 个 custom player create items", count );
         }
         else
         {
@@ -3256,7 +3256,7 @@ void ObjectMgr::LoadPlayerInfo()
             delete result;
 
             sLog.outString();
-            sLog.outString( ">> Loaded %u custom player create items", count );
+            sLog.outString( ">> 加载了 %u 个 custom player create items", count );
         }
     }
 
@@ -3272,7 +3272,7 @@ void ObjectMgr::LoadPlayerInfo()
             BarGoLink bar(1);
 
             sLog.outString();
-            sLog.outString( ">> Loaded %u player create spells", count );
+            sLog.outString( ">> 加载了 %u 个 player create spells", count );
             sLog.outErrorDb( "Error loading `playercreateinfo_spell` table or empty table.");
         }
         else
@@ -3318,7 +3318,7 @@ void ObjectMgr::LoadPlayerInfo()
             delete result;
 
             sLog.outString();
-            sLog.outString( ">> Loaded %u player create spells", count );
+            sLog.outString( ">> 加载了 %u 个 player create spells", count );
         }
     }
 
@@ -3334,7 +3334,7 @@ void ObjectMgr::LoadPlayerInfo()
             BarGoLink bar(1);
 
             sLog.outString();
-            sLog.outString(">> Loaded %u player create actions", count);
+            sLog.outString(">> 加载了 %u 个 player create actions", count);
             sLog.outErrorDb("Error loading `playercreateinfo_action` table or empty table.");
         }
         else
@@ -3380,7 +3380,7 @@ void ObjectMgr::LoadPlayerInfo()
             delete result;
 
             sLog.outString();
-            sLog.outString( ">> Loaded %u player create actions", count );
+            sLog.outString( ">> 加载了 %u 个 player create actions", count );
         }
     }
 
@@ -3396,7 +3396,7 @@ void ObjectMgr::LoadPlayerInfo()
             BarGoLink bar(1);
 
             sLog.outString();
-            sLog.outString( ">> Loaded %u level health/mana definitions", count );
+            sLog.outString( ">> 加载了 %u 个 level health/mana definitions", count );
             sLog.outErrorDb( "Error loading `player_classlevelstats` table or empty table.");
             Log::WaitBeforeContinueIfNeed();
             exit(1);
@@ -3451,7 +3451,7 @@ void ObjectMgr::LoadPlayerInfo()
         delete result;
 
         sLog.outString();
-        sLog.outString( ">> Loaded %u level health/mana definitions", count );
+        sLog.outString( ">> 加载了 %u 个 level health/mana definitions", count );
     }
 
     // Fill gaps and check integrity
@@ -3494,7 +3494,7 @@ void ObjectMgr::LoadPlayerInfo()
             BarGoLink bar(1);
 
             sLog.outString();
-            sLog.outString(">> Loaded %u level stats definitions", count);
+            sLog.outString(">> 加载了 %u 个 level stats definitions", count);
             sLog.outErrorDb("Error loading `player_levelstats` table or empty table.");
             Log::WaitBeforeContinueIfNeed();
             exit(1);
@@ -3554,7 +3554,7 @@ void ObjectMgr::LoadPlayerInfo()
         delete result;
 
         sLog.outString();
-        sLog.outString( ">> Loaded %u level stats definitions", count );
+        sLog.outString( ">> 加载了 %u 个 level stats definitions", count );
     }
 
     // Fill gaps and check integrity
@@ -3620,7 +3620,7 @@ void ObjectMgr::LoadPlayerInfo()
             BarGoLink bar(1);
 
             sLog.outString();
-            sLog.outString(">> Loaded %u xp for level definitions", count);
+            sLog.outString(">> 加载了 %u 个 xp for level definitions", count);
             sLog.outErrorDb("Error loading `player_xp_for_level` table or empty table.");
             Log::WaitBeforeContinueIfNeed();
             exit(1);
@@ -3656,7 +3656,7 @@ void ObjectMgr::LoadPlayerInfo()
         delete result;
 
         sLog.outString();
-        sLog.outString(">> Loaded %u xp for level definitions", count);
+        sLog.outString(">> 加载了 %u 个 xp for level definitions", count);
     }
 
     // fill level gaps
@@ -3791,7 +3791,7 @@ void ObjectMgr::LoadArenaTeams()
         bar.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded %u arenateam definitions", count);
+        sLog.outString(">> 加载了 %u 个 arenateam definitions", count);
         return;
     }
 
@@ -3824,7 +3824,7 @@ void ObjectMgr::LoadArenaTeams()
     delete arenaTeamMembersResult;
 
     sLog.outString();
-    sLog.outString(">> Loaded %u arenateam definitions", count);
+    sLog.outString(">> 加载了 %u 个 arenateam definitions", count);
 }
 
 void ObjectMgr::LoadGroups()
@@ -3841,7 +3841,7 @@ void ObjectMgr::LoadGroups()
         bar.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded %u group definitions", count);
+        sLog.outString(">> 加载了 %u 个 group definitions", count);
         return;
     }
 
@@ -3865,7 +3865,7 @@ void ObjectMgr::LoadGroups()
     delete result;
 
     sLog.outString();
-    sLog.outString( ">> Loaded %u group definitions", count );
+    sLog.outString( ">> 加载了 %u 个 group definitions", count );
 
     // -- loading members --
     count = 0;
@@ -3996,10 +3996,10 @@ void ObjectMgr::LoadGroups()
     }
 
     sLog.outString();
-    sLog.outString( ">> Loaded %u group-instance binds total", count );
+    sLog.outString( ">> 加载了 %u 个 group-instance binds total", count );
 
     sLog.outString();
-    sLog.outString( ">> Loaded %u group members total", count );
+    sLog.outString( ">> 加载了 %u 个 group members total", count );
 }
 
 void ObjectMgr::LoadQuests()
@@ -4061,8 +4061,8 @@ void ObjectMgr::LoadQuests()
         bar.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded 0 quests definitions");
-        sLog.outErrorDb("`quest_template` table is empty!");
+        sLog.outString(">> 加载 0 quests definitions");
+        sLog.outErrorDb("`quest_template` 数据表示空的!");
         return;
     }
 
@@ -4682,7 +4682,7 @@ void ObjectMgr::LoadQuests()
     }
 
     sLog.outString();
-    sLog.outString( ">> Loaded %lu quests definitions", (unsigned long)mQuestTemplates.size() );
+    sLog.outString( ">> 加载 %lu quests definitions", (unsigned long)mQuestTemplates.size() );
 }
 
 void ObjectMgr::LoadQuestLocales()
@@ -4708,7 +4708,7 @@ void ObjectMgr::LoadQuestLocales()
         bar.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded 0 Quest locale strings. DB table `locales_quest` is empty.");
+        sLog.outString(">> 加载 0 Quest locale strings. 数据表 `locales_quest` 是空的.");
         return;
     }
 
@@ -4836,7 +4836,7 @@ void ObjectMgr::LoadQuestLocales()
     delete result;
 
     sLog.outString();
-    sLog.outString( ">> Loaded %lu Quest locale strings", (unsigned long)mQuestLocaleMap.size() );
+    sLog.outString( ">> 加载 %lu Quest locale strings", (unsigned long)mQuestLocaleMap.size() );
 }
 
 void ObjectMgr::LoadPageTexts()
@@ -4844,7 +4844,7 @@ void ObjectMgr::LoadPageTexts()
     sPageTextStore.Free();                                  // for reload case
 
     sPageTextStore.Load();
-    sLog.outString( ">> Loaded %u page texts", sPageTextStore.RecordCount );
+    sLog.outString( ">> 加载了 %u 个 page texts", sPageTextStore.RecordCount );
     sLog.outString();
 
     for(uint32 i = 1; i < sPageTextStore.MaxEntry; ++i)
@@ -4896,7 +4896,7 @@ void ObjectMgr::LoadPageTextLocales()
         bar.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded 0 PageText locale strings. DB table `locales_page_text` is empty.");
+        sLog.outString(">> 加载 0 PageText locale strings. 数据表 `locales_page_text` 是空的.");
         return;
     }
 
@@ -4938,7 +4938,7 @@ void ObjectMgr::LoadPageTextLocales()
     delete result;
 
     sLog.outString();
-    sLog.outString( ">> Loaded %lu PageText locale strings", (unsigned long)mPageTextLocaleMap.size() );
+    sLog.outString( ">> 加载 %lu PageText locale strings", (unsigned long)mPageTextLocaleMap.size() );
 }
 
 void ObjectMgr::LoadInstanceEncounters()
@@ -4954,7 +4954,7 @@ void ObjectMgr::LoadInstanceEncounters()
         bar.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded 0 Instance Encounters. DB table `instance_encounters` is empty.");
+        sLog.outString(">> 加载 0 Instance Encounters. 数据表 `instance_encounters` 是空的.");
         return;
     }
 
@@ -5011,7 +5011,7 @@ void ObjectMgr::LoadInstanceEncounters()
     delete result;
 
     sLog.outString();
-    sLog.outString( ">> Loaded %lu Instance Encounters", (unsigned long)m_DungeonEncounters.size() );
+    sLog.outString( ">> 加载 %lu Instance Encounters", (unsigned long)m_DungeonEncounters.size() );
 }
 
 struct SQLInstanceLoader : public SQLStorageLoaderBase<SQLInstanceLoader>
@@ -5071,7 +5071,7 @@ void ObjectMgr::LoadInstanceTemplate()
         }
     }
 
-    sLog.outString( ">> Loaded %u Instance Template definitions", sInstanceTemplate.RecordCount );
+    sLog.outString( ">> 加载了 %u 个 Instance Template definitions", sInstanceTemplate.RecordCount );
     sLog.outString();
 }
 
@@ -5111,7 +5111,7 @@ void ObjectMgr::LoadWorldTemplate()
         }
     }
 
-    sLog.outString( ">> Loaded %u World Template definitions", sWorldTemplate.RecordCount );
+    sLog.outString( ">> 加载了 %u 个 World Template definitions", sWorldTemplate.RecordCount );
     sLog.outString();
 }
 
@@ -5134,7 +5134,7 @@ void ObjectMgr::LoadGossipText()
         bar.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded %u npc texts", count);
+        sLog.outString(">> 加载了 %u 个 npc texts", count);
         return;
     }
 
@@ -5177,7 +5177,7 @@ void ObjectMgr::LoadGossipText()
     } while(result->NextRow());
 
     sLog.outString();
-    sLog.outString(">> Loaded %u npc texts", count);
+    sLog.outString(">> 加载了 %u 个 npc texts", count);
     delete result;
 }
 
@@ -5203,7 +5203,7 @@ void ObjectMgr::LoadGossipTextLocales()
         bar.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded 0 Quest locale strings. DB table `locales_npc_text` is empty.");
+        sLog.outString(">> 加载 0 Quest locale strings. 数据表 `locales_npc_text` 是空的.");
         return;
     }
 
@@ -5259,7 +5259,7 @@ void ObjectMgr::LoadGossipTextLocales()
     delete result;
 
     sLog.outString();
-    sLog.outString( ">> Loaded %lu NpcText locale strings", (unsigned long)mNpcTextLocaleMap.size() );
+    sLog.outString( ">> 加载 %lu NpcText locale strings", (unsigned long)mNpcTextLocaleMap.size() );
 }
 
 //not very fast function but it is called only once a day, or on starting-up
@@ -5277,7 +5277,7 @@ void ObjectMgr::ReturnOrDeleteOldMails(bool serverUp)
         BarGoLink bar(1);
         bar.step();
         sLog.outString();
-        sLog.outString(">> Only expired mails (need to be return or delete) or DB table `mail` is empty.");
+        sLog.outString(">> Only expired mails (need to be return or delete) or 数据表 `mail` 是空的.");
         return;                                             // any mails need to be returned or deleted
     }
 
@@ -5367,7 +5367,7 @@ void ObjectMgr::ReturnOrDeleteOldMails(bool serverUp)
     delete result;
 
     sLog.outString();
-    sLog.outString( ">> Loaded %u mails", count );
+    sLog.outString( ">> 加载了 %u 个 mails", count );
 }
 
 void ObjectMgr::LoadQuestAreaTriggers()
@@ -5384,7 +5384,7 @@ void ObjectMgr::LoadQuestAreaTriggers()
         bar.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded %u quest trigger points", count);
+        sLog.outString(">> 加载了 %u 个 quest trigger points", count);
         return;
     }
 
@@ -5431,7 +5431,7 @@ void ObjectMgr::LoadQuestAreaTriggers()
     delete result;
 
     sLog.outString();
-    sLog.outString( ">> Loaded %u quest trigger points", count );
+    sLog.outString( ">> 加载了 %u 个 quest trigger points", count );
 }
 
 void ObjectMgr::LoadTavernAreaTriggers()
@@ -5448,7 +5448,7 @@ void ObjectMgr::LoadTavernAreaTriggers()
         bar.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded %u tavern triggers", count);
+        sLog.outString(">> 加载了 %u 个 tavern triggers", count);
         return;
     }
 
@@ -5476,7 +5476,7 @@ void ObjectMgr::LoadTavernAreaTriggers()
     delete result;
 
     sLog.outString();
-    sLog.outString( ">> Loaded %u tavern triggers", count );
+    sLog.outString( ">> 加载了 %u 个 tavern triggers", count );
 }
 
 uint32 ObjectMgr::GetNearestTaxiNode( float x, float y, float z, uint32 mapid, Team team )
@@ -5594,7 +5594,7 @@ void ObjectMgr::LoadGraveyardZones()
         bar.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded %u graveyard-zone links", count);
+        sLog.outString(">> 加载了 %u 个 graveyard-zone links", count);
         return;
     }
 
@@ -5644,7 +5644,7 @@ void ObjectMgr::LoadGraveyardZones()
     delete result;
 
     sLog.outString();
-    sLog.outString( ">> Loaded %u graveyard-zone links", count );
+    sLog.outString( ">> 加载了 %u 个 graveyard-zone links", count );
 }
 
 WorldSafeLocsEntry const *ObjectMgr::GetClosestGraveYard(float x, float y, float z, uint32 MapId, Team team)
@@ -5864,7 +5864,7 @@ void ObjectMgr::LoadAreaTriggerTeleports()
         bar.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded %u area trigger teleport definitions", count);
+        sLog.outString(">> 加载了 %u 个 area trigger teleport definitions", count);
         return;
     }
 
@@ -6017,7 +6017,7 @@ void ObjectMgr::LoadAreaTriggerTeleports()
     delete result;
 
     sLog.outString();
-    sLog.outString( ">> Loaded %u area trigger teleport definitions", count );
+    sLog.outString( ">> 加载了 %u 个 area trigger teleport definitions", count );
 }
 
 /*
@@ -6238,7 +6238,7 @@ void ObjectMgr::LoadGameObjectLocales()
         bar.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded 0 gameobject locale strings. DB table `locales_gameobject` is empty.");
+        sLog.outString(">> 加载 0 gameobject locale strings. 数据表 `locales_gameobject` 是空的.");
         return;
     }
 
@@ -6296,7 +6296,7 @@ void ObjectMgr::LoadGameObjectLocales()
     delete result;
 
     sLog.outString();
-    sLog.outString( ">> Loaded %lu gameobject locale strings", (unsigned long)mGameObjectLocaleMap.size() );
+    sLog.outString( ">> 加载 %lu gameobject locale strings", (unsigned long)mGameObjectLocaleMap.size() );
 }
 
 struct SQLGameObjectLoader : public SQLStorageLoaderBase<SQLGameObjectLoader>
@@ -6540,7 +6540,7 @@ void ObjectMgr::LoadGameobjectInfo()
         }
     }
 
-    sLog.outString( ">> Loaded %u game object templates", sGOStorage.RecordCount );
+    sLog.outString( ">> 加载了 %u 个 game object templates", sGOStorage.RecordCount );
     sLog.outString();
 }
 
@@ -6556,7 +6556,7 @@ void ObjectMgr::LoadExplorationBaseXP()
         bar.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded %u BaseXP definitions", count);
+        sLog.outString(">> 加载了 %u 个 BaseXP definitions", count);
         return;
     }
 
@@ -6577,7 +6577,7 @@ void ObjectMgr::LoadExplorationBaseXP()
     delete result;
 
     sLog.outString();
-    sLog.outString( ">> Loaded %u BaseXP definitions", count );
+    sLog.outString( ">> 加载了 %u 个 BaseXP definitions", count );
 }
 
 uint32 ObjectMgr::GetBaseXP(uint32 level) const
@@ -6605,7 +6605,7 @@ void ObjectMgr::LoadPetNames()
         bar.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded %u pet name parts", count);
+        sLog.outString(">> 加载了 %u 个 pet name parts", count);
         return;
     }
 
@@ -6629,7 +6629,7 @@ void ObjectMgr::LoadPetNames()
     delete result;
 
     sLog.outString();
-    sLog.outString( ">> Loaded %u pet name parts", count );
+    sLog.outString( ">> 加载了 %u 个 pet name parts", count );
 }
 
 void ObjectMgr::LoadPetNumber()
@@ -6646,7 +6646,7 @@ void ObjectMgr::LoadPetNumber()
     bar.step();
 
     sLog.outString();
-    sLog.outString(">> Loaded the max pet number: %d", m_PetNumbers.GetNextAfterMaxUsed() - 1);
+    sLog.outString(">> 加载 the max pet number: %d", m_PetNumbers.GetNextAfterMaxUsed() - 1);
 }
 
 std::string ObjectMgr::GeneratePetName(uint32 entry)
@@ -6683,7 +6683,7 @@ void ObjectMgr::LoadCorpses()
         bar.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded %u corpses", count);
+        sLog.outString(">> 加载了 %u 个 corpses", count);
         return;
     }
 
@@ -6712,7 +6712,7 @@ void ObjectMgr::LoadCorpses()
     delete result;
 
     sLog.outString();
-    sLog.outString( ">> Loaded %u corpses", count );
+    sLog.outString( ">> 加载了 %u 个 corpses", count );
 }
 
 void ObjectMgr::LoadReputationRewardRate()
@@ -6729,7 +6729,7 @@ void ObjectMgr::LoadReputationRewardRate()
         bar.step();
 
         sLog.outString();
-        sLog.outErrorDb(">> Loaded `reputation_reward_rate`, table is empty!");
+        sLog.outErrorDb(">> 加载 `reputation_reward_rate`, 数据表示空的!");
         return;
     }
 
@@ -6783,7 +6783,7 @@ void ObjectMgr::LoadReputationRewardRate()
     delete result;
 
     sLog.outString();
-    sLog.outString(">> Loaded %u reputation_reward_rate", count);
+    sLog.outString(">> 加载了 %u 个 reputation_reward_rate", count);
 }
 
 void ObjectMgr::LoadReputationOnKill()
@@ -6803,7 +6803,7 @@ void ObjectMgr::LoadReputationOnKill()
         bar.step();
 
         sLog.outString();
-        sLog.outErrorDb(">> Loaded 0 creature award reputation definitions. DB table `creature_onkill_reputation` is empty.");
+        sLog.outErrorDb(">> 加载 0 creature award reputation definitions. 数据表 `creature_onkill_reputation` 是空的.");
         return;
     }
 
@@ -6862,7 +6862,7 @@ void ObjectMgr::LoadReputationOnKill()
     delete result;
 
     sLog.outString();
-    sLog.outString(">> Loaded %u creature award reputation definitions", count);
+    sLog.outString(">> 加载了 %u 个 creature award reputation definitions", count);
 }
 
 void ObjectMgr::LoadReputationSpilloverTemplate()
@@ -6879,7 +6879,7 @@ void ObjectMgr::LoadReputationSpilloverTemplate()
         bar.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded `reputation_spillover_template`, table is empty.");
+        sLog.outString(">> 加载 `reputation_spillover_template`, 数据表示空的.");
         return;
     }
 
@@ -6982,7 +6982,7 @@ void ObjectMgr::LoadReputationSpilloverTemplate()
     delete result;
 
     sLog.outString();
-    sLog.outString(">> Loaded %u reputation_spillover_template", count);
+    sLog.outString(">> 加载了 %u 个 reputation_spillover_template", count);
 }
 
 void ObjectMgr::LoadPointsOfInterest()
@@ -7001,7 +7001,7 @@ void ObjectMgr::LoadPointsOfInterest()
         bar.step();
 
         sLog.outString();
-        sLog.outErrorDb(">> Loaded 0 Points of Interest definitions. DB table `points_of_interest` is empty.");
+        sLog.outErrorDb(">> 加载 0 Points of Interest definitions. 数据表 `points_of_interest` 是空的.");
         return;
     }
 
@@ -7036,7 +7036,7 @@ void ObjectMgr::LoadPointsOfInterest()
     delete result;
 
     sLog.outString();
-    sLog.outString(">> Loaded %u Points of Interest definitions", count);
+    sLog.outString(">> 加载了 %u 个 Points of Interest definitions", count);
 }
 
 void ObjectMgr::LoadQuestPOI()
@@ -7055,7 +7055,7 @@ void ObjectMgr::LoadQuestPOI()
         bar.step();
 
         sLog.outString();
-        sLog.outErrorDb(">> Loaded 0 quest POI definitions. DB table `quest_poi` is empty.");
+        sLog.outErrorDb(">> 加载 0 quest POI definitions. 数据表 `quest_poi` 是空的.");
         return;
     }
 
@@ -7114,7 +7114,7 @@ void ObjectMgr::LoadQuestPOI()
     }
 
     sLog.outString();
-    sLog.outString(">> Loaded %u quest POI definitions", count);
+    sLog.outString(">> 加载了 %u 个 quest POI definitions", count);
 }
 
 void ObjectMgr::LoadNPCSpellClickSpells()
@@ -7132,7 +7132,7 @@ void ObjectMgr::LoadNPCSpellClickSpells()
         bar.step();
 
         sLog.outString();
-        sLog.outErrorDb(">> Loaded 0 spellclick spells. DB table `npc_spellclick_spells` is empty.");
+        sLog.outErrorDb(">> 加载 0 spellclick spells. 数据表 `npc_spellclick_spells` 是空的.");
         return;
     }
 
@@ -7204,7 +7204,7 @@ void ObjectMgr::LoadNPCSpellClickSpells()
     delete result;
 
     sLog.outString();
-    sLog.outString(">> Loaded %u spellclick definitions", count);
+    sLog.outString(">> 加载了 %u 个 spellclick definitions", count);
 }
 
 void ObjectMgr::LoadWeatherZoneChances()
@@ -7221,7 +7221,7 @@ void ObjectMgr::LoadWeatherZoneChances()
         bar.step();
 
         sLog.outString();
-        sLog.outErrorDb(">> Loaded 0 weather definitions. DB table `game_weather` is empty.");
+        sLog.outErrorDb(">> 加载 0 weather definitions. 数据表 `game_weather` 是空的.");
         return;
     }
 
@@ -7267,7 +7267,7 @@ void ObjectMgr::LoadWeatherZoneChances()
     delete result;
 
     sLog.outString();
-    sLog.outString(">> Loaded %u weather definitions", count);
+    sLog.outString(">> 加载了 %u 个 weather definitions", count);
 }
 
 void ObjectMgr::DeleteCreatureData(uint32 guid)
@@ -7319,7 +7319,7 @@ void ObjectMgr::LoadQuestRelationsHelper(QuestRelationsMap& map, char const* tab
         bar.step();
 
         sLog.outString();
-        sLog.outErrorDb(">> Loaded 0 quest relations from %s. DB table `%s` is empty.",table,table);
+        sLog.outErrorDb(">> 加载 0 quest relations from %s. 数据表 `%s` 是空的.",table,table);
         return;
     }
 
@@ -7347,7 +7347,7 @@ void ObjectMgr::LoadQuestRelationsHelper(QuestRelationsMap& map, char const* tab
     delete result;
 
     sLog.outString();
-    sLog.outString(">> Loaded %u quest relations from %s", count,table);
+    sLog.outString(">> 加载了 %u 个 quest relations from %s", count,table);
 }
 
 void ObjectMgr::LoadGameobjectQuestRelations()
@@ -7420,7 +7420,7 @@ void ObjectMgr::LoadReservedPlayersNames()
         bar.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded %u reserved player names", count);
+        sLog.outString(">> 加载了 %u 个 reserved player names", count);
         return;
     }
 
@@ -7449,7 +7449,7 @@ void ObjectMgr::LoadReservedPlayersNames()
     delete result;
 
     sLog.outString();
-    sLog.outString( ">> Loaded %u reserved player names", count );
+    sLog.outString( ">> 加载了 %u 个 reserved player names", count );
 }
 
 bool ObjectMgr::IsReservedName( const std::string& name ) const
@@ -7636,7 +7636,7 @@ void ObjectMgr::LoadGameObjectForQuests()
         BarGoLink bar(1);
         bar.step();
         sLog.outString();
-        sLog.outString(">> Loaded 0 GameObjects for quests");
+        sLog.outString(">> 加载 0 GameObjects for quests");
         return;
     }
 
@@ -7710,7 +7710,7 @@ void ObjectMgr::LoadGameObjectForQuests()
     }
 
     sLog.outString();
-    sLog.outString( ">> Loaded %u GameObjects for quests", count );
+    sLog.outString( ">> 加载了 %u 个 GameObjects for quests", count );
 }
 
 bool ObjectMgr::LoadMangosStrings(DatabaseType& db, char const* table, int32 min_value, int32 max_value)
@@ -7759,9 +7759,9 @@ bool ObjectMgr::LoadMangosStrings(DatabaseType& db, char const* table, int32 min
 
         sLog.outString();
         if (min_value == MIN_MANGOS_STRING_ID)              // error only in case internal strings
-            sLog.outErrorDb(">> Loaded 0 mangos strings. DB table `%s` is empty. Cannot continue.",table);
+            sLog.outErrorDb(">> 加载 0 mangos strings. 数据表 `%s` 是空的. Cannot continue.",table);
         else
-            sLog.outString(">> Loaded 0 string templates. DB table `%s` is empty.",table);
+            sLog.outString(">> 加载 0 string templates. 数据表 `%s` 是空的.",table);
         return false;
     }
 
@@ -7823,9 +7823,9 @@ bool ObjectMgr::LoadMangosStrings(DatabaseType& db, char const* table, int32 min
 
     sLog.outString();
     if (min_value == MIN_MANGOS_STRING_ID)
-        sLog.outString( ">> Loaded %u MaNGOS strings from table %s", count,table);
+        sLog.outString( ">> 加载了 %u 个 MaNGOS strings from table %s", count,table);
     else
-        sLog.outString( ">> Loaded %u string templates from %s", count,table);
+        sLog.outString( ">> 加载了 %u 个 string templates from %s", count,table);
 
     return true;
 }
@@ -7867,7 +7867,7 @@ void ObjectMgr::LoadSpellDisabledEntrys()
         bar.step();
 
         sLog.outString();
-        sLog.outString( ">> Loaded %u disabled spells", total_count );
+        sLog.outString( ">> 加载了 %u 个 disabled spells", total_count );
         return;
     }
 
@@ -7890,7 +7890,7 @@ void ObjectMgr::LoadSpellDisabledEntrys()
     delete result;
 
     sLog.outString();
-    sLog.outString( ">> Loaded %u disabled spells ( %u - is cheaters spells)", total_count, cheat_spell_count);
+    sLog.outString( ">> 加载了 %u 个 disabled spells ( %u - is cheaters spells)", total_count, cheat_spell_count);
 }
 
 void ObjectMgr::LoadFishingBaseSkillLevel()
@@ -7907,7 +7907,7 @@ void ObjectMgr::LoadFishingBaseSkillLevel()
         bar.step();
 
         sLog.outString();
-        sLog.outErrorDb(">> Loaded `skill_fishing_base_level`, table is empty!");
+        sLog.outErrorDb(">> 加载 `skill_fishing_base_level`, 数据表示空的!");
         return;
     }
 
@@ -7936,7 +7936,7 @@ void ObjectMgr::LoadFishingBaseSkillLevel()
     delete result;
 
     sLog.outString();
-    sLog.outString(">> Loaded %u areas for fishing base skill level", count);
+    sLog.outString(">> 加载了 %u 个 areas for fishing base skill level", count);
 }
 
 // Searches for the same condition already in Conditions store
@@ -8505,7 +8505,7 @@ void ObjectMgr::LoadGameTele()
         bar.step();
 
         sLog.outString();
-        sLog.outErrorDb(">> Loaded `game_tele`, table is empty!");
+        sLog.outErrorDb(">> 加载 `game_tele`, 数据表示空的!");
         return;
     }
 
@@ -8550,7 +8550,7 @@ void ObjectMgr::LoadGameTele()
     delete result;
 
     sLog.outString();
-    sLog.outString(">> Loaded %u GameTeleports", count);
+    sLog.outString(">> 加载了 %u 个 GameTeleports", count);
 }
 
 GameTele const* ObjectMgr::GetGameTele(const std::string& name) const
@@ -8638,7 +8638,7 @@ void ObjectMgr::LoadMailLevelRewards()
         bar.step();
 
         sLog.outString();
-        sLog.outErrorDb(">> Loaded `mail_level_reward`, table is empty!");
+        sLog.outErrorDb(">> 加载 `mail_level_reward`, 数据表示空的!");
         return;
     }
 
@@ -8687,7 +8687,7 @@ void ObjectMgr::LoadMailLevelRewards()
     delete result;
 
     sLog.outString();
-    sLog.outString( ">> Loaded %u level dependent mail rewards,", count );
+    sLog.outString( ">> 加载了 %u 个 level dependent mail rewards,", count );
 }
 
 void ObjectMgr::LoadTrainers(char const* tableName, bool isTemplates)
@@ -8710,7 +8710,7 @@ void ObjectMgr::LoadTrainers(char const* tableName, bool isTemplates)
         bar.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded `%s`, table is empty!", tableName);
+        sLog.outString(">> 加载 `%s`, 数据表示空的!", tableName);
         return;
     }
 
@@ -8847,7 +8847,7 @@ void ObjectMgr::LoadTrainers(char const* tableName, bool isTemplates)
     delete result;
 
     sLog.outString();
-    sLog.outString( ">> Loaded %d trainer %sspells", count, isTemplates ? "template " : "" );
+    sLog.outString( ">> 加载 %d trainer %sspells", count, isTemplates ? "template " : "" );
 }
 
 void ObjectMgr::LoadTrainerTemplates()
@@ -8897,7 +8897,7 @@ void ObjectMgr::LoadVendors(char const* tableName, bool isTemplates)
         bar.step();
 
         sLog.outString();
-        sLog.outString(">> Loaded `%s`, table is empty!", tableName);
+        sLog.outString(">> 加载 `%s`, 数据表示空的!", tableName);
         return;
     }
 
@@ -8927,7 +8927,7 @@ void ObjectMgr::LoadVendors(char const* tableName, bool isTemplates)
     delete result;
 
     sLog.outString();
-    sLog.outString( ">> Loaded %u vendor %sitems", count, isTemplates ? "template " : "");
+    sLog.outString( ">> 加载了 %u 个 vendor %sitems", count, isTemplates ? "template " : "");
 }
 
 
@@ -8972,7 +8972,7 @@ void ObjectMgr::LoadNpcGossips()
         bar.step();
 
         sLog.outString();
-        sLog.outErrorDb(">> Loaded `npc_gossip`, table is empty!");
+        sLog.outErrorDb(">> 加载 `npc_gossip`, 数据表示空的!");
         return;
     }
 
@@ -9007,7 +9007,7 @@ void ObjectMgr::LoadNpcGossips()
     delete result;
 
     sLog.outString();
-    sLog.outString( ">> Loaded %d NpcTextId ", count );
+    sLog.outString( ">> 加载 %d NpcTextId ", count );
 }
 
 void ObjectMgr::LoadGossipMenu(std::set<uint32>& gossipScriptSet)
@@ -9025,7 +9025,7 @@ void ObjectMgr::LoadGossipMenu(std::set<uint32>& gossipScriptSet)
         bar.step();
 
         sLog.outString();
-        sLog.outErrorDb(">> Loaded gossip_menu, table is empty!");
+        sLog.outErrorDb(">> 加载 gossip_menu, 数据表示空的!");
         return;
     }
 
@@ -9095,7 +9095,7 @@ void ObjectMgr::LoadGossipMenu(std::set<uint32>& gossipScriptSet)
     delete result;
 
     sLog.outString();
-    sLog.outString( ">> Loaded %u gossip_menu entries", count);
+    sLog.outString( ">> 加载了 %u 个 gossip_menu entries", count);
 
     // post loading tests
     for(uint32 i = 1; i < sCreatureStorage.MaxEntry; ++i)
@@ -9130,7 +9130,7 @@ void ObjectMgr::LoadGossipMenuItems(std::set<uint32>& gossipScriptSet)
         bar.step();
 
         sLog.outString();
-        sLog.outErrorDb(">> Loaded gossip_menu_option, table is empty!");
+        sLog.outErrorDb(">> 加载 gossip_menu_option, 数据表示空的!");
         return;
     }
 
@@ -9300,7 +9300,7 @@ void ObjectMgr::LoadGossipMenuItems(std::set<uint32>& gossipScriptSet)
     }
 
     sLog.outString();
-    sLog.outString(">> Loaded %u gossip_menu_option entries", count);
+    sLog.outString(">> 加载了 %u 个 gossip_menu_option entries", count);
 }
 
 void ObjectMgr::LoadGossipMenus()

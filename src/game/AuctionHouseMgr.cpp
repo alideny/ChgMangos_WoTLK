@@ -270,7 +270,7 @@ void AuctionHouseMgr::LoadAuctionItems()
         BarGoLink bar(1);
         bar.step();
         sLog.outString();
-        sLog.outString(">> Loaded 0 auction items");
+        sLog.outString(">> 加载 0 auction items");
         return;
     }
 
@@ -310,7 +310,7 @@ void AuctionHouseMgr::LoadAuctionItems()
     delete result;
 
     sLog.outString();
-    sLog.outString(">> Loaded %u auction items", count);
+    sLog.outString(">> 加载了 %u 个 auction items", count);
 }
 
 void AuctionHouseMgr::LoadAuctions()
@@ -321,7 +321,7 @@ void AuctionHouseMgr::LoadAuctions()
         BarGoLink bar(1);
         bar.step();
         sLog.outString();
-        sLog.outString(">> Loaded 0 auctions. DB table `auction` is empty.");
+        sLog.outString(">> 加载 0 auctions. 数据表 `auction` 是空的.");
         return;
     }
 
@@ -334,7 +334,7 @@ void AuctionHouseMgr::LoadAuctions()
         BarGoLink bar(1);
         bar.step();
         sLog.outString();
-        sLog.outString(">> Loaded 0 auctions. DB table `auction` is empty.");
+        sLog.outString(">> 加载 0 auctions. 数据表 `auction` 是空的.");
         return;
     }
 
@@ -344,7 +344,7 @@ void AuctionHouseMgr::LoadAuctions()
         BarGoLink bar(1);
         bar.step();
         sLog.outString();
-        sLog.outString(">> Loaded 0 auctions. DB table `auction` is empty.");
+        sLog.outString(">> 加载 0 auctions. 数据表 `auction` 是空的.");
         return;
     }
 
@@ -459,7 +459,7 @@ void AuctionHouseMgr::LoadAuctions()
     delete result;
 
     sLog.outString();
-    sLog.outString(">> Loaded %u auctions", AuctionCount);
+    sLog.outString(">> 加载了 %u 个 auctions", AuctionCount);
 }
 
 void AuctionHouseMgr::AddAItem(Item* it)
