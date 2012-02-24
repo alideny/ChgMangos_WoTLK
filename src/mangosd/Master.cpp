@@ -95,8 +95,15 @@ public:
             // possible freeze
             else if (WorldTimer::getMSTimeDiff(w_lastchange, curtime) > _delaytime)
             {
-                sLog.outError("世界服务器启动失败！");
-                *((uint32 volatile*)NULL) = 0;              // bang crash
+                if (WorldTimer::getMSTimeDiff(w_lastchange, curtime) > (60 * 60 * IN_MILLISECONDS) - 1)
+                {
+                    sLog.outError("启动失败，请检查系统配置！");
+                }
+                else
+                {
+                    sLog.outError("世界服务器线程启动失败！关闭服务器。");
+                    *((uint32 volatile*)NULL) = 0;              // bang crash
+                }
             }
         }
         sLog.outString("世界服务器线程初始化完成。");
