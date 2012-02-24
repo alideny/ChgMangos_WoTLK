@@ -1664,7 +1664,7 @@ SpellEntry const *Creature::ReachWithSpellAttack(Unit *pVictim)
         SpellEntry const *spellInfo = sSpellStore.LookupEntry(spellID);
         if(!spellInfo)
         {
-            sLog.outError("WORLD: unknown spell id %i", spellID);
+            sLog.outError("世界: 未知的技能 ID %i", spellID);
             continue;
         }
 
@@ -1718,7 +1718,7 @@ SpellEntry const *Creature::ReachWithSpellCure(Unit *pVictim)
         SpellEntry const *spellInfo = sSpellStore.LookupEntry(spellID);
         if(!spellInfo)
         {
-            sLog.outError("WORLD: unknown spell id %i", spellID);
+            sLog.outError("世界: 未知的技能 ID %i", spellID);
             continue;
         }
 
@@ -1799,7 +1799,7 @@ void Creature::SendAIReaction(AiReaction reactionType)
 
     ((WorldObject*)this)->SendMessageToSet(&data, true);
 
-    DEBUG_FILTER_LOG(LOG_FILTER_AI_AND_MOVEGENSS, "WORLD: Sent SMSG_AI_REACTION, type %u.", reactionType);
+    DEBUG_FILTER_LOG(LOG_FILTER_AI_AND_MOVEGENSS, "世界: Sent SMSG_AI_REACTION, type %u.", reactionType);
 }
 
 void Creature::CallAssistance()

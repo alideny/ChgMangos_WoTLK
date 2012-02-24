@@ -263,7 +263,7 @@ bool ChatHandler::HandleReloadAllAreaCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadAllLootCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Loot Tables..." );
+    sLog.outString( "重新加载 Loot Tables..." );
     LoadLootTables();
     SendGlobalSysMessage("DB tables `*_loot_template` reloaded.");
     return true;
@@ -286,7 +286,7 @@ bool ChatHandler::HandleReloadAllQuestCommand(char* /*args*/)
     HandleReloadQuestPOICommand((char*)"a");
     HandleReloadQuestTemplateCommand((char*)"a");
 
-    sLog.outString( "Re-Loading Quests Relations..." );
+    sLog.outString( "重新加载 Quests Relations..." );
     sObjectMgr.LoadQuestRelations();
     SendGlobalSysMessage("DB tables `*_questrelation` and `*_involvedrelation` reloaded.");
     return true;
@@ -301,7 +301,7 @@ bool ChatHandler::HandleReloadAllScriptsCommand(char* /*args*/)
         return false;
     }
 
-    sLog.outString( "Re-Loading Scripts..." );
+    sLog.outString( "重新加载 Scripts..." );
     HandleReloadGameObjectScriptsCommand((char*)"a");
     HandleReloadGossipScriptsCommand((char*)"a");
     HandleReloadEventScriptsCommand((char*)"a");
@@ -376,7 +376,7 @@ bool ChatHandler::HandleReloadAllLocalesCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadConfigCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading config settings..." );
+    sLog.outString( "重新加载 config settings..." );
     sWorld.LoadConfigSettings(true);
     sMapMgr.InitializeVisibilityDistanceInfo();
     SendGlobalSysMessage("World config settings reloaded.");
@@ -385,7 +385,7 @@ bool ChatHandler::HandleReloadConfigCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadAchievementCriteriaRequirementCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Additional Achievement Criteria Requirements Data..." );
+    sLog.outString( "重新加载 Additional Achievement Criteria Requirements Data..." );
     sAchievementMgr.LoadAchievementCriteriaRequirements();
     SendGlobalSysMessage("DB table `achievement_criteria_requirement` reloaded.");
     return true;
@@ -393,7 +393,7 @@ bool ChatHandler::HandleReloadAchievementCriteriaRequirementCommand(char* /*args
 
 bool ChatHandler::HandleReloadAchievementRewardCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Achievement Reward Data..." );
+    sLog.outString( "重新加载 Achievement Reward Data..." );
     sAchievementMgr.LoadRewards();
     SendGlobalSysMessage("DB table `achievement_reward` reloaded.");
     return true;
@@ -401,7 +401,7 @@ bool ChatHandler::HandleReloadAchievementRewardCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadAreaTriggerTavernCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Tavern Area Triggers..." );
+    sLog.outString( "重新加载 Tavern Area Triggers..." );
     sObjectMgr.LoadTavernAreaTriggers();
     SendGlobalSysMessage("DB table `areatrigger_tavern` reloaded.");
     return true;
@@ -409,7 +409,7 @@ bool ChatHandler::HandleReloadAreaTriggerTavernCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadAreaTriggerTeleportCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading AreaTrigger teleport definitions..." );
+    sLog.outString( "重新加载 AreaTrigger teleport definitions..." );
     sObjectMgr.LoadAreaTriggerTeleports();
     SendGlobalSysMessage("DB table `areatrigger_teleport` reloaded.");
     return true;
@@ -455,7 +455,7 @@ bool ChatHandler::HandleReloadGossipScriptsCommand(char* args)
     }
 
     if (*args!='a')
-        sLog.outString( "Re-Loading Scripts from `gossip_scripts`...");
+        sLog.outString( "重新加载 Scripts from `gossip_scripts`...");
 
     sScriptMgr.LoadGossipScripts();
 
@@ -483,7 +483,7 @@ bool ChatHandler::HandleReloadGOQuestInvRelationsCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadQuestAreaTriggersCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Quest Area Triggers..." );
+    sLog.outString( "重新加载 Quest Area Triggers..." );
     sObjectMgr.LoadQuestAreaTriggers();
     SendGlobalSysMessage("DB table `areatrigger_involvedrelation` (quest area triggers) reloaded.");
     return true;
@@ -491,12 +491,12 @@ bool ChatHandler::HandleReloadQuestAreaTriggersCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadQuestTemplateCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Quest Templates..." );
+    sLog.outString( "重新加载 Quest Templates..." );
     sObjectMgr.LoadQuests();
     SendGlobalSysMessage("DB table `quest_template` (quest definitions) reloaded.");
 
     /// dependent also from `gameobject` but this table not reloaded anyway
-    sLog.outString( "Re-Loading GameObjects for quests..." );
+    sLog.outString( "重新加载 GameObjects for quests..." );
     sObjectMgr.LoadGameObjectForQuests();
     SendGlobalSysMessage("Data GameObjects for quests reloaded.");
     return true;
@@ -504,7 +504,7 @@ bool ChatHandler::HandleReloadQuestTemplateCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadLootTemplatesCreatureCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Loot Tables... (`creature_loot_template`)" );
+    sLog.outString( "重新加载 Loot Tables... (`creature_loot_template`)" );
     LoadLootTemplates_Creature();
     LootTemplates_Creature.CheckLootRefs();
     SendGlobalSysMessage("DB table `creature_loot_template` reloaded.");
@@ -513,7 +513,7 @@ bool ChatHandler::HandleReloadLootTemplatesCreatureCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadLootTemplatesDisenchantCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Loot Tables... (`disenchant_loot_template`)" );
+    sLog.outString( "重新加载 Loot Tables... (`disenchant_loot_template`)" );
     LoadLootTemplates_Disenchant();
     LootTemplates_Disenchant.CheckLootRefs();
     SendGlobalSysMessage("DB table `disenchant_loot_template` reloaded.");
@@ -522,7 +522,7 @@ bool ChatHandler::HandleReloadLootTemplatesDisenchantCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadLootTemplatesFishingCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Loot Tables... (`fishing_loot_template`)" );
+    sLog.outString( "重新加载 Loot Tables... (`fishing_loot_template`)" );
     LoadLootTemplates_Fishing();
     LootTemplates_Fishing.CheckLootRefs();
     SendGlobalSysMessage("DB table `fishing_loot_template` reloaded.");
@@ -531,7 +531,7 @@ bool ChatHandler::HandleReloadLootTemplatesFishingCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadLootTemplatesGameobjectCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Loot Tables... (`gameobject_loot_template`)" );
+    sLog.outString( "重新加载 Loot Tables... (`gameobject_loot_template`)" );
     LoadLootTemplates_Gameobject();
     LootTemplates_Gameobject.CheckLootRefs();
     SendGlobalSysMessage("DB table `gameobject_loot_template` reloaded.");
@@ -540,7 +540,7 @@ bool ChatHandler::HandleReloadLootTemplatesGameobjectCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadLootTemplatesItemCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Loot Tables... (`item_loot_template`)" );
+    sLog.outString( "重新加载 Loot Tables... (`item_loot_template`)" );
     LoadLootTemplates_Item();
     LootTemplates_Item.CheckLootRefs();
     SendGlobalSysMessage("DB table `item_loot_template` reloaded.");
@@ -549,7 +549,7 @@ bool ChatHandler::HandleReloadLootTemplatesItemCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadLootTemplatesMillingCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Loot Tables... (`milling_loot_template`)" );
+    sLog.outString( "重新加载 Loot Tables... (`milling_loot_template`)" );
     LoadLootTemplates_Milling();
     LootTemplates_Milling.CheckLootRefs();
     SendGlobalSysMessage("DB table `milling_loot_template` reloaded.");
@@ -558,7 +558,7 @@ bool ChatHandler::HandleReloadLootTemplatesMillingCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadLootTemplatesPickpocketingCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Loot Tables... (`pickpocketing_loot_template`)" );
+    sLog.outString( "重新加载 Loot Tables... (`pickpocketing_loot_template`)" );
     LoadLootTemplates_Pickpocketing();
     LootTemplates_Pickpocketing.CheckLootRefs();
     SendGlobalSysMessage("DB table `pickpocketing_loot_template` reloaded.");
@@ -567,7 +567,7 @@ bool ChatHandler::HandleReloadLootTemplatesPickpocketingCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadLootTemplatesProspectingCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Loot Tables... (`prospecting_loot_template`)" );
+    sLog.outString( "重新加载 Loot Tables... (`prospecting_loot_template`)" );
     LoadLootTemplates_Prospecting();
     LootTemplates_Prospecting.CheckLootRefs();
     SendGlobalSysMessage("DB table `prospecting_loot_template` reloaded.");
@@ -576,7 +576,7 @@ bool ChatHandler::HandleReloadLootTemplatesProspectingCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadLootTemplatesMailCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Loot Tables... (`mail_loot_template`)" );
+    sLog.outString( "重新加载 Loot Tables... (`mail_loot_template`)" );
     LoadLootTemplates_Mail();
     LootTemplates_Mail.CheckLootRefs();
     SendGlobalSysMessage("DB table `mail_loot_template` reloaded.");
@@ -585,7 +585,7 @@ bool ChatHandler::HandleReloadLootTemplatesMailCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadLootTemplatesReferenceCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Loot Tables... (`reference_loot_template`)" );
+    sLog.outString( "重新加载 Loot Tables... (`reference_loot_template`)" );
     LoadLootTemplates_Reference();
     SendGlobalSysMessage("DB table `reference_loot_template` reloaded.");
     return true;
@@ -593,7 +593,7 @@ bool ChatHandler::HandleReloadLootTemplatesReferenceCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadLootTemplatesSkinningCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Loot Tables... (`skinning_loot_template`)" );
+    sLog.outString( "重新加载 Loot Tables... (`skinning_loot_template`)" );
     LoadLootTemplates_Skinning();
     LootTemplates_Skinning.CheckLootRefs();
     SendGlobalSysMessage("DB table `skinning_loot_template` reloaded.");
@@ -602,7 +602,7 @@ bool ChatHandler::HandleReloadLootTemplatesSkinningCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadLootTemplatesSpellCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Loot Tables... (`spell_loot_template`)" );
+    sLog.outString( "重新加载 Loot Tables... (`spell_loot_template`)" );
     LoadLootTemplates_Spell();
     LootTemplates_Spell.CheckLootRefs();
     SendGlobalSysMessage("DB table `spell_loot_template` reloaded.");
@@ -611,7 +611,7 @@ bool ChatHandler::HandleReloadLootTemplatesSpellCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadMangosStringCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading mangos_string Table!" );
+    sLog.outString( "重新加载 mangos_string Table!" );
     sObjectMgr.LoadMangosStrings();
     SendGlobalSysMessage("DB table `mangos_string` reloaded.");
     return true;
@@ -619,7 +619,7 @@ bool ChatHandler::HandleReloadMangosStringCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadNpcGossipCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading `npc_gossip` Table!" );
+    sLog.outString( "重新加载 `npc_gossip` Table!" );
     sObjectMgr.LoadNpcGossips();
     SendGlobalSysMessage("DB table `npc_gossip` reloaded.");
     return true;
@@ -627,7 +627,7 @@ bool ChatHandler::HandleReloadNpcGossipCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadNpcTextCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading `npc_text` Table!" );
+    sLog.outString( "重新加载 `npc_text` Table!" );
     sObjectMgr.LoadGossipText();
     SendGlobalSysMessage("DB table `npc_text` reloaded.");
     return true;
@@ -635,11 +635,11 @@ bool ChatHandler::HandleReloadNpcTextCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadNpcTrainerCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading `npc_trainer_template` Table!" );
+    sLog.outString( "重新加载 `npc_trainer_template` Table!" );
     sObjectMgr.LoadTrainerTemplates();
     SendGlobalSysMessage("DB table `npc_trainer_template` reloaded.");
 
-    sLog.outString( "Re-Loading `npc_trainer` Table!" );
+    sLog.outString( "重新加载 `npc_trainer` Table!" );
     sObjectMgr.LoadTrainers();
     SendGlobalSysMessage("DB table `npc_trainer` reloaded.");
     return true;
@@ -648,11 +648,11 @@ bool ChatHandler::HandleReloadNpcTrainerCommand(char* /*args*/)
 bool ChatHandler::HandleReloadNpcVendorCommand(char* /*args*/)
 {
     // not safe reload vendor template tables independent...
-    sLog.outString( "Re-Loading `npc_vendor_template` Table!" );
+    sLog.outString( "重新加载 `npc_vendor_template` Table!" );
     sObjectMgr.LoadVendorTemplates();
     SendGlobalSysMessage("DB table `npc_vendor_template` reloaded.");
 
-    sLog.outString( "Re-Loading `npc_vendor` Table!" );
+    sLog.outString( "重新加载 `npc_vendor` Table!" );
     sObjectMgr.LoadVendors();
     SendGlobalSysMessage("DB table `npc_vendor` reloaded.");
     return true;
@@ -660,7 +660,7 @@ bool ChatHandler::HandleReloadNpcVendorCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadPointsOfInterestCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading `points_of_interest` Table!" );
+    sLog.outString( "重新加载 `points_of_interest` Table!" );
     sObjectMgr.LoadPointsOfInterest();
     SendGlobalSysMessage("DB table `points_of_interest` reloaded.");
     return true;
@@ -668,7 +668,7 @@ bool ChatHandler::HandleReloadPointsOfInterestCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadQuestPOICommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading `quest_poi` and `quest_poi_points` Tables!" );
+    sLog.outString( "重新加载 `quest_poi` and `quest_poi_points` Tables!" );
     sObjectMgr.LoadQuestPOI();
     SendGlobalSysMessage("DB Table `quest_poi` and `quest_poi_points` reloaded.");
     return true;
@@ -676,7 +676,7 @@ bool ChatHandler::HandleReloadQuestPOICommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadSpellClickSpellsCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading `npc_spellclick_spells` Table!" );
+    sLog.outString( "重新加载 `npc_spellclick_spells` Table!" );
     sObjectMgr.LoadNPCSpellClickSpells();
     SendGlobalSysMessage("DB table `npc_spellclick_spells` reloaded.");
     return true;
@@ -692,7 +692,7 @@ bool ChatHandler::HandleReloadReservedNameCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadReputationRewardRateCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading `reputation_reward_rate` Table!" );
+    sLog.outString( "重新加载 `reputation_reward_rate` Table!" );
     sObjectMgr.LoadReputationRewardRate();
     SendGlobalSysMessage("DB table `reputation_reward_rate` reloaded.");
     return true;
@@ -700,7 +700,7 @@ bool ChatHandler::HandleReloadReputationRewardRateCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadReputationSpilloverTemplateCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading `reputation_spillover_template` Table!" );
+    sLog.outString( "重新加载 `reputation_spillover_template` Table!" );
     sObjectMgr.LoadReputationSpilloverTemplate();
     SendGlobalSysMessage("DB table `reputation_spillover_template` reloaded.");
     return true;
@@ -708,7 +708,7 @@ bool ChatHandler::HandleReloadReputationSpilloverTemplateCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadSkillDiscoveryTemplateCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Skill Discovery Table..." );
+    sLog.outString( "重新加载 Skill Discovery Table..." );
     sSpellMgr.LoadSkillDiscoveryTable();
     SendGlobalSysMessage("DB table `skill_discovery_template` (recipes discovered at crafting) reloaded.");
     return true;
@@ -716,7 +716,7 @@ bool ChatHandler::HandleReloadSkillDiscoveryTemplateCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadSkillExtraItemTemplateCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Skill Extra Item Table..." );
+    sLog.outString( "重新加载 Skill Extra Item Table..." );
     sSpellMgr.LoadSkillExtraItemTable();
     SendGlobalSysMessage("DB table `skill_extra_item_template` (extra item creation when crafting) reloaded.");
     return true;
@@ -724,7 +724,7 @@ bool ChatHandler::HandleReloadSkillExtraItemTemplateCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadSkillFishingBaseLevelCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Skill Fishing base level requirements..." );
+    sLog.outString( "重新加载 Skill Fishing base level requirements..." );
     sObjectMgr.LoadFishingBaseSkillLevel();
     SendGlobalSysMessage("DB table `skill_fishing_base_level` (fishing base level for zone/subzone) reloaded.");
     return true;
@@ -732,7 +732,7 @@ bool ChatHandler::HandleReloadSkillFishingBaseLevelCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadSpellAreaCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading SpellArea Data..." );
+    sLog.outString( "重新加载 SpellArea Data..." );
     sSpellMgr.LoadSpellAreas();
     SendGlobalSysMessage("DB table `spell_area` (spell dependences from area/quest/auras state) reloaded.");
     return true;
@@ -740,7 +740,7 @@ bool ChatHandler::HandleReloadSpellAreaCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadSpellBonusesCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Spell Bonus Data..." );
+    sLog.outString( "重新加载 Spell Bonus Data..." );
     sSpellMgr.LoadSpellBonuses();
     SendGlobalSysMessage("DB table `spell_bonus_data` (spell damage/healing coefficients) reloaded.");
     return true;
@@ -748,7 +748,7 @@ bool ChatHandler::HandleReloadSpellBonusesCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadSpellChainCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Spell Chain Data... " );
+    sLog.outString( "重新加载 Spell Chain Data... " );
     sSpellMgr.LoadSpellChains();
     SendGlobalSysMessage("DB table `spell_chain` (spell ranks) reloaded.");
     return true;
@@ -756,7 +756,7 @@ bool ChatHandler::HandleReloadSpellChainCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadSpellElixirCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Spell Elixir types..." );
+    sLog.outString( "重新加载 Spell Elixir types..." );
     sSpellMgr.LoadSpellElixirs();
     SendGlobalSysMessage("DB table `spell_elixir` (spell elixir types) reloaded.");
     return true;
@@ -764,7 +764,7 @@ bool ChatHandler::HandleReloadSpellElixirCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadSpellLearnSpellCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Spell Learn Spells..." );
+    sLog.outString( "重新加载 Spell Learn Spells..." );
     sSpellMgr.LoadSpellLearnSpells();
     SendGlobalSysMessage("DB table `spell_learn_spell` reloaded.");
     return true;
@@ -772,7 +772,7 @@ bool ChatHandler::HandleReloadSpellLearnSpellCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadSpellProcEventCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Spell Proc Event conditions..." );
+    sLog.outString( "重新加载 Spell Proc Event conditions..." );
     sSpellMgr.LoadSpellProcEvents();
     SendGlobalSysMessage("DB table `spell_proc_event` (spell proc trigger requirements) reloaded.");
     return true;
@@ -780,7 +780,7 @@ bool ChatHandler::HandleReloadSpellProcEventCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadSpellProcItemEnchantCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Spell Proc Item Enchant..." );
+    sLog.outString( "重新加载 Spell Proc Item Enchant..." );
     sSpellMgr.LoadSpellProcItemEnchant();
     SendGlobalSysMessage("DB table `spell_proc_item_enchant` (item enchantment ppm) reloaded.");
     return true;
@@ -788,7 +788,7 @@ bool ChatHandler::HandleReloadSpellProcItemEnchantCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadSpellScriptTargetCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading SpellsScriptTarget..." );
+    sLog.outString( "重新加载 SpellsScriptTarget..." );
     sSpellMgr.LoadSpellScriptTarget();
     SendGlobalSysMessage("DB table `spell_script_target` (spell targets selection in case specific creature/GO requirements) reloaded.");
     return true;
@@ -796,7 +796,7 @@ bool ChatHandler::HandleReloadSpellScriptTargetCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadSpellTargetPositionCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading spell target destination coordinates..." );
+    sLog.outString( "重新加载 spell target destination coordinates..." );
     sSpellMgr.LoadSpellTargetPositions();
     SendGlobalSysMessage("DB table `spell_target_position` (destination coordinates for spell targets) reloaded.");
     return true;
@@ -804,7 +804,7 @@ bool ChatHandler::HandleReloadSpellTargetPositionCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadSpellThreatsCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Aggro Spells Definitions...");
+    sLog.outString( "重新加载 Aggro Spells Definitions...");
     sSpellMgr.LoadSpellThreats();
     SendGlobalSysMessage("DB table `spell_threat` (spell aggro definitions) reloaded.");
     return true;
@@ -812,7 +812,7 @@ bool ChatHandler::HandleReloadSpellThreatsCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadSpellPetAurasCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Spell pet auras...");
+    sLog.outString( "重新加载 Spell pet auras...");
     sSpellMgr.LoadSpellPetAuras();
     SendGlobalSysMessage("DB table `spell_pet_auras` reloaded.");
     return true;
@@ -820,7 +820,7 @@ bool ChatHandler::HandleReloadSpellPetAurasCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadPageTextsCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Page Texts..." );
+    sLog.outString( "重新加载 Page Texts..." );
     sObjectMgr.LoadPageTexts();
     SendGlobalSysMessage("DB table `page_texts` reloaded.");
     return true;
@@ -828,7 +828,7 @@ bool ChatHandler::HandleReloadPageTextsCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadItemEnchantementsCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Item Random Enchantments Table..." );
+    sLog.outString( "重新加载 Item Random Enchantments Table..." );
     LoadRandomEnchantmentsTable();
     SendGlobalSysMessage("DB table `item_enchantment_template` reloaded.");
     return true;
@@ -836,7 +836,7 @@ bool ChatHandler::HandleReloadItemEnchantementsCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadItemConvertCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Item Converts Table..." );
+    sLog.outString( "重新加载 Item Converts Table..." );
     sObjectMgr.LoadItemConverts();
     SendGlobalSysMessage("DB table `item_convert` reloaded.");
     return true;
@@ -844,7 +844,7 @@ bool ChatHandler::HandleReloadItemConvertCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadItemRequiredTragetCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Item Required Targets Table..." );
+    sLog.outString( "重新加载 Item Required Targets Table..." );
     sObjectMgr.LoadItemRequiredTarget();
     SendGlobalSysMessage("DB table `item_required_target` reloaded.");
     return true;
@@ -852,7 +852,7 @@ bool ChatHandler::HandleReloadItemRequiredTragetCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadBattleEventCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading BattleGround Eventindexes..." );
+    sLog.outString( "重新加载 BattleGround Eventindexes..." );
     sBattleGroundMgr.LoadBattleEventIndexes();
     SendGlobalSysMessage("DB table `gameobject_battleground` and `creature_battleground` reloaded.");
     return true;
@@ -868,7 +868,7 @@ bool ChatHandler::HandleReloadGameObjectScriptsCommand(char* args)
     }
 
     if (*args!='a')
-        sLog.outString( "Re-Loading Scripts from `gameobject_scripts`...");
+        sLog.outString( "重新加载 Scripts from `gameobject_scripts`...");
 
     sScriptMgr.LoadGameObjectScripts();
 
@@ -888,7 +888,7 @@ bool ChatHandler::HandleReloadEventScriptsCommand(char* args)
     }
 
     if (*args!='a')
-        sLog.outString( "Re-Loading Scripts from `event_scripts`...");
+        sLog.outString( "重新加载 Scripts from `event_scripts`...");
 
     sScriptMgr.LoadEventScripts();
 
@@ -901,7 +901,7 @@ bool ChatHandler::HandleReloadEventScriptsCommand(char* args)
 bool ChatHandler::HandleReloadEventAITextsCommand(char* /*args*/)
 {
 
-    sLog.outString( "Re-Loading Texts from `creature_ai_texts`...");
+    sLog.outString( "重新加载 Texts from `creature_ai_texts`...");
     sEventAIMgr.LoadCreatureEventAI_Texts(true);
     SendGlobalSysMessage("DB table `creature_ai_texts` reloaded.");
     return true;
@@ -909,7 +909,7 @@ bool ChatHandler::HandleReloadEventAITextsCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadEventAISummonsCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Summons from `creature_ai_summons`...");
+    sLog.outString( "重新加载 Summons from `creature_ai_summons`...");
     sEventAIMgr.LoadCreatureEventAI_Summons(true);
     SendGlobalSysMessage("DB table `creature_ai_summons` reloaded.");
     return true;
@@ -917,7 +917,7 @@ bool ChatHandler::HandleReloadEventAISummonsCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadEventAIScriptsCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Scripts from `creature_ai_scripts`...");
+    sLog.outString( "重新加载 Scripts from `creature_ai_scripts`...");
     sEventAIMgr.LoadCreatureEventAI_Scripts();
     SendGlobalSysMessage("DB table `creature_ai_scripts` reloaded.");
     return true;
@@ -933,7 +933,7 @@ bool ChatHandler::HandleReloadQuestEndScriptsCommand(char* args)
     }
 
     if (*args != 'a')
-        sLog.outString( "Re-Loading Scripts from `quest_end_scripts`...");
+        sLog.outString( "重新加载 Scripts from `quest_end_scripts`...");
 
     sScriptMgr.LoadQuestEndScripts();
 
@@ -953,7 +953,7 @@ bool ChatHandler::HandleReloadQuestStartScriptsCommand(char* args)
     }
 
     if (*args != 'a')
-        sLog.outString( "Re-Loading Scripts from `quest_start_scripts`...");
+        sLog.outString( "重新加载 Scripts from `quest_start_scripts`...");
 
     sScriptMgr.LoadQuestStartScripts();
 
@@ -973,7 +973,7 @@ bool ChatHandler::HandleReloadSpellScriptsCommand(char* args)
     }
 
     if (*args != 'a')
-        sLog.outString( "Re-Loading Scripts from `spell_scripts`...");
+        sLog.outString( "重新加载 Scripts from `spell_scripts`...");
 
     sScriptMgr.LoadSpellScripts();
 
@@ -985,7 +985,7 @@ bool ChatHandler::HandleReloadSpellScriptsCommand(char* args)
 
 bool ChatHandler::HandleReloadDbScriptStringCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Script strings from `db_script_string`...");
+    sLog.outString( "重新加载 Script strings from `db_script_string`...");
     sScriptMgr.LoadDbScriptStrings();
     SendGlobalSysMessage("DB table `db_script_string` reloaded.");
     return true;
@@ -993,7 +993,7 @@ bool ChatHandler::HandleReloadDbScriptStringCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadGameGraveyardZoneCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Graveyard-zone links...");
+    sLog.outString( "重新加载 Graveyard-zone links...");
 
     sObjectMgr.LoadGraveyardZones();
 
@@ -1004,7 +1004,7 @@ bool ChatHandler::HandleReloadGameGraveyardZoneCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadGameTeleCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Game Tele coordinates...");
+    sLog.outString( "重新加载 Game Tele coordinates...");
 
     sObjectMgr.LoadGameTele();
 
@@ -1015,7 +1015,7 @@ bool ChatHandler::HandleReloadGameTeleCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadLocalesAchievementRewardCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Locales Achievement Reward Data..." );
+    sLog.outString( "重新加载 Locales Achievement Reward Data..." );
     sAchievementMgr.LoadRewardLocales();
     SendGlobalSysMessage("DB table `locales_achievement_reward` reloaded.");
     return true;
@@ -1023,7 +1023,7 @@ bool ChatHandler::HandleReloadLocalesAchievementRewardCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadLocalesCreatureCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Locales Creature ...");
+    sLog.outString( "重新加载 Locales Creature ...");
     sObjectMgr.LoadCreatureLocales();
     SendGlobalSysMessage("DB table `locales_creature` reloaded.");
     return true;
@@ -1031,7 +1031,7 @@ bool ChatHandler::HandleReloadLocalesCreatureCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadLocalesGameobjectCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Locales Gameobject ... ");
+    sLog.outString( "重新加载 Locales Gameobject ... ");
     sObjectMgr.LoadGameObjectLocales();
     SendGlobalSysMessage("DB table `locales_gameobject` reloaded.");
     return true;
@@ -1039,7 +1039,7 @@ bool ChatHandler::HandleReloadLocalesGameobjectCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadLocalesGossipMenuOptionCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Locales Gossip Menu Option ... ");
+    sLog.outString( "重新加载 Locales Gossip Menu Option ... ");
     sObjectMgr.LoadGossipMenuItemsLocales();
     SendGlobalSysMessage("DB table `locales_gossip_menu_option` reloaded.");
     return true;
@@ -1047,7 +1047,7 @@ bool ChatHandler::HandleReloadLocalesGossipMenuOptionCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadLocalesItemCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Locales Item ... ");
+    sLog.outString( "重新加载 Locales Item ... ");
     sObjectMgr.LoadItemLocales();
     SendGlobalSysMessage("DB table `locales_item` reloaded.");
     return true;
@@ -1055,7 +1055,7 @@ bool ChatHandler::HandleReloadLocalesItemCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadLocalesNpcTextCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Locales NPC Text ... ");
+    sLog.outString( "重新加载 Locales NPC Text ... ");
     sObjectMgr.LoadGossipTextLocales();
     SendGlobalSysMessage("DB table `locales_npc_text` reloaded.");
     return true;
@@ -1063,7 +1063,7 @@ bool ChatHandler::HandleReloadLocalesNpcTextCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadLocalesPageTextCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Locales Page Text ... ");
+    sLog.outString( "重新加载 Locales Page Text ... ");
     sObjectMgr.LoadPageTextLocales();
     SendGlobalSysMessage("DB table `locales_page_text` reloaded.");
     return true;
@@ -1071,7 +1071,7 @@ bool ChatHandler::HandleReloadLocalesPageTextCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadLocalesPointsOfInterestCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Locales Points Of Interest ... ");
+    sLog.outString( "重新加载 Locales Points Of Interest ... ");
     sObjectMgr.LoadPointOfInterestLocales();
     SendGlobalSysMessage("DB table `locales_points_of_interest` reloaded.");
     return true;
@@ -1079,7 +1079,7 @@ bool ChatHandler::HandleReloadLocalesPointsOfInterestCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadLocalesQuestCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Locales Quest ... ");
+    sLog.outString( "重新加载 Locales Quest ... ");
     sObjectMgr.LoadQuestLocales();
     SendGlobalSysMessage("DB table `locales_quest` reloaded.");
     return true;
@@ -1087,7 +1087,7 @@ bool ChatHandler::HandleReloadLocalesQuestCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadMailLevelRewardCommand(char* /*args*/)
 {
-    sLog.outString( "Re-Loading Player level dependent mail rewards..." );
+    sLog.outString( "重新加载 Player level dependent mail rewards..." );
     sObjectMgr.LoadMailLevelRewards();
     SendGlobalSysMessage("DB table `mail_level_reward` reloaded.");
     return true;
@@ -1095,7 +1095,7 @@ bool ChatHandler::HandleReloadMailLevelRewardCommand(char* /*args*/)
 
 bool ChatHandler::HandleReloadSpellDisabledCommand(char* /*arg*/)
 {
-    sLog.outString( "Re-Loading spell disabled table...");
+    sLog.outString( "重新加载 spell disabled table...");
 
     sObjectMgr.LoadSpellDisabledEntrys();
 
@@ -1106,7 +1106,7 @@ bool ChatHandler::HandleReloadSpellDisabledCommand(char* /*arg*/)
 
 bool ChatHandler::HandleReloadSpellLinkedCommand(char* /*arg*/)
 {
-    sLog.outString( "Re-Loading spell linked table...");
+    sLog.outString( "重新加载 spell linked table...");
 
     sSpellMgr.LoadSpellLinked();
 
@@ -1117,7 +1117,7 @@ bool ChatHandler::HandleReloadSpellLinkedCommand(char* /*arg*/)
 
 bool ChatHandler::HandleReloadAntiCheatCommand(char* /*arg*/)
 {
-    sLog.outString( "Re-Loading anticheat config table...");
+    sLog.outString( "重新加载 anticheat config table...");
 
     sObjectMgr.LoadAntiCheatConfig();
 
@@ -7267,12 +7267,12 @@ bool ChatHandler::HandleMmap(char* args)
         if (on)
         {
             sWorld.setConfig(CONFIG_BOOL_MMAP_ENABLED, true);
-            SendSysMessage("WORLD: mmaps are now ENABLED (individual map settings still in effect)");
+            SendSysMessage("世界: mmaps are now ENABLED (individual map settings still in effect)");
         }
         else
         {
             sWorld.setConfig(CONFIG_BOOL_MMAP_ENABLED, false);
-            SendSysMessage("WORLD: mmaps are now DISABLED");
+            SendSysMessage("世界: mmaps are now DISABLED");
         }
         return true;
     }

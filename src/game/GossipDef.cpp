@@ -197,7 +197,7 @@ void PlayerMenu::SendGossipMenu(uint32 TitleTextId, ObjectGuid objectGuid)
     }
 
     GetMenuSession()->SendPacket( &data );
-    //DEBUG_LOG( "WORLD: Sent SMSG_GOSSIP_MESSAGE NPCGuid=%u",GUID_LOPART(npcGUID) );
+    //DEBUG_LOG( "世界: Sent SMSG_GOSSIP_MESSAGE NPCGuid=%u",GUID_LOPART(npcGUID) );
 }
 
 void PlayerMenu::CloseGossip()
@@ -205,7 +205,7 @@ void PlayerMenu::CloseGossip()
     WorldPacket data( SMSG_GOSSIP_COMPLETE, 0 );
     GetMenuSession()->SendPacket( &data );
 
-    //DEBUG_LOG( "WORLD: Sent SMSG_GOSSIP_COMPLETE" );
+    //DEBUG_LOG( "世界: Sent SMSG_GOSSIP_COMPLETE" );
 }
 
 // Outdated
@@ -220,7 +220,7 @@ void PlayerMenu::SendPointOfInterest( float X, float Y, uint32 Icon, uint32 Flag
     data << locName;
 
     GetMenuSession()->SendPacket( &data );
-    //DEBUG_LOG("WORLD: Sent SMSG_GOSSIP_POI");
+    //DEBUG_LOG("世界: Sent SMSG_GOSSIP_POI");
 }
 
 void PlayerMenu::SendPointOfInterest( uint32 poi_id )
@@ -249,7 +249,7 @@ void PlayerMenu::SendPointOfInterest( uint32 poi_id )
     data << icon_name;
 
     GetMenuSession()->SendPacket( &data );
-    //DEBUG_LOG("WORLD: Sent SMSG_GOSSIP_POI");
+    //DEBUG_LOG("世界: Sent SMSG_GOSSIP_POI");
 }
 
 void PlayerMenu::SendTalking( uint32 textID )
@@ -313,7 +313,7 @@ void PlayerMenu::SendTalking( uint32 textID )
     }
     GetMenuSession()->SendPacket( &data );
 
-    DEBUG_LOG(  "WORLD: Sent SMSG_NPC_TEXT_UPDATE " );
+    DEBUG_LOG(  "世界: Sent SMSG_NPC_TEXT_UPDATE " );
 }
 
 void PlayerMenu::SendTalking( char const * title, char const * text )
@@ -336,7 +336,7 @@ void PlayerMenu::SendTalking( char const * title, char const * text )
 
     GetMenuSession()->SendPacket( &data );
 
-    DEBUG_LOG( "WORLD: Sent SMSG_NPC_TEXT_UPDATE " );
+    DEBUG_LOG( "世界: Sent SMSG_NPC_TEXT_UPDATE " );
 }
 
 /*********************************************************/
@@ -415,7 +415,7 @@ void PlayerMenu::SendQuestGiverQuestList(QEmote eEmote, const std::string& Title
     }
     data.put<uint8>(count_pos, count);
     GetMenuSession()->SendPacket( &data );
-    DEBUG_LOG("WORLD: Sent SMSG_QUESTGIVER_QUEST_LIST NPC Guid = %s", npcGUID.GetString().c_str());
+    DEBUG_LOG("世界: Sent SMSG_QUESTGIVER_QUEST_LIST NPC Guid = %s", npcGUID.GetString().c_str());
 }
 
 void PlayerMenu::SendQuestGiverStatus( uint8 questStatus, ObjectGuid npcGUID )
@@ -425,7 +425,7 @@ void PlayerMenu::SendQuestGiverStatus( uint8 questStatus, ObjectGuid npcGUID )
     data << uint8(questStatus);
 
     GetMenuSession()->SendPacket( &data );
-    DEBUG_LOG( "WORLD: Sent SMSG_QUESTGIVER_STATUS for %s", npcGUID.GetString().c_str());
+    DEBUG_LOG( "世界: Sent SMSG_QUESTGIVER_STATUS for %s", npcGUID.GetString().c_str());
 }
 
 void PlayerMenu::SendQuestGiverQuestDetails(Quest const* pQuest, ObjectGuid guid, bool ActivateAccept)
@@ -547,7 +547,7 @@ void PlayerMenu::SendQuestGiverQuestDetails(Quest const* pQuest, ObjectGuid guid
 
     GetMenuSession()->SendPacket( &data );
 
-    DEBUG_LOG("WORLD: Sent SMSG_QUESTGIVER_QUEST_DETAILS - for %s of %s, questid = %u", GetMenuSession()->GetPlayer()->GetGuidStr().c_str(), guid.GetString().c_str(), pQuest->GetQuestId());
+    DEBUG_LOG("世界: Sent SMSG_QUESTGIVER_QUEST_DETAILS - for %s of %s, questid = %u", GetMenuSession()->GetPlayer()->GetGuidStr().c_str(), guid.GetString().c_str(), pQuest->GetQuestId());
 }
 
 // send only static data in this packet!
@@ -698,7 +698,7 @@ void PlayerMenu::SendQuestQueryResponse( Quest const *pQuest )
 
     GetMenuSession()->SendPacket( &data );
 
-    DEBUG_LOG( "WORLD: Sent SMSG_QUEST_QUERY_RESPONSE questid=%u", pQuest->GetQuestId() );
+    DEBUG_LOG( "世界: Sent SMSG_QUEST_QUERY_RESPONSE questid=%u", pQuest->GetQuestId() );
 }
 
 void PlayerMenu::SendQuestGiverOfferReward(Quest const* pQuest, ObjectGuid npcGUID, bool EnableNext)
@@ -805,7 +805,7 @@ void PlayerMenu::SendQuestGiverOfferReward(Quest const* pQuest, ObjectGuid npcGU
         //data << int32(pQuest->RewRepValue[i]);
 
     GetMenuSession()->SendPacket(&data);
-    DEBUG_LOG("WORLD: Sent SMSG_QUESTGIVER_OFFER_REWARD NPCGuid = %s, questid = %u", npcGUID.GetString().c_str(), pQuest->GetQuestId());
+    DEBUG_LOG("世界: Sent SMSG_QUESTGIVER_OFFER_REWARD NPCGuid = %s, questid = %u", npcGUID.GetString().c_str(), pQuest->GetQuestId());
 }
 
 void PlayerMenu::SendQuestGiverRequestItems(Quest const *pQuest, ObjectGuid npcGUID, bool Completable, bool CloseOnCancel)
@@ -885,5 +885,5 @@ void PlayerMenu::SendQuestGiverRequestItems(Quest const *pQuest, ObjectGuid npcG
     data << uint32(0x10);                                   // flags4
 
     GetMenuSession()->SendPacket( &data );
-    DEBUG_LOG("WORLD: Sent SMSG_QUESTGIVER_REQUEST_ITEMS NPCGuid = %s, questid = %u", npcGUID.GetString().c_str(), pQuest->GetQuestId());
+    DEBUG_LOG("世界: Sent SMSG_QUESTGIVER_REQUEST_ITEMS NPCGuid = %s, questid = %u", npcGUID.GetString().c_str(), pQuest->GetQuestId());
 }

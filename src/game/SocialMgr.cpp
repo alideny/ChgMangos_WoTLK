@@ -150,7 +150,7 @@ void PlayerSocial::SendSocialList()
     }
 
     plr->GetSession()->SendPacket(&data);
-    DEBUG_LOG("WORLD: Sent SMSG_CONTACT_LIST");
+    DEBUG_LOG(" ¿ΩÁ: Sent SMSG_CONTACT_LIST");
 }
 
 bool PlayerSocial::HasFriend(ObjectGuid friend_guid)

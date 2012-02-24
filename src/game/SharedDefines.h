@@ -3041,7 +3041,7 @@ enum AreaLockStatus
 // others will not and opposite
 // will only support WoW, WoW:TBC and WoW:WotLK 3.3.5a 3.3.5b client build 12340, 13507, 13685, 13930...
 
-#define EXPECTED_MANGOSD_CLIENT_BUILD        {13930, 13685, 13507, 12340, 0}
+#define EXPECTED_MANGOSD_CLIENT_BUILD        {13930, 13685, 13507, 12484, 12340, 0}
 
 // max supported expansion level in mangosd
 // NOTE: not set it more that supported by targeted client version with all expansions installed

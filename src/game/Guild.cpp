@@ -775,7 +775,7 @@ void Guild::Roster(WorldSession *session /*= NULL*/)
         session->SendPacket(&data);
     else
         BroadcastPacket(&data);
-    DEBUG_LOG( "WORLD: Sent (SMSG_GUILD_ROSTER)" );
+    DEBUG_LOG( "世界: Sent (SMSG_GUILD_ROSTER)" );
 }
 
 void Guild::Query(WorldSession *session)
@@ -801,7 +801,7 @@ void Guild::Query(WorldSession *session)
     data << uint32(0);                                      // probably real ranks count
 
     session->SendPacket( &data );
-    DEBUG_LOG( "WORLD: Sent (SMSG_GUILD_QUERY_RESPONSE)" );
+    DEBUG_LOG( "世界: Sent (SMSG_GUILD_QUERY_RESPONSE)" );
 }
 
 void Guild::SetEmblem(uint32 emblemStyle, uint32 emblemColor, uint32 borderStyle, uint32 borderColor, uint32 backgroundColor)
@@ -861,7 +861,7 @@ void Guild::DisplayGuildEventLog(WorldSession *session)
         data << uint32(time(NULL)-itr->TimeStamp);
     }
     session->SendPacket(&data);
-    DEBUG_LOG("WORLD: Sent (MSG_GUILD_EVENT_LOG_QUERY)");
+    DEBUG_LOG("世界: Sent (MSG_GUILD_EVENT_LOG_QUERY)");
 }
 
 // Load guild eventlog from DB
@@ -950,7 +950,7 @@ void Guild::DisplayGuildBankContent(WorldSession *session, uint8 TabId)
 
     session->SendPacket(&data);
 
-    DEBUG_LOG("WORLD: Sent (SMSG_GUILD_BANK_LIST)");
+    DEBUG_LOG("世界: Sent (SMSG_GUILD_BANK_LIST)");
 }
 
 void Guild::DisplayGuildBankMoneyUpdate(WorldSession *session)
@@ -964,7 +964,7 @@ void Guild::DisplayGuildBankMoneyUpdate(WorldSession *session)
     data << uint8(0);                                       // not send items
     BroadcastPacket(&data);
 
-    DEBUG_LOG("WORLD: Sent (SMSG_GUILD_BANK_LIST)");
+    DEBUG_LOG("世界: Sent (SMSG_GUILD_BANK_LIST)");
 }
 
 void Guild::DisplayGuildBankContentUpdate(uint8 TabId, int32 slot1, int32 slot2)
@@ -1011,7 +1011,7 @@ void Guild::DisplayGuildBankContentUpdate(uint8 TabId, int32 slot1, int32 slot2)
         player->GetSession()->SendPacket(&data);
     }
 
-    DEBUG_LOG("WORLD: Sent (SMSG_GUILD_BANK_LIST)");
+    DEBUG_LOG("世界: Sent (SMSG_GUILD_BANK_LIST)");
 }
 
 void Guild::DisplayGuildBankContentUpdate(uint8 TabId, GuildItemPosCountVec const& slots)
@@ -1046,7 +1046,7 @@ void Guild::DisplayGuildBankContentUpdate(uint8 TabId, GuildItemPosCountVec cons
         player->GetSession()->SendPacket(&data);
     }
 
-    DEBUG_LOG("WORLD: Sent (SMSG_GUILD_BANK_LIST)");
+    DEBUG_LOG("世界: Sent (SMSG_GUILD_BANK_LIST)");
 }
 
 Item* Guild::GetItem(uint8 TabId, uint8 SlotId)
@@ -1078,7 +1078,7 @@ void Guild::DisplayGuildBankTabsInfo(WorldSession *session)
     data << uint8(0);                                       // Do not send tab content
     session->SendPacket(&data);
 
-    DEBUG_LOG("WORLD: Sent (SMSG_GUILD_BANK_LIST)");
+    DEBUG_LOG("世界: Sent (SMSG_GUILD_BANK_LIST)");
 }
 
 void Guild::CreateNewBankTab()
@@ -1209,7 +1209,7 @@ void Guild::SendMoneyInfo(WorldSession *session, uint32 LowGuid)
     WorldPacket data(MSG_GUILD_BANK_MONEY_WITHDRAWN, 4);
     data << uint32(GetMemberMoneyWithdrawRem(LowGuid));
     session->SendPacket(&data);
-    DEBUG_LOG("WORLD: Sent MSG_GUILD_BANK_MONEY_WITHDRAWN");
+    DEBUG_LOG("世界: Sent MSG_GUILD_BANK_MONEY_WITHDRAWN");
 }
 
 bool Guild::MemberMoneyWithdraw(uint32 amount, uint32 LowGuid)
@@ -1581,7 +1581,7 @@ void Guild::DisplayGuildBankLogs(WorldSession *session, uint8 TabId)
         }
         session->SendPacket(&data);
     }
-    DEBUG_LOG("WORLD: Sent (MSG_GUILD_BANK_LOG_QUERY)");
+    DEBUG_LOG("世界: Sent (MSG_GUILD_BANK_LOG_QUERY)");
 }
 
 void Guild::LogBankEvent(uint8 EventType, uint8 TabId, uint32 PlayerGuidLow, uint32 ItemOrMoney, uint8 ItemStackCount, uint8 DestTabId)
@@ -2377,7 +2377,7 @@ void Guild::BroadcastEvent(GuildEvents event, ObjectGuid guid, char const* str1 
 
     BroadcastPacket(&data);
 
-    DEBUG_LOG("WORLD: Sent SMSG_GUILD_EVENT");
+    DEBUG_LOG("世界: Sent SMSG_GUILD_EVENT");
 }
 
 void Guild::DeleteGuildBankItems( bool alsoInDB /*= false*/ )

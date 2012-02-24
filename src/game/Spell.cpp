@@ -5221,7 +5221,7 @@ void Spell::HandleEffects(Unit *pUnitTarget, Item *pItemTarget, GameObject *pGOT
     }
     else
     {
-        sLog.outError("WORLD: Spell FX %d > TOTAL_SPELL_EFFECTS ", eff);
+        sLog.outError("世界: Spell FX %d > TOTAL_SPELL_EFFECTS ", eff);
     }
 
     // store effect index who did the damage (for picking correct damage multiplier)
@@ -5235,7 +5235,7 @@ void Spell::AddTriggeredSpell( uint32 spellId )
 
     if(!spellInfo)
     {
-        sLog.outError("Spell::AddTriggeredSpell: unknown spell id %u used as triggred spell for spell %u)", spellId, m_spellInfo->Id);
+        sLog.outError("Spell::AddTriggeredSpell: 未知的技能 ID %u used as triggred spell for spell %u)", spellId, m_spellInfo->Id);
         return;
     }
 
@@ -5248,7 +5248,7 @@ void Spell::AddPrecastSpell( uint32 spellId )
 
     if(!spellInfo)
     {
-        sLog.outError("Spell::AddPrecastSpell: unknown spell id %u used as pre-cast spell for spell %u)", spellId, m_spellInfo->Id);
+        sLog.outError("Spell::AddPrecastSpell: 未知的技能 ID %u used as pre-cast spell for spell %u)", spellId, m_spellInfo->Id);
         return;
     }
 
@@ -8181,7 +8181,7 @@ void Spell::SelectMountByAreaAndSkill(Unit* target, SpellEntry const* parentSpel
         SpellEntry const *pSpell = sSpellStore.LookupEntry(spellid);
         if (!pSpell)
         {
-            sLog.outError("SelectMountByAreaAndSkill: unknown spell id %i by caster: %s", spellid, target->GetGuidStr().c_str());
+            sLog.outError("SelectMountByAreaAndSkill: 未知的技能 ID %i by caster: %s", spellid, target->GetGuidStr().c_str());
             return;
         }
 

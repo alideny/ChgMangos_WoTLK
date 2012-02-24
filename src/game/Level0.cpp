@@ -109,7 +109,7 @@ bool ChatHandler::HandleServerInfoCommand(char* /*args*/)
         fullR2 = _R2FULLVERSION(REVISION_DATE,REVISION_TIME,REVISION_R2,REVISION_ID);
     }
     SendSysMessage(full);
-    SendSysMessage(fullR2);
+    //SendSysMessage(fullR2);
 
     if (sScriptMgr.IsScriptLibraryLoaded())
     {

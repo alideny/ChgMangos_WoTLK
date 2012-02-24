@@ -87,7 +87,7 @@ CreatureEventAI::CreatureEventAI(Creature *c ) : CreatureAI(c)
         }
         //EventMap had events but they were not added because they must be for instance
         if (events_count == 0)
-            sLog.outError("CreatureEventAI: Creature %u has events but no events added to list because of instance flags.", m_creature->GetEntry());
+            ;//sLog.outError("CreatureEventAI: Creature %u has events but no events added to list because of instance flags.", m_creature->GetEntry());
         else
         {
             m_CreatureEventAIList.reserve(events_count);

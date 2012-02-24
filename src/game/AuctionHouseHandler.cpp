@@ -42,7 +42,7 @@ void WorldSession::HandleAuctionHelloOpcode(WorldPacket & recv_data)
     Creature *unit = GetPlayer()->GetNPCIfCanInteractWith(auctioneerGuid, UNIT_NPC_FLAG_AUCTIONEER);
     if (!unit)
     {
-        DEBUG_LOG("WORLD: HandleAuctionHelloOpcode - %s not found or you can't interact with him.", auctioneerGuid.GetString().c_str());
+        DEBUG_LOG("世界: HandleAuctionHelloOpcode - %s not found or you can't interact with him.", auctioneerGuid.GetString().c_str());
         return;
     }
 
@@ -233,7 +233,7 @@ AuctionHouseEntry const* WorldSession::GetCheckedAuctionHouseForAuctioneer(Objec
 // this void creates new auction and adds auction to some auctionhouse
 void WorldSession::HandleAuctionSellItem(WorldPacket & recv_data)
 {
-    DEBUG_LOG("WORLD: HandleAuctionSellItem");
+    DEBUG_LOG("世界: HandleAuctionSellItem");
 
     ObjectGuid auctioneerGuid;
     uint32 etime, bid, buyout, itemCount;
@@ -373,7 +373,7 @@ void WorldSession::HandleAuctionSellItem(WorldPacket & recv_data)
 // this function is called when client bids or buys out auction
 void WorldSession::HandleAuctionPlaceBid(WorldPacket & recv_data)
 {
-    DEBUG_LOG("WORLD: HandleAuctionPlaceBid");
+    DEBUG_LOG("世界: HandleAuctionPlaceBid");
 
     ObjectGuid auctioneerGuid;
     uint32 auctionId;
@@ -455,7 +455,7 @@ void WorldSession::HandleAuctionPlaceBid(WorldPacket & recv_data)
 // this void is called when auction_owner cancels his auction
 void WorldSession::HandleAuctionRemoveItem(WorldPacket & recv_data)
 {
-    DEBUG_LOG("WORLD: HandleAuctionRemoveItem");
+    DEBUG_LOG("世界: HandleAuctionRemoveItem");
 
     ObjectGuid auctioneerGuid;
     uint32 auctionId;
@@ -527,7 +527,7 @@ void WorldSession::HandleAuctionRemoveItem(WorldPacket & recv_data)
 // called when player lists his bids
 void WorldSession::HandleAuctionListBidderItems(WorldPacket & recv_data)
 {
-    DEBUG_LOG("WORLD: HandleAuctionListBidderItems");
+    DEBUG_LOG("世界: HandleAuctionListBidderItems");
 
     ObjectGuid auctioneerGuid;                              // NPC guid
     uint32 listfrom;                                        // page of auctions
@@ -581,7 +581,7 @@ void WorldSession::HandleAuctionListBidderItems(WorldPacket & recv_data)
 // this void sends player info about his auctions
 void WorldSession::HandleAuctionListOwnerItems(WorldPacket & recv_data)
 {
-    DEBUG_LOG("WORLD: HandleAuctionListOwnerItems");
+    DEBUG_LOG("世界: HandleAuctionListOwnerItems");
 
     ObjectGuid auctioneerGuid;
     uint32 listfrom;
@@ -616,7 +616,7 @@ void WorldSession::HandleAuctionListOwnerItems(WorldPacket & recv_data)
 // this void is called when player clicks on search button
 void WorldSession::HandleAuctionListItems(WorldPacket & recv_data)
 {
-    DEBUG_LOG("WORLD: HandleAuctionListItems");
+    DEBUG_LOG("世界: HandleAuctionListItems");
 
     ObjectGuid auctioneerGuid;
     std::string searchedname;

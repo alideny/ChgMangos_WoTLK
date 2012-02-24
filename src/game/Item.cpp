@@ -93,7 +93,7 @@ void AddItemsSetItem(Player* player, Item* item)
                 SpellEntry const* spellInfo = sSpellStore.LookupEntry(set->spells[x]);
                 if (!spellInfo)
                 {
-                    sLog.outError("WORLD: unknown spell id %u in items set %u effects", set->spells[x],setid);
+                    sLog.outError("世界: 未知的技能 ID %u in items set %u effects", set->spells[x],setid);
                     break;
                 }
 

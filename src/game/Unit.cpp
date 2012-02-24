@@ -904,7 +904,7 @@ uint32 Unit::DealDamage(Unit *pVictim, DamageInfo* damageInfo, bool durabilityLo
     {
         DEBUG_FILTER_LOG(LOG_FILTER_DAMAGE,"DealDamage: victim just died");
 
-        // find player: owner of controlled `this` or `this` itself maybe
+        // find 玩家: owner of controlled `this` or `this` itself maybe
         // for loot will be sued only if group_tap==NULL
         Player *player_tap = GetCharmerOrOwnerPlayerOrPlayerItself();
         Group *group_tap = NULL;
@@ -1347,9 +1347,9 @@ void Unit::CastSpell(Unit* Victim, uint32 spellId, bool triggered, Item *castIte
     if(!spellInfo)
     {
         if (triggeredByAura)
-            sLog.outError("CastSpell: unknown spell id %i by caster: %s triggered by aura %u (eff %u)", spellId, GetGuidStr().c_str(), triggeredByAura->GetId(), triggeredByAura->GetEffIndex());
+            sLog.outError("技能系统: 未知的技能 ID %i by caster: %s triggered by aura %u (eff %u)", spellId, GetGuidStr().c_str(), triggeredByAura->GetId(), triggeredByAura->GetEffIndex());
         else
-            sLog.outError("CastSpell: unknown spell id %i by caster: %s", spellId, GetGuidStr().c_str());
+            sLog.outError("技能系统: 未知的技能 ID %i by caster: %s", spellId, GetGuidStr().c_str());
         return;
     }
 
@@ -1361,20 +1361,20 @@ void Unit::CastSpell(Unit* Victim, SpellEntry const *spellInfo, bool triggered, 
     if(!spellInfo)
     {
         if (triggeredByAura)
-            sLog.outError("CastSpell: unknown spell by caster: %s triggered by aura %u (eff %u)", GetGuidStr().c_str(), triggeredByAura->GetId(), triggeredByAura->GetEffIndex());
+            sLog.outError("技能系统: unknown spell by caster: %s triggered by aura %u (eff %u)", GetGuidStr().c_str(), triggeredByAura->GetId(), triggeredByAura->GetEffIndex());
         else
-            sLog.outError("CastSpell: unknown spell by caster: %s", GetGuidStr().c_str());
+            sLog.outError("技能系统: unknown spell by caster: %s", GetGuidStr().c_str());
         return;
     }
 
     if(!Victim)
     {
-        sLog.outError("CastSpell: cast spell %u by caster %s failed - victim is NULL", spellInfo->Id, GetGuidStr().c_str());
+        sLog.outError("技能系统: cast spell %u by caster %s failed - victim is NULL", spellInfo->Id, GetGuidStr().c_str());
         return;
     }
 
     if (castItem)
-        DEBUG_FILTER_LOG(LOG_FILTER_SPELL_CAST, "WORLD: cast Item spellId - %i", spellInfo->Id);
+        DEBUG_FILTER_LOG(LOG_FILTER_SPELL_CAST, "世界: cast Item spellId - %i", spellInfo->Id);
 
     if (triggeredByAura)
     {
@@ -1417,9 +1417,9 @@ void Unit::CastCustomSpell(Unit* Victim,uint32 spellId, int32 const* bp0, int32 
     if(!spellInfo)
     {
         if (triggeredByAura)
-            sLog.outError("CastCustomSpell: unknown spell id %i by caster: %s triggered by aura %u (eff %u)", spellId, GetGuidStr().c_str(), triggeredByAura->GetId(), triggeredByAura->GetEffIndex());
+            sLog.outError("CastCustomSpell: 未知的技能 ID %i by caster: %s triggered by aura %u (eff %u)", spellId, GetGuidStr().c_str(), triggeredByAura->GetId(), triggeredByAura->GetEffIndex());
         else
-            sLog.outError("CastCustomSpell: unknown spell id %i by caster: %s", spellId, GetGuidStr().c_str());
+            sLog.outError("CastCustomSpell: 未知的技能 ID %i by caster: %s", spellId, GetGuidStr().c_str());
         return;
     }
 
@@ -1441,7 +1441,7 @@ void Unit::CastCustomSpell(Unit* Victim, SpellEntry const *spellInfo, int32 cons
         return;
 
     if (castItem)
-        DEBUG_FILTER_LOG(LOG_FILTER_SPELL_CAST, "WORLD: cast Item spellId - %i", spellInfo->Id);
+        DEBUG_FILTER_LOG(LOG_FILTER_SPELL_CAST, "世界: cast Item spellId - %i", spellInfo->Id);
 
     if (triggeredByAura)
     {
@@ -1485,9 +1485,9 @@ void Unit::CastSpell(float x, float y, float z, uint32 spellId, bool triggered, 
     if(!spellInfo)
     {
         if (triggeredByAura)
-            sLog.outError("CastSpell(x,y,z): unknown spell id %i by caster: %s triggered by aura %u (eff %u)", spellId, GetGuidStr().c_str(), triggeredByAura->GetId(), triggeredByAura->GetEffIndex());
+            sLog.outError("CastSpell(x,y,z): 未知的技能 ID %i by caster: %s triggered by aura %u (eff %u)", spellId, GetGuidStr().c_str(), triggeredByAura->GetId(), triggeredByAura->GetEffIndex());
         else
-            sLog.outError("CastSpell(x,y,z): unknown spell id %i by caster: %s", spellId, GetGuidStr().c_str());
+            sLog.outError("CastSpell(x,y,z): 未知的技能 ID %i by caster: %s", spellId, GetGuidStr().c_str());
         return;
     }
 
@@ -1510,7 +1510,7 @@ void Unit::CastSpell(float x, float y, float z, SpellEntry const *spellInfo, boo
         return;
 
     if (castItem)
-        DEBUG_FILTER_LOG(LOG_FILTER_SPELL_CAST, "WORLD: cast Item spellId - %i", spellInfo->Id);
+        DEBUG_FILTER_LOG(LOG_FILTER_SPELL_CAST, "世界: cast Item spellId - %i", spellInfo->Id);
 
     if (triggeredByAura)
     {
@@ -3146,7 +3146,7 @@ void Unit::SendMeleeAttackStart(Unit* pVictim)
     data << pVictim->GetObjectGuid();
 
     SendMessageToSet(&data, true);
-    DEBUG_LOG( "WORLD: Sent SMSG_ATTACKSTART" );
+    DEBUG_LOG( "世界: Sent SMSG_ATTACKSTART" );
 }
 
 void Unit::SendMeleeAttackStop(Unit* victim)
@@ -6122,7 +6122,7 @@ void Unit::SendSpellMiss(Unit *target, uint32 spellID, SpellMissInfo missInfo)
 
 void Unit::SendAttackStateUpdate(DamageInfo* damageInfo)
 {
-    DEBUG_FILTER_LOG(LOG_FILTER_COMBAT, "WORLD: Sending SMSG_ATTACKERSTATEUPDATE");
+    DEBUG_FILTER_LOG(LOG_FILTER_COMBAT, "世界: Sending SMSG_ATTACKERSTATEUPDATE");
 
     uint32 targetHealth = damageInfo->target->GetHealth();
     uint32 overkill = damageInfo->damage > targetHealth ? damageInfo->damage - targetHealth : 0;
@@ -6737,7 +6737,7 @@ void Unit::RemoveAllAttackers()
         Unit* attacker = GetMap()->GetUnit(*itr);
         if(!attacker || !attacker->AttackStop())
         {
-            sLog.outError("WORLD: Unit has an attacker that isn't attacking it!");
+            sLog.outError("世界: Unit has an attacker that isn't attacking it!");
             GetMap()->RemoveAttackerFor(GetObjectGuid(),*itr);
         }
     }
@@ -11202,7 +11202,7 @@ void Unit::DoPetAction( Player* owner, uint8 flag, uint32 spellid, ObjectGuid pe
                     break;
                 }
                 default:
-                    sLog.outError("WORLD: unknown PET command Action %i and spellid %i.", uint32(flag), spellid);
+                    sLog.outError("世界: unknown PET command Action %i and spellid %i.", uint32(flag), spellid);
             }
             break;
         }
@@ -11237,7 +11237,7 @@ void Unit::DoPetAction( Player* owner, uint8 flag, uint32 spellid, ObjectGuid pe
             break;
         }
         default:
-            sLog.outError("WORLD: unknown PET flag Action %i and spellid %i.", uint32(flag), spellid);
+            sLog.outError("世界: unknown PET flag Action %i and spellid %i.", uint32(flag), spellid);
             break;
     }
 
@@ -11252,7 +11252,7 @@ void Unit::DoPetCastSpell(Unit* target, uint32 spellId)
     SpellEntry const *spellInfo = sSpellStore.LookupEntry(spellId);
     if(!spellInfo)
     {
-        sLog.outError("WORLD: unknown PET spell id %i", spellInfo->Id);
+        sLog.outError("世界: unknown PET spell id %i", spellInfo->Id);
         return;
     }
 
@@ -12843,7 +12843,7 @@ void Unit::KnockBackPlayerWithAngle(float angle, float horizontalSpeed, float ve
 
     }
     else
-        sLog.outError("KnockBackPlayer: Target of KnockBackPlayer must be player!");
+        sLog.outError("KnockBack玩家: Target of KnockBackPlayer must be player!");
 }
 
 float Unit::GetCombatRatingReduction(CombatRating cr) const
@@ -12874,7 +12874,7 @@ void Unit::SendThreatUpdate()
     ThreatList const& tlist = getThreatManager().getThreatList();
     if (uint32 count = tlist.size())
     {
-        DEBUG_FILTER_LOG(LOG_FILTER_COMBAT, "WORLD: Send SMSG_THREAT_UPDATE Message");
+        DEBUG_FILTER_LOG(LOG_FILTER_COMBAT, "世界: Send SMSG_THREAT_UPDATE Message");
         WorldPacket data(SMSG_THREAT_UPDATE, 8 + count * 8);
         data << GetPackGUID();
         data << uint32(count);
@@ -12892,7 +12892,7 @@ void Unit::SendHighestThreatUpdate(HostileReference* pHostilReference)
     ThreatList const& tlist = getThreatManager().getThreatList();
     if (uint32 count = tlist.size())
     {
-        DEBUG_FILTER_LOG(LOG_FILTER_COMBAT, "WORLD: Send SMSG_HIGHEST_THREAT_UPDATE Message");
+        DEBUG_FILTER_LOG(LOG_FILTER_COMBAT, "世界: Send SMSG_HIGHEST_THREAT_UPDATE Message");
         WorldPacket data(SMSG_HIGHEST_THREAT_UPDATE, 8 + 8 + count * 8);
         data << GetPackGUID();
         data << pHostilReference->getUnitGuid().WriteAsPacked();
@@ -12908,7 +12908,7 @@ void Unit::SendHighestThreatUpdate(HostileReference* pHostilReference)
 
 void Unit::SendThreatClear()
 {
-    DEBUG_FILTER_LOG(LOG_FILTER_COMBAT, "WORLD: Send SMSG_THREAT_CLEAR Message");
+    DEBUG_FILTER_LOG(LOG_FILTER_COMBAT, "世界: Send SMSG_THREAT_CLEAR Message");
     WorldPacket data(SMSG_THREAT_CLEAR, 8);
     data << GetPackGUID();
     SendMessageToSet(&data, false);
@@ -12916,7 +12916,7 @@ void Unit::SendThreatClear()
 
 void Unit::SendThreatRemove(HostileReference* pHostileReference)
 {
-    DEBUG_FILTER_LOG(LOG_FILTER_COMBAT, "WORLD: Send SMSG_THREAT_REMOVE Message");
+    DEBUG_FILTER_LOG(LOG_FILTER_COMBAT, "世界: Send SMSG_THREAT_REMOVE Message");
     WorldPacket data(SMSG_THREAT_REMOVE, 8 + 8);
     data << GetPackGUID();
     data << pHostileReference->getUnitGuid().WriteAsPacked();

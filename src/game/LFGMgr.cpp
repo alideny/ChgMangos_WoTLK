@@ -106,7 +106,7 @@ void LFGMgr::Update(uint32 diff)
     for (uint8 i = LFG_TYPE_NONE; i < LFG_TYPE_MAX; ++i)
     {
 
-//        DEBUG_LOG("LFGMgr::Update type %u, player queue %u group queue %u",i,m_playerQueue[i].size(), m_groupQueue[i].size());
+//        DEBUG_LOG("随机副本:Update type %u, player queue %u group queue %u",i,m_playerQueue[i].size(), m_groupQueue[i].size());
         if (m_playerQueue[i].empty() && m_groupQueue[i].empty())
             continue;
 
@@ -258,7 +258,7 @@ void LFGMgr::Join(Player* player)
     {
         if (player->GetObjectGuid() != group->GetLeaderGuid() && group->GetLFGState()->GetStatus() != LFG_STATUS_OFFER_CONTINUE)
         {
-            DEBUG_LOG("LFGMgr::Join: %u trying to join in group, but not group leader, and not in OfferContinue. Aborting.", guid.GetCounter());
+            DEBUG_LOG("随机副本:Join: %u trying to join in group, but not group leader, and not in OfferContinue. Aborting.", guid.GetCounter());
             player->GetSession()->SendLfgJoinResult(ERR_LFG_NO_SLOTS_PLAYER);
             return;
         }
@@ -273,7 +273,7 @@ void LFGMgr::Join(Player* player)
 
     if (type == LFG_TYPE_NONE)
     {
-        DEBUG_LOG("LFGMgr::Join: %u trying to join without dungeon type. Aborting.", guid.GetCounter());
+        DEBUG_LOG("随机副本:Join: %u trying to join without dungeon type. Aborting.", guid.GetCounter());
         player->GetSession()->SendLfgJoinResult(ERR_LFG_INVALID_SLOT);
         return;
     }
@@ -282,7 +282,7 @@ void LFGMgr::Join(Player* player)
 
     if (queue)
     {
-        DEBUG_LOG("LFGMgr::Join: %u trying to join but is already in queue! May be OfferContinue?", guid.GetCounter());
+        DEBUG_LOG("随机副本:Join: %u trying to join but is already in queue! May be OfferContinue?", guid.GetCounter());
         if (group && group->GetLFGState()->GetState() == LFG_STATE_DUNGEON)
         {
             RemoveFromQueue(guid);
@@ -299,7 +299,7 @@ void LFGMgr::Join(Player* player)
 
     if (result != ERR_LFG_OK)                              // Someone can't join. Clear all stuf
     {
-        DEBUG_LOG("LFGMgr::Join: %s %u joining with %u members. result: %u", guid.IsGroup() ? "Group" : "Player", guid.GetCounter(), group ? group->GetMembersCount() : 1, result);
+        DEBUG_LOG("随机副本:Join: %s %u joining with %u members. result: %u", guid.IsGroup() ? "Group" : "Player", guid.GetCounter(), group ? group->GetMembersCount() : 1, result);
         player->GetLFGState()->Clear();
         player->GetSession()->SendLfgJoinResult(result);
         if (player->GetGroup())
@@ -309,7 +309,7 @@ void LFGMgr::Join(Player* player)
 
     if (!guid.IsGroup() && player->GetLFGState()->GetRoles() == LFG_ROLE_MASK_NONE)
     {
-        DEBUG_LOG("LFGMgr::Join:Error: %u has no roles! continued...", guid.GetCounter());
+        DEBUG_LOG("随机副本:Join:Error: %u has no roles! continued...", guid.GetCounter());
     }
 
 
@@ -372,7 +372,7 @@ void LFGMgr::Join(Player* player)
                 break;
             }
             default:
-                DEBUG_LOG("LFGMgr::Join:Error: group %u in impossible state %u for join.", guid.GetCounter(), group->GetLFGState()->GetState());
+                DEBUG_LOG("随机副本:Join:Error: group %u in impossible state %u for join.", guid.GetCounter(), group->GetLFGState()->GetState());
                 return;
         }
     }
@@ -557,7 +557,7 @@ void LFGMgr::AddToQueue(ObjectGuid guid, LFGType type, bool inBegin)
             m_playerQueue[type].insert((inBegin ? m_playerQueue[type].begin() : m_playerQueue[type].end()), pqInfo);
         }
     }
-    DEBUG_LOG("LFGMgr::AddToQueue: %s %u joined, type %u",(guid.IsGroup() ? "group" : "player"), guid.GetCounter(), type);
+    DEBUG_LOG("随机副本:AddToQueue: %s %u joined, type %u",(guid.IsGroup() ? "group" : "player"), guid.GetCounter(), type);
 }
 
 void LFGMgr::RemoveFromQueue(ObjectGuid guid)
@@ -567,7 +567,7 @@ void LFGMgr::RemoveFromQueue(ObjectGuid guid)
     {
         LFGType type = queue->second.GetDungeonType();
 
-        DEBUG_LOG("LFGMgr::RemoveFromQueue: %s %u removed, type %u",(guid.IsGroup() ? "group" : "player"), guid.GetCounter(), type);
+        DEBUG_LOG("随机副本:RemoveFromQueue: %s %u removed, type %u",(guid.IsGroup() ? "group" : "player"), guid.GetCounter(), type);
 
         WriteGuard Guard(GetLock());
         if (type != LFG_TYPE_NONE)
@@ -605,7 +605,7 @@ LFGJoinResult LFGMgr::GetPlayerJoinResult(Player* player)
 
     if (player->GetPlayerbotMgr() || player->GetPlayerbotAI())
     {
-        DEBUG_LOG("LFGMgr::Join: %u trying to join to dungeon finder, but has playerbots (or playerbot itself). Aborting.", player->GetObjectGuid().GetCounter());
+        DEBUG_LOG("随机副本:Join: %u trying to join to dungeon finder, but has playerbots (or playerbot itself). Aborting.", player->GetObjectGuid().GetCounter());
         return ERR_LFG_NO_SLOTS_PLAYER;
     }
 
@@ -628,7 +628,7 @@ LFGJoinResult LFGMgr::GetGroupJoinResult(Group* group)
 
     if (group->isRaidGroup() && group->GetLFGState()->GetType() != LFG_TYPE_RAID)
     {
-        DEBUG_LOG("LFGMgr::Join: Group %u trying to join as raid, but not to raid finder. Aborting.", group->GetObjectGuid().GetCounter());
+        DEBUG_LOG("随机副本:Join: Group %u trying to join as raid, but not to raid finder. Aborting.", group->GetObjectGuid().GetCounter());
         return ERR_LFG_MISMATCHED_SLOTS;
     }
 
@@ -894,7 +894,7 @@ void LFGMgr::ClearLFRList(Player* player)
     LFGDungeonSet dungeons;
     dungeons.clear();
     player->GetLFGState()->SetDungeons(&dungeons);
-    DEBUG_LOG("LFGMgr::LFR List cleared, player %u leaving LFG queue", player->GetObjectGuid().GetCounter());
+    DEBUG_LOG("随机副本:LFR List cleared, player %u leaving LFG queue", player->GetObjectGuid().GetCounter());
     RemoveFromQueue(player->GetObjectGuid());
 
 }
@@ -1022,13 +1022,13 @@ void LFGMgr::SendLFGRewards(Group* group)
 
     if (!group || !group->isLFGGroup())
     {
-        DEBUG_LOG("LFGMgr::SendLFGReward: not group or not a LFGGroup. Ignoring");
+        DEBUG_LOG("随机副本:SendLFGReward: not group or not a LFGGroup. Ignoring");
         return;
     }
 
     if (group->GetLFGState()->GetState() == LFG_STATE_FINISHED_DUNGEON)
     {
-        DEBUG_LOG("LFGMgr::SendLFGReward: group %u already rewarded!",group->GetObjectGuid().GetCounter());
+        DEBUG_LOG("随机副本:SendLFGReward: group %u already rewarded!",group->GetObjectGuid().GetCounter());
         return;
     }
 
@@ -1040,12 +1040,12 @@ void LFGMgr::SendLFGRewards(Group* group)
 
     if (!dungeon)
     {
-        DEBUG_LOG("LFGMgr::SendLFGReward: group %u - no dungeon in list", group->GetObjectGuid().GetCounter());
+        DEBUG_LOG("随机副本:SendLFGReward: group %u - no dungeon in list", group->GetObjectGuid().GetCounter());
         return;
     }
     else  if (dungeon->type != LFG_TYPE_RANDOM_DUNGEON)
     {
-        DEBUG_LOG("LFGMgr::SendLFGReward: group %u dungeon %u is not random (%u)", group->GetObjectGuid().GetCounter(), dungeon->ID, dungeon->type);
+        DEBUG_LOG("随机副本:SendLFGReward: group %u dungeon %u is not random (%u)", group->GetObjectGuid().GetCounter(), dungeon->ID, dungeon->type);
         return;
     }
 
@@ -1071,7 +1071,7 @@ void LFGMgr::SendLFGReward(Player* player, LFGDungeonEntry const* dungeon)
 
     if (player->GetLFGState()->GetState() == LFG_STATE_FINISHED_DUNGEON)
     {
-        DEBUG_LOG("LFGMgr::SendLFGReward: player %u already rewarded!",player->GetObjectGuid().GetCounter());
+        DEBUG_LOG("随机副本:SendLFGReward: player %u already rewarded!",player->GetObjectGuid().GetCounter());
         return;
     }
 
@@ -1102,7 +1102,7 @@ void LFGMgr::SendLFGReward(Player* player, LFGDungeonEntry const* dungeon)
 
     if (!qReward)
     {
-        sLog.outError("LFGMgr::RewardDungeonDone quest %u is absent in DB.", reward->reward[index].questId);
+        sLog.outError("随机副本:RewardDungeonDone quest %u is absent in DB.", reward->reward[index].questId);
         return;
     }
 
@@ -1110,7 +1110,7 @@ void LFGMgr::SendLFGReward(Player* player, LFGDungeonEntry const* dungeon)
     player->RewardQuest(qReward,0,NULL,false);
 
     // Give rewards
-    DEBUG_LOG("LFGMgr::RewardDungeonDoneFor: %u done dungeon %u, %s previously done.", player->GetObjectGuid().GetCounter(), dungeon->ID, index > 0 ? " " : " not");
+    DEBUG_LOG("随机副本:RewardDungeonDoneFor: %u done dungeon %u, %s previously done.", player->GetObjectGuid().GetCounter(), dungeon->ID, index > 0 ? " " : " not");
     player->GetSession()->SendLfgPlayerReward(dungeon, reward, qReward, index != 0);
 }
 
@@ -1173,10 +1173,10 @@ uint32 LFGMgr::CreateProposal(LFGDungeonEntry const* dungeon, Group* group, LFGQ
         for (LFGQueueSet::const_iterator itr2 = guids->begin(); itr2 != guids->end(); ++itr2 )
         {
             if (!SendProposal(ID,*itr2))
-                DEBUG_LOG("LFGMgr::CreateProposal: cannot send proposal %u, dungeon %u, %s to player %u", ID, dungeon->ID, group ? " in group" : " not in group", (*itr2).GetCounter());
+                DEBUG_LOG("随机副本:CreateProposal: cannot send proposal %u, dungeon %u, %s to player %u", ID, dungeon->ID, group ? " in group" : " not in group", (*itr2).GetCounter());
         }
     }
-    DEBUG_LOG("LFGMgr::CreateProposal: %u, dungeon %u, %s", ID, dungeon->ID, group ? " in group" : " not in group");
+    DEBUG_LOG("随机副本:CreateProposal: %u, dungeon %u, %s", ID, dungeon->ID, group ? " in group" : " not in group");
     return ID;
 }
 
@@ -1213,7 +1213,7 @@ bool LFGMgr::SendProposal(uint32 ID, ObjectGuid guid)
         pProposal->GetGroup()->GetLFGState()->SetState(LFG_STATE_PROPOSAL);
     }
 
-    DEBUG_LOG("LFGMgr::SendProposal: proposal %u, dungeon %u, %s", ID, pProposal->GetDungeon()->ID, pProposal->GetGroup() ? " in group" : " not in group");
+    DEBUG_LOG("随机副本:SendProposal: proposal %u, dungeon %u, %s", ID, pProposal->GetDungeon()->ID, pProposal->GetGroup() ? " in group" : " not in group");
     return true;
 }
 
@@ -1288,7 +1288,7 @@ void LFGMgr::UpdateProposal(uint32 ID, ObjectGuid guid, bool accept)
     if (!allAnswered)
         return;
 
-    DEBUG_LOG("LFGMgr::UpdateProposal: all players in proposal %u answered, make group/teleport group", pProposal->ID);
+    DEBUG_LOG("随机副本:UpdateProposal: all players in proposal %u answered, make group/teleport group", pProposal->ID);
     // save waittime (group maked, save statistic)
 
     // Set the real dungeon (for random) or set old dungeon if OfferContinue
@@ -1326,7 +1326,7 @@ void LFGMgr::UpdateProposal(uint32 ID, ObjectGuid guid, bool accept)
             realdungeon = SelectRandomDungeonFromList(randomList);
             if (!realdungeon)
             {
-                DEBUG_LOG("LFGMgr::UpdateProposal:%u cannot set real dungeon! no compatible list.", pProposal->ID);
+                DEBUG_LOG("随机副本:UpdateProposal:%u cannot set real dungeon! no compatible list.", pProposal->ID);
                 pProposal->SetDeleted();
                 return;
             }
@@ -1340,14 +1340,14 @@ void LFGMgr::UpdateProposal(uint32 ID, ObjectGuid guid, bool accept)
         LFGQueueSet proposalGuidsTmp = pProposal->GetMembers();
         if (proposalGuidsTmp.empty())
         {
-            DEBUG_LOG("LFGMgr::UpdateProposal:%u cannot make group, guid set 是空的!", pProposal->ID);
+            DEBUG_LOG("随机副本:UpdateProposal:%u cannot make group, guid set 是空的!", pProposal->ID);
             pProposal->SetDeleted();
             return;
         }
         Player* leader = LeaderElection(&proposalGuidsTmp);
         if (!leader)
         {
-            DEBUG_LOG("LFGMgr::UpdateProposal:%u cannot make group, cannot set leader!", pProposal->ID);
+            DEBUG_LOG("随机副本:UpdateProposal:%u cannot make group, cannot set leader!", pProposal->ID);
             pProposal->SetDeleted();
             return;
         }
@@ -1373,7 +1373,7 @@ void LFGMgr::UpdateProposal(uint32 ID, ObjectGuid guid, bool accept)
         AddMemberToLFDGroup(leader->GetObjectGuid());
         pProposal->RemoveMember(leader->GetObjectGuid());
         leader->GetLFGState()->SetProposal(NULL);
-        DEBUG_LOG("LFGMgr::UpdateProposal: in proposal %u created group %u", pProposal->ID, group->GetObjectGuid().GetCounter());
+        DEBUG_LOG("随机副本:UpdateProposal: in proposal %u created group %u", pProposal->ID, group->GetObjectGuid().GetCounter());
     }
     else
     {
@@ -1471,7 +1471,7 @@ void LFGMgr::RemoveProposal(Player* decliner, uint32 ID)
         Leave(decliner);
     }
 
-    DEBUG_LOG("LFGMgr::UpdateProposal: %u didn't accept. Removing from queue", decliner->GetObjectGuid().GetCounter());
+    DEBUG_LOG("随机副本:UpdateProposal: %u didn't accept. Removing from queue", decliner->GetObjectGuid().GetCounter());
 
     if (Group* group = pProposal->GetGroup())
     {
@@ -1529,7 +1529,7 @@ void LFGMgr::RemoveProposal(uint32 ID, bool success)
                     player->GetSession()->SendLfgUpdatePlayer(LFG_UPDATETYPE_JOIN_PROPOSAL, LFGType(pProposal->GetDungeon()->type));
                     player->GetSession()->SendLfgUpdateSearch(true);
 //                    player->GetSession()->SendLfgUpdatePlayer(LFG_UPDATETYPE_ADDED_TO_QUEUE, LFGType(pProposal->GetDungeon()->type));
-                    DEBUG_LOG("LFGMgr::RemoveProposal: %u re-adding to queue", player->GetObjectGuid().GetCounter());
+                    DEBUG_LOG("随机副本:RemoveProposal: %u re-adding to queue", player->GetObjectGuid().GetCounter());
                 }
                 else
                     RemoveFromQueue(player->GetObjectGuid());
@@ -1543,13 +1543,13 @@ void LFGMgr::RemoveProposal(uint32 ID, bool success)
             group->GetLFGState()->SetState(LFG_STATE_QUEUED);
             if (GetQueueInfo(group->GetObjectGuid()))
             {
-                DEBUG_LOG("LFGMgr::RemoveProposal: standart way - group %u re-adding to queue.", group->GetObjectGuid().GetCounter());
+                DEBUG_LOG("随机副本:RemoveProposal: standart way - group %u re-adding to queue.", group->GetObjectGuid().GetCounter());
             }
             else
             {
                 // re-adding group to queue. dont must call, but who know...
                 AddToQueue(group->GetObjectGuid(),LFGType(pProposal->GetDungeon()->type), true);
-                DEBUG_LOG("LFGMgr::RemoveProposal: ERROR! group %u re-adding to queue not standart way.", group->GetObjectGuid().GetCounter());
+                DEBUG_LOG("随机副本:RemoveProposal: ERROR! group %u re-adding to queue not standart way.", group->GetObjectGuid().GetCounter());
             }
 
             for (GroupReference* itr = group->GetFirstMember(); itr != NULL; itr = itr->next())
@@ -1591,7 +1591,7 @@ void LFGMgr::CleanupProposals(LFGType type)
     {
         for(std::set<uint32>::const_iterator itr = expiredProposals.begin(); itr != expiredProposals.end(); ++itr)
         {
-            DEBUG_LOG("LFGMgr::CleanupProposals: remove expired proposal %u", *itr);
+            DEBUG_LOG("随机副本:CleanupProposals: remove expired proposal %u", *itr);
             RemoveProposal(*itr);
         }
     }
@@ -1607,7 +1607,7 @@ void LFGMgr::OfferContinue(Group* group)
         LFGDungeonEntry const* dungeon = group->GetLFGState()->GetDungeon();
         if (!dungeon ||  group->GetLFGState()->GetStatus() > LFG_STATUS_NOT_SAVED)
         {
-            DEBUG_LOG("LFGMgr::OfferContinue: group %u not have required attributes!", group->GetObjectGuid().GetCounter());
+            DEBUG_LOG("随机副本:OfferContinue: group %u not have required attributes!", group->GetObjectGuid().GetCounter());
             return;
         }
         if (Player* leader = sObjectMgr.GetPlayer(group->GetLeaderGuid()))
@@ -1615,7 +1615,7 @@ void LFGMgr::OfferContinue(Group* group)
         group->GetLFGState()->SetStatus(LFG_STATUS_OFFER_CONTINUE);
     }
     else
-        sLog.outError("LFGMgr::OfferContinue: no group!");
+        sLog.outError("随机副本:OfferContinue: no group!");
 }
 
 void LFGMgr::InitBoot(Player* kicker, ObjectGuid victimGuid, std::string reason)
@@ -1626,7 +1626,7 @@ void LFGMgr::InitBoot(Player* kicker, ObjectGuid victimGuid, std::string reason)
     if (!kicker || !group || !victim)
         return;
 
-    DEBUG_LOG("LFGMgr::InitBoot: group %u kicker %u victim %u reason %s", group->GetObjectGuid().GetCounter(), kicker->GetObjectGuid().GetCounter(), victimGuid.GetCounter(), reason.c_str());
+    DEBUG_LOG("随机副本:InitBoot: group %u kicker %u victim %u reason %s", group->GetObjectGuid().GetCounter(), kicker->GetObjectGuid().GetCounter(), victimGuid.GetCounter(), reason.c_str());
 
     if (!group->GetLFGState()->IsBootActive())
     {
@@ -1692,7 +1692,7 @@ void LFGMgr::UpdateBoot(Player* player, bool accept)
     if (!group->GetLFGState()->IsBootActive())
         return;
 
-    DEBUG_LOG("LFGMgr::UpdateBoot: group %u kicker %u answer %u", group->GetObjectGuid().GetCounter(), player->GetObjectGuid().GetCounter(), accept);
+    DEBUG_LOG("随机副本:UpdateBoot: group %u kicker %u answer %u", group->GetObjectGuid().GetCounter(), player->GetObjectGuid().GetCounter(), accept);
 
     group->GetLFGState()->UpdateBoot(player->GetObjectGuid(),LFGAnswer(accept));
 
@@ -1748,7 +1748,7 @@ void LFGMgr::Teleport(Group* group, bool out)
     if (!group)
         return;
 
-    DEBUG_LOG("LFGMgr::TeleportGroup %u in dungeon!", group->GetObjectGuid().GetCounter());
+    DEBUG_LOG("随机副本:TeleportGroup %u in dungeon!", group->GetObjectGuid().GetCounter());
 
     for (GroupReference* itr = group->GetFirstMember(); itr != NULL; itr = itr->next())
     {
@@ -1775,7 +1775,7 @@ void LFGMgr::Teleport(Player* player, bool out, bool fromOpcode /*= false*/)
     if (!player || player->IsInCombat())
         return;
 
-    DEBUG_LOG("LFGMgr::TeleportPlayer: %u is being teleported %s", player->GetObjectGuid().GetCounter(), out ? "from dungeon." : "in dungeon.");
+    DEBUG_LOG("随机副本:Teleport玩家: %u is being teleported %s", player->GetObjectGuid().GetCounter(), out ? "from dungeon." : "in dungeon.");
 
     if (out)
     {
@@ -1811,7 +1811,7 @@ void LFGMgr::Teleport(Player* player, bool out, bool fromOpcode /*= false*/)
         if (!dungeon)
         {
             error = LFG_TELEPORTERROR_INVALID_LOCATION;
-            DEBUG_LOG("LFGMgr::TeleportPlayer %u error %u, no dungeon!", player->GetObjectGuid().GetCounter(), error);
+            DEBUG_LOG("随机副本:TeleportPlayer %u error %u, no dungeon!", player->GetObjectGuid().GetCounter(), error);
         }
     }
 
@@ -1826,12 +1826,12 @@ void LFGMgr::Teleport(Player* player, bool out, bool fromOpcode /*= false*/)
         if (group->GetDungeonDifficulty() != Difficulty(dungeon->difficulty))
         {
             error = LFG_TELEPORTERROR_UNK4;
-            DEBUG_LOG("LFGMgr::TeleportPlayer %u error %u, difficulty not match!", player->GetObjectGuid().GetCounter(), error);
+            DEBUG_LOG("随机副本:TeleportPlayer %u error %u, difficulty not match!", player->GetObjectGuid().GetCounter(), error);
         }
         else if (GetPlayerLockStatus(player,dungeon) != LFG_LOCKSTATUS_OK)
         {
             error = LFG_TELEPORTERROR_INVALID_LOCATION;
-            DEBUG_LOG("LFGMgr::TeleportPlayer %u error %u, player not enter to this instance!", player->GetObjectGuid().GetCounter(), error);
+            DEBUG_LOG("随机副本:TeleportPlayer %u error %u, player not enter to this instance!", player->GetObjectGuid().GetCounter(), error);
         }
         else if (leaderInDungeon && group->GetLFGState()->GetState() == LFG_STATE_DUNGEON)
         {
@@ -1852,7 +1852,7 @@ void LFGMgr::Teleport(Player* player, bool out, bool fromOpcode /*= false*/)
         else
         {
             error = LFG_TELEPORTERROR_INVALID_LOCATION;
-            DEBUG_LOG("LFGMgr::TeleportPlayer %u error %u, no areatrigger to map %u!", player->GetObjectGuid().GetCounter(), error, dungeon->map);
+            DEBUG_LOG("随机副本:TeleportPlayer %u error %u, no areatrigger to map %u!", player->GetObjectGuid().GetCounter(), error, dungeon->map);
         }
     }
 
@@ -2004,7 +2004,7 @@ void LFGMgr::UpdateRoleCheck(Group* group)
         }
     }
 
-    DEBUG_LOG("LFGMgr::UpdateRoleCheck group %u %s result %u", group->GetObjectGuid().GetCounter(),isFinished ? "completed" : "not finished", group->GetLFGState()->GetRoleCheckState());
+    DEBUG_LOG("随机副本:UpdateRoleCheck group %u %s result %u", group->GetObjectGuid().GetCounter(),isFinished ? "completed" : "not finished", group->GetLFGState()->GetRoleCheckState());
 
     // temporary - only all answer accept
     if (group->GetLFGState()->GetRoleCheckState() != LFG_ROLECHECK_FINISHED)
@@ -2040,7 +2040,7 @@ void LFGMgr::UpdateRoleCheck(Group* group)
         }
     }
 
-    DEBUG_LOG("LFGMgr::UpdateRoleCheck finished, group %u result %u", group->GetObjectGuid().GetCounter(), group->GetLFGState()->GetRoleCheckState());
+    DEBUG_LOG("随机副本:UpdateRoleCheck finished, group %u result %u", group->GetObjectGuid().GetCounter(), group->GetLFGState()->GetRoleCheckState());
 
     if (group->GetLFGState()->GetRoleCheckState() == LFG_ROLECHECK_FINISHED)
     {
@@ -2106,7 +2106,7 @@ bool LFGMgr::CheckRoles(LFGRolesMap* rolesMap)
             --dps;
     }
 
-    DEBUG_LOG("LFGMgr::CheckRoles healers %u tanks %u dps %u map size " SIZEFMTD, healers, tanks, dps, rolesMap->size());
+    DEBUG_LOG("随机副本:CheckRoles healers %u tanks %u dps %u map size " SIZEFMTD, healers, tanks, dps, rolesMap->size());
 
 //    if (sWorld.getConfig(CONFIG_BOOL_LFG_DEBUG_ENABLE))
 //        return true;
@@ -2195,7 +2195,7 @@ void LFGMgr::SetRoles(LFGRolesMap* rolesMap)
 {
     if (!rolesMap || rolesMap->empty())
         return;
-    DEBUG_LOG("LFGMgr::SetRoles set roles for rolesmap size = %u",uint8(rolesMap->size()));
+    DEBUG_LOG("随机副本:SetRoles set roles for rolesmap size = %u",uint8(rolesMap->size()));
 
     LFGRoleMask oldRoles;
     LFGRoleMask newRole;
@@ -2282,7 +2282,7 @@ void LFGMgr::SetRoles(LFGRolesMap* rolesMap)
         if (player && player->IsInWorld())
         {
             player->GetLFGState()->SetRoles(itr->second);
-            DEBUG_LOG("LFGMgr::SetRoles role for player %u set to %u",player->GetObjectGuid().GetCounter(), uint8(itr->second));
+            DEBUG_LOG("随机副本:SetRoles role for player %u set to %u",player->GetObjectGuid().GetCounter(), uint8(itr->second));
         }
     }
 
@@ -2715,7 +2715,7 @@ void LFGMgr::AddToSearchMatrix(ObjectGuid guid, bool inBegin)
 
     LFGDungeonSet const* dungeons = player->GetLFGState()->GetDungeons();
 
-    DEBUG_LOG("LFGMgr::AddToSearchMatrix %u added, dungeons size " SIZEFMTD, guid.GetCounter(),dungeons->size());
+    DEBUG_LOG("随机副本:AddToSearchMatrix %u added, dungeons size " SIZEFMTD, guid.GetCounter(),dungeons->size());
 
     if (dungeons->empty())
         return;
@@ -2755,7 +2755,7 @@ void LFGMgr::RemoveFromSearchMatrix(ObjectGuid guid)
 
     LFGDungeonSet const* dungeons = player->GetLFGState()->GetDungeons();
 
-    DEBUG_LOG("LFGMgr::RemoveFromSearchMatrix %u removed, dungeons size " SIZEFMTD, guid.GetCounter(),dungeons->size());
+    DEBUG_LOG("随机副本:RemoveFromSearchMatrix %u removed, dungeons size " SIZEFMTD, guid.GetCounter(),dungeons->size());
 
     if (dungeons->empty())
         return;
@@ -2889,7 +2889,7 @@ LFGDungeonEntry const* LFGMgr::SelectRandomDungeonFromList(LFGDungeonSet dungeon
 {
     if (dungeons.empty())
     {
-        DEBUG_LOG("LFGMgr::SelectRandomDungeonFromList cannot select dungeons from empty list!");
+        DEBUG_LOG("随机副本:SelectRandomDungeonFromList cannot select dungeons from empty list!");
         return NULL;
     }
 
@@ -2936,7 +2936,7 @@ void LFGMgr::UpdateLFRGroups()
             LFGDungeonEntry const* realdungeon = SelectRandomDungeonFromList(*group->GetLFGState()->GetDungeons());
             MANGOS_ASSERT(realdungeon);
             group->GetLFGState()->SetDungeon(realdungeon);
-            DEBUG_LOG("LFGMgr::UpdateLFRGroup: %u set real dungeon to %u.", group->GetObjectGuid().GetCounter(), realdungeon->ID);
+            DEBUG_LOG("随机副本:UpdateLFRGroup: %u set real dungeon to %u.", group->GetObjectGuid().GetCounter(), realdungeon->ID);
 
             Player* leader = sObjectMgr.GetPlayer(group->GetLeaderGuid());
             if (leader && leader->GetMapId() != uint32(realdungeon->map))
@@ -3091,7 +3091,7 @@ void LFGMgr::SheduleEvent()
             continue;
         else
         {
-            DEBUG_LOG("LFGMgr::SheduleEvent guid %u type %u",itr->guid.GetCounter(), itr->type);
+            DEBUG_LOG("随机副本:SheduleEvent guid %u type %u",itr->guid.GetCounter(), itr->type);
             switch (itr->type)
             {
                 case LFG_EVENT_TELEPORT_PLAYER:
@@ -3120,7 +3120,7 @@ void LFGMgr::SheduleEvent()
 
 void LFGMgr::AddEvent(ObjectGuid guid, LFGEventType type, time_t delay, uint8 param)
 {
-    DEBUG_LOG("LFGMgr::AddEvent guid %u type %u",guid.GetCounter(), type);
+    DEBUG_LOG("随机副本:AddEvent guid %u type %u",guid.GetCounter(), type);
     LFGEvent event = LFGEvent(type,guid,param);
     m_eventList.push_back(event);
     m_eventList.rbegin()->Start(delay);

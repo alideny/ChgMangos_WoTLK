@@ -234,7 +234,7 @@ void Spell::EffectEmpty(SpellEffectIndex /*eff_idx*/)
 
 void Spell::EffectNULL(SpellEffectIndex /*eff_idx*/)
 {
-    DEBUG_LOG("WORLD: Spell Effect DUMMY");
+    DEBUG_LOG("世界: Spell Effect DUMMY");
 }
 
 void Spell::EffectUnused(SpellEffectIndex /*eff_idx*/)
@@ -4407,7 +4407,7 @@ void Spell::EffectTriggerSpellWithValue(SpellEffectIndex eff_idx)
 
     if (!spellInfo)
     {
-        sLog.outError("EffectTriggerSpellWithValue of spell %u: triggering unknown spell id %i", m_spellInfo->Id,triggered_spell_id);
+        sLog.outError("EffectTriggerSpellWithValue of spell %u: triggering 未知的技能 ID %i", m_spellInfo->Id,triggered_spell_id);
         return;
     }
 
@@ -4422,7 +4422,7 @@ void Spell::EffectTriggerRitualOfSummoning(SpellEffectIndex eff_idx)
 
     if (!spellInfo)
     {
-        sLog.outError("EffectTriggerRitualOfSummoning of spell %u: triggering unknown spell id %i", m_spellInfo->Id,triggered_spell_id);
+        sLog.outError("EffectTriggerRitualOfSummoning of spell %u: triggering 未知的技能 ID %i", m_spellInfo->Id,triggered_spell_id);
         return;
     }
 
@@ -4475,7 +4475,7 @@ void Spell::EffectForceCast(SpellEffectIndex eff_idx)
 
     if (!spellInfo)
     {
-        sLog.outError("EffectForceCast of spell %u: triggering unknown spell id %i", m_spellInfo->Id, triggered_spell_id);
+        sLog.outError("EffectForceCast of spell %u: triggering 未知的技能 ID %i", m_spellInfo->Id, triggered_spell_id);
         return;
     }
 
@@ -4594,7 +4594,7 @@ void Spell::EffectTriggerSpell(SpellEffectIndex effIndex)
     SpellEntry const *spellInfo = sSpellStore.LookupEntry( triggered_spell_id );
     if (!spellInfo)
     {
-        sLog.outError("EffectTriggerSpell of spell %u: triggering unknown spell id %i", m_spellInfo->Id,triggered_spell_id);
+        //sLog.outError("EffectTriggerSpell of spell %u: triggering 未知的技能 ID %i", m_spellInfo->Id,triggered_spell_id);
         return;
     }
 
@@ -4670,13 +4670,13 @@ void Spell::EffectTriggerMissileSpell(SpellEffectIndex effect_idx)
 
     if (!spellInfo)
     {
-        sLog.outError("EffectTriggerMissileSpell of spell %u (eff: %u): triggering unknown spell id %u",
-            m_spellInfo->Id,effect_idx,triggered_spell_id);
+        //sLog.outError("EffectTriggerMissileSpell of spell %u (eff: %u): triggering 未知的技能 ID %u",
+        //    m_spellInfo->Id,effect_idx,triggered_spell_id);
         return;
     }
 
     if (m_CastItem)
-        DEBUG_FILTER_LOG(LOG_FILTER_SPELL_CAST, "WORLD: cast Item spellId - %i", spellInfo->Id);
+        DEBUG_FILTER_LOG(LOG_FILTER_SPELL_CAST, "世界: cast Item spellId - %i", spellInfo->Id);
 
     if (m_caster->GetTypeId() == TYPEID_PLAYER)
         ((Player*)m_caster)->RemoveSpellCooldown(triggered_spell_id);
@@ -5732,7 +5732,7 @@ void Spell::EffectOpenLock(SpellEffectIndex eff_idx)
 {
     if (!m_caster || m_caster->GetTypeId() != TYPEID_PLAYER)
     {
-        DEBUG_LOG( "WORLD: Open Lock - No Player Caster!");
+        DEBUG_LOG( "世界: Open Lock - No Player Caster!");
         return;
     }
 
@@ -5788,7 +5788,7 @@ void Spell::EffectOpenLock(SpellEffectIndex eff_idx)
     }
     else
     {
-        DEBUG_LOG( "WORLD: Open Lock - No GameObject/Item Target!");
+        DEBUG_LOG( "世界: Open Lock - No GameObject/Item Target!");
         return;
     }
 
@@ -6407,7 +6407,7 @@ void Spell::EffectDualWield(SpellEffectIndex /*eff_idx*/)
 void Spell::EffectPull(SpellEffectIndex /*eff_idx*/)
 {
     // TODO: create a proper pull towards distract spell center for distract
-    DEBUG_LOG("WORLD: Spell Effect DUMMY");
+    DEBUG_LOG("世界: Spell Effect DUMMY");
 }
 
 void Spell::EffectDistract(SpellEffectIndex /*eff_idx*/)
@@ -6797,7 +6797,7 @@ void Spell::EffectAddHonor(SpellEffectIndex /*eff_idx*/)
     if (m_CastItem)
     {
         ((Player*)unitTarget)->RewardHonor(NULL, 1, float(damage / 10));
-        DEBUG_FILTER_LOG(LOG_FILTER_SPELL_CAST, "SpellEffect::AddHonor (spell_id %u) rewards %d honor points (item %u) for player: %u", m_spellInfo->Id, damage/10, m_CastItem->GetEntry(),((Player*)unitTarget)->GetGUIDLow());
+        DEBUG_FILTER_LOG(LOG_FILTER_SPELL_CAST, "SpellEffect::AddHonor (spell_id %u) rewards %d honor points (item %u) for 玩家: %u", m_spellInfo->Id, damage/10, m_CastItem->GetEntry(),((Player*)unitTarget)->GetGUIDLow());
         return;
     }
 
@@ -6806,13 +6806,13 @@ void Spell::EffectAddHonor(SpellEffectIndex /*eff_idx*/)
     {
         float honor_reward = MaNGOS::Honor::hk_honor_at_level(unitTarget->getLevel(), damage);
         ((Player*)unitTarget)->RewardHonor(NULL, 1, honor_reward);
-        DEBUG_FILTER_LOG(LOG_FILTER_SPELL_CAST, "SpellEffect::AddHonor (spell_id %u) rewards %f honor points (scale) to player: %u", m_spellInfo->Id, honor_reward, ((Player*)unitTarget)->GetGUIDLow());
+        DEBUG_FILTER_LOG(LOG_FILTER_SPELL_CAST, "SpellEffect::AddHonor (spell_id %u) rewards %f honor points (scale) to 玩家: %u", m_spellInfo->Id, honor_reward, ((Player*)unitTarget)->GetGUIDLow());
     }
     else
     {
         //maybe we have correct honor_gain in damage already
         ((Player*)unitTarget)->RewardHonor(NULL, 1, (float)damage);
-        sLog.outError("SpellEffect::AddHonor (spell_id %u) rewards %u honor points (non scale) for player: %u", m_spellInfo->Id, damage, ((Player*)unitTarget)->GetGUIDLow());
+        sLog.outError("SpellEffect::AddHonor (spell_id %u) rewards %u honor points (non scale) for 玩家: %u", m_spellInfo->Id, damage, ((Player*)unitTarget)->GetGUIDLow());
     }
 }
 
@@ -6866,7 +6866,7 @@ void Spell::EffectEnchantItemPerm(SpellEffectIndex eff_idx)
 
     if (item_owner!=p_caster && p_caster->GetSession()->GetSecurity() > SEC_PLAYER && sWorld.getConfig(CONFIG_BOOL_GM_LOG_TRADE) )
     {
-        sLog.outCommand(p_caster->GetSession()->GetAccountId(),"GM %s (Account: %u) enchanting(perm): %s (Entry: %d) for player: %s (Account: %u)",
+        sLog.outCommand(p_caster->GetSession()->GetAccountId(),"GM %s (Account: %u) enchanting(perm): %s (Entry: %d) for 玩家: %s (Account: %u)",
             p_caster->GetName(),p_caster->GetSession()->GetAccountId(),
             itemTarget->GetProto()->Name1,itemTarget->GetEntry(),
             item_owner->GetName(),item_owner->GetSession()->GetAccountId());
@@ -6926,7 +6926,7 @@ void Spell::EffectEnchantItemPrismatic(SpellEffectIndex eff_idx)
 
     if (item_owner!=p_caster && p_caster->GetSession()->GetSecurity() > SEC_PLAYER && sWorld.getConfig(CONFIG_BOOL_GM_LOG_TRADE) )
     {
-        sLog.outCommand(p_caster->GetSession()->GetAccountId(),"GM %s (Account: %u) enchanting(perm): %s (Entry: %d) for player: %s (Account: %u)",
+        sLog.outCommand(p_caster->GetSession()->GetAccountId(),"GM %s (Account: %u) enchanting(perm): %s (Entry: %d) for 玩家: %s (Account: %u)",
             p_caster->GetName(),p_caster->GetSession()->GetAccountId(),
             itemTarget->GetProto()->Name1,itemTarget->GetEntry(),
             item_owner->GetName(),item_owner->GetSession()->GetAccountId());
@@ -6980,7 +6980,7 @@ void Spell::EffectEnchantItemTmp(SpellEffectIndex eff_idx)
         SpellEntry const *spellInfo = sSpellStore.LookupEntry(spell_id);
         if (!spellInfo)
         {
-            sLog.outError("Spell::EffectEnchantItemTmp: unknown spell id %i", spell_id);
+            sLog.outError("Spell::EffectEnchantItemTmp: 未知的技能 ID %i", spell_id);
             return;
         }
 
@@ -7045,7 +7045,7 @@ void Spell::EffectEnchantItemTmp(SpellEffectIndex eff_idx)
 
     if (item_owner!=p_caster && p_caster->GetSession()->GetSecurity() > SEC_PLAYER && sWorld.getConfig(CONFIG_BOOL_GM_LOG_TRADE) )
     {
-        sLog.outCommand(p_caster->GetSession()->GetAccountId(),"GM %s (Account: %u) enchanting(temp): %s (Entry: %d) for player: %s (Account: %u)",
+        sLog.outCommand(p_caster->GetSession()->GetAccountId(),"GM %s (Account: %u) enchanting(temp): %s (Entry: %d) for 玩家: %s (Account: %u)",
             p_caster->GetName(), p_caster->GetSession()->GetAccountId(),
             itemTarget->GetProto()->Name1, itemTarget->GetEntry(),
             item_owner->GetName(), item_owner->GetSession()->GetAccountId());
@@ -11678,7 +11678,7 @@ void Spell::EffectSummonAllTotems(SpellEffectIndex eff_idx)
                         (!((Player*)m_caster)->HasActiveSpell(spell_Id))) ||
                         IsPassiveSpell(spellInfo))
                     {
-                        sLog.outError("Spell::EffectSummonAllTotems: unknown spell id %u in player %s totem slot! WPE cheat detected!", spell_Id,m_caster->GetObjectGuid().GetString().c_str());
+                        sLog.outError("Spell::EffectSummonAllTotems: 未知的技能 ID %u in player %s totem slot! WPE cheat detected!", spell_Id,m_caster->GetObjectGuid().GetString().c_str());
                         return;
                     }
 
@@ -11949,7 +11949,7 @@ void Spell::EffectMilling(SpellEffectIndex /*eff_idx*/)
 
 void Spell::EffectSkill(SpellEffectIndex /*eff_idx*/)
 {
-    DEBUG_LOG("WORLD: SkillEFFECT");
+    DEBUG_LOG("世界: SkillEFFECT");
 }
 
 void Spell::EffectSpiritHeal(SpellEffectIndex /*eff_idx*/)

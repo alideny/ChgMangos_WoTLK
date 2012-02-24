@@ -29,11 +29,11 @@ void WorldSession::HandleAttackSwingOpcode( WorldPacket & recv_data )
     ObjectGuid guid;
     recv_data >> guid;
 
-    DEBUG_FILTER_LOG(LOG_FILTER_COMBAT, "WORLD: Recvd CMSG_ATTACKSWING Message %s", guid.GetString().c_str());
+    DEBUG_FILTER_LOG(LOG_FILTER_COMBAT, "世界: Recvd CMSG_ATTACKSWING Message %s", guid.GetString().c_str());
 
     if(!guid.IsUnit())
     {
-        sLog.outError("WORLD: %s isn't unit", guid.GetString().c_str());
+        sLog.outError("世界: %s isn't unit", guid.GetString().c_str());
         return;
     }
 
@@ -41,7 +41,7 @@ void WorldSession::HandleAttackSwingOpcode( WorldPacket & recv_data )
 
     if(!pEnemy)
     {
-        sLog.outError( "WORLD: Enemy %s not found", guid.GetString().c_str());
+        sLog.outError( "世界: Enemy %s not found", guid.GetString().c_str());
 
         // stop attack state at client
         SendAttackStop(NULL);
@@ -50,7 +50,7 @@ void WorldSession::HandleAttackSwingOpcode( WorldPacket & recv_data )
 
     if(_player->IsFriendlyTo(pEnemy) || pEnemy->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE))
     {
-        sLog.outError( "WORLD: Enemy %s is friendly",guid.GetString().c_str());
+        sLog.outError( "世界: Enemy %s is friendly",guid.GetString().c_str());
 
         // stop attack state at client
         SendAttackStop(pEnemy);
@@ -78,7 +78,7 @@ void WorldSession::HandleSetSheathedOpcode( WorldPacket & recv_data )
     uint32 sheathed;
     recv_data >> sheathed;
 
-    //DEBUG_LOG( "WORLD: Recvd CMSG_SETSHEATHED Message guidlow:%u value1:%u", GetPlayer()->GetGUIDLow(), sheathed );
+    //DEBUG_LOG( "世界: Recvd CMSG_SETSHEATHED Message guidlow:%u value1:%u", GetPlayer()->GetGUIDLow(), sheathed );
 
     if(sheathed >= MAX_SHEATH_STATE)
     {

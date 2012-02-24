@@ -96,7 +96,7 @@ void GameEventMgr::LoadFromDB()
         QueryResult *result = WorldDatabase.Query("SELECT MAX(entry) FROM game_event");
         if( !result )
         {
-            sLog.outString(">> Table game_event 是空的.");
+            sLog.outString(">> 表 game_event 是空的.");
             sLog.outString();
             return;
         }
@@ -113,7 +113,7 @@ void GameEventMgr::LoadFromDB()
     if (!result)
     {
         mGameEvent.clear();
-        sLog.outString(">> Table game_event 是空的!");
+        sLog.outString(">> 表 game_event 是空的!");
         sLog.outString();
         return;
     }
@@ -588,7 +588,7 @@ uint32 GameEventMgr::Initialize()                           // return the next e
     }
 
     uint32 delay = Update(&activeAtShutdown);
-    BASIC_LOG("Game Event system initialized." );
+    BASIC_LOG("游戏时间系统初始化完成." );
     m_IsGameEventsInit = true;
     return delay;
 }
@@ -641,7 +641,7 @@ uint32 GameEventMgr::Update(ActiveEvents const* activeAtShutdown /*= NULL*/)
         if (calcDelay < nextEventDelay)
             nextEventDelay = calcDelay;
     }
-    BASIC_LOG("Next game event check in %u seconds.", nextEventDelay + 1);
+    BASIC_LOG("下一次游戏事件检测时间: %u 秒.", nextEventDelay + 1);
     return (nextEventDelay + 1) * IN_MILLISECONDS;           // Add 1 second to be sure event has started/stopped at next call
 }
 

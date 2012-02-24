@@ -27,7 +27,7 @@
 
 void WorldSession::HandleCalendarGetCalendar(WorldPacket &/*recv_data*/)
 {
-    DEBUG_LOG("WORLD: CMSG_CALENDAR_GET_CALENDAR");         // empty
+    DEBUG_LOG("世界: CMSG_CALENDAR_GET_CALENDAR");         // empty
 
     time_t cur_time = time(NULL);
 
@@ -117,14 +117,14 @@ void WorldSession::HandleCalendarGetCalendar(WorldPacket &/*recv_data*/)
 
 void WorldSession::HandleCalendarGetEvent(WorldPacket &recv_data)
 {
-    DEBUG_LOG("WORLD: CMSG_CALENDAR_GET_EVENT");
+    DEBUG_LOG("世界: CMSG_CALENDAR_GET_EVENT");
     recv_data.hexlike();
     recv_data.read_skip<uint64>();                          // unk
 }
 
 void WorldSession::HandleCalendarGuildFilter(WorldPacket &recv_data)
 {
-    DEBUG_LOG("WORLD: CMSG_CALENDAR_GUILD_FILTER");
+    DEBUG_LOG("世界: CMSG_CALENDAR_GUILD_FILTER");
     recv_data.hexlike();
     recv_data.read_skip<uint32>();                          // unk1
     recv_data.read_skip<uint32>();                          // unk2
@@ -133,14 +133,14 @@ void WorldSession::HandleCalendarGuildFilter(WorldPacket &recv_data)
 
 void WorldSession::HandleCalendarArenaTeam(WorldPacket &recv_data)
 {
-    DEBUG_LOG("WORLD: CMSG_CALENDAR_ARENA_TEAM");
+    DEBUG_LOG("世界: CMSG_CALENDAR_ARENA_TEAM");
     recv_data.hexlike();
     recv_data.read_skip<uint32>();                          // unk
 }
 
 void WorldSession::HandleCalendarAddEvent(WorldPacket &recv_data)
 {
-    DEBUG_LOG("WORLD: CMSG_CALENDAR_ADD_EVENT");
+    DEBUG_LOG("世界: CMSG_CALENDAR_ADD_EVENT");
     recv_data.hexlike();
     recv_data.rpos(recv_data.wpos());                       // set to end to avoid warnings spam
 
@@ -176,7 +176,7 @@ void WorldSession::HandleCalendarAddEvent(WorldPacket &recv_data)
 
 void WorldSession::HandleCalendarUpdateEvent(WorldPacket &recv_data)
 {
-    DEBUG_LOG("WORLD: CMSG_CALENDAR_UPDATE_EVENT");
+    DEBUG_LOG("世界: CMSG_CALENDAR_UPDATE_EVENT");
     recv_data.hexlike();
     recv_data.rpos(recv_data.wpos());                       // set to end to avoid warnings spam
 
@@ -195,7 +195,7 @@ void WorldSession::HandleCalendarUpdateEvent(WorldPacket &recv_data)
 
 void WorldSession::HandleCalendarRemoveEvent(WorldPacket &recv_data)
 {
-    DEBUG_LOG("WORLD: CMSG_CALENDAR_REMOVE_EVENT");
+    DEBUG_LOG("世界: CMSG_CALENDAR_REMOVE_EVENT");
     recv_data.hexlike();
     recv_data.rpos(recv_data.wpos());                       // set to end to avoid warnings spam
 
@@ -207,7 +207,7 @@ void WorldSession::HandleCalendarRemoveEvent(WorldPacket &recv_data)
 
 void WorldSession::HandleCalendarCopyEvent(WorldPacket &recv_data)
 {
-    DEBUG_LOG("WORLD: CMSG_CALENDAR_COPY_EVENT");
+    DEBUG_LOG("世界: CMSG_CALENDAR_COPY_EVENT");
     recv_data.hexlike();
     recv_data.rpos(recv_data.wpos());                       // set to end to avoid warnings spam
 
@@ -219,7 +219,7 @@ void WorldSession::HandleCalendarCopyEvent(WorldPacket &recv_data)
 
 void WorldSession::HandleCalendarEventInvite(WorldPacket &recv_data)
 {
-    DEBUG_LOG("WORLD: CMSG_CALENDAR_EVENT_INVITE");
+    DEBUG_LOG("世界: CMSG_CALENDAR_EVENT_INVITE");
     recv_data.hexlike();
     recv_data.rpos(recv_data.wpos());                       // set to end to avoid warnings spam
 
@@ -233,7 +233,7 @@ void WorldSession::HandleCalendarEventInvite(WorldPacket &recv_data)
 
 void WorldSession::HandleCalendarEventRsvp(WorldPacket &recv_data)
 {
-    DEBUG_LOG("WORLD: CMSG_CALENDAR_EVENT_RSVP");
+    DEBUG_LOG("世界: CMSG_CALENDAR_EVENT_RSVP");
     recv_data.hexlike();
     recv_data.rpos(recv_data.wpos());                       // set to end to avoid warnings spam
 
@@ -244,7 +244,7 @@ void WorldSession::HandleCalendarEventRsvp(WorldPacket &recv_data)
 
 void WorldSession::HandleCalendarEventRemoveInvite(WorldPacket &recv_data)
 {
-    DEBUG_LOG("WORLD: CMSG_CALENDAR_EVENT_REMOVE_INVITE");
+    DEBUG_LOG("世界: CMSG_CALENDAR_EVENT_REMOVE_INVITE");
     recv_data.hexlike();
     recv_data.rpos(recv_data.wpos());                       // set to end to avoid warnings spam
 
@@ -256,7 +256,7 @@ void WorldSession::HandleCalendarEventRemoveInvite(WorldPacket &recv_data)
 
 void WorldSession::HandleCalendarEventStatus(WorldPacket &recv_data)
 {
-    DEBUG_LOG("WORLD: CMSG_CALENDAR_EVENT_STATUS");
+    DEBUG_LOG("世界: CMSG_CALENDAR_EVENT_STATUS");
     recv_data.hexlike();
     recv_data.rpos(recv_data.wpos());                       // set to end to avoid warnings spam
 
@@ -269,7 +269,7 @@ void WorldSession::HandleCalendarEventStatus(WorldPacket &recv_data)
 
 void WorldSession::HandleCalendarEventModeratorStatus(WorldPacket &recv_data)
 {
-    DEBUG_LOG("WORLD: CMSG_CALENDAR_EVENT_MODERATOR_STATUS");
+    DEBUG_LOG("世界: CMSG_CALENDAR_EVENT_MODERATOR_STATUS");
     recv_data.hexlike();
     recv_data.rpos(recv_data.wpos());                       // set to end to avoid warnings spam
 
@@ -282,7 +282,7 @@ void WorldSession::HandleCalendarEventModeratorStatus(WorldPacket &recv_data)
 
 void WorldSession::HandleCalendarComplain(WorldPacket &recv_data)
 {
-    DEBUG_LOG("WORLD: CMSG_CALENDAR_COMPLAIN");
+    DEBUG_LOG("世界: CMSG_CALENDAR_COMPLAIN");
     recv_data.hexlike();
     recv_data.rpos(recv_data.wpos());                       // set to end to avoid warnings spam
 
@@ -293,7 +293,7 @@ void WorldSession::HandleCalendarComplain(WorldPacket &recv_data)
 
 void WorldSession::HandleCalendarGetNumPending(WorldPacket & /*recv_data*/)
 {
-    DEBUG_LOG("WORLD: CMSG_CALENDAR_GET_NUM_PENDING");      // empty
+    DEBUG_LOG("世界: CMSG_CALENDAR_GET_NUM_PENDING");      // empty
 
     WorldPacket data(SMSG_CALENDAR_SEND_NUM_PENDING, 4);
     data << uint32(0);                                      // 0 - no pending invites, 1 - some pending invites

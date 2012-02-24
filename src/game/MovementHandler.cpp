@@ -34,7 +34,7 @@
 
 void WorldSession::HandleMoveWorldportAckOpcode( WorldPacket & /*recv_data*/ )
 {
-    DEBUG_LOG( "WORLD: got MSG_MOVE_WORLDPORT_ACK." );
+    DEBUG_LOG( "世界: got MSG_MOVE_WORLDPORT_ACK." );
     HandleMoveWorldportAckOpcode();
 }
 
@@ -263,7 +263,7 @@ void WorldSession::HandleMoveTeleportAckOpcode(WorldPacket& recv_data)
 void WorldSession::HandleMovementOpcodes( WorldPacket & recv_data )
 {
     uint32 opcode = recv_data.GetOpcode();
-    DEBUG_LOG("WORLD: Recvd %s (%u, 0x%X) opcode", LookupOpcodeName(opcode), opcode, opcode);
+    DEBUG_LOG("世界: Recvd %s (%u, 0x%X) opcode", LookupOpcodeName(opcode), opcode, opcode);
     recv_data.hexlike();
 
     Unit *mover = _player->GetMover();
@@ -309,7 +309,7 @@ void WorldSession::HandleMovementOpcodes( WorldPacket & recv_data )
 void WorldSession::HandleForceSpeedChangeAckOpcodes(WorldPacket &recv_data)
 {
     uint32 opcode = recv_data.GetOpcode();
-    DEBUG_LOG("WORLD: Recvd %s (%u, 0x%X) opcode", LookupOpcodeName(opcode), opcode, opcode);
+    DEBUG_LOG("世界: Recvd %s (%u, 0x%X) opcode", LookupOpcodeName(opcode), opcode, opcode);
     /* extract packet */
     ObjectGuid guid;
     MovementInfo movementInfo;
@@ -379,7 +379,7 @@ void WorldSession::HandleForceSpeedChangeAckOpcodes(WorldPacket &recv_data)
 
 void WorldSession::HandleSetActiveMoverOpcode(WorldPacket &recv_data)
 {
-    DEBUG_LOG("WORLD: Recvd CMSG_SET_ACTIVE_MOVER");
+    DEBUG_LOG("世界: Recvd CMSG_SET_ACTIVE_MOVER");
     recv_data.hexlike();
 
     ObjectGuid guid;
@@ -396,7 +396,7 @@ void WorldSession::HandleSetActiveMoverOpcode(WorldPacket &recv_data)
 
 void WorldSession::HandleMoveNotActiveMoverOpcode(WorldPacket &recv_data)
 {
-    DEBUG_LOG("WORLD: Recvd CMSG_MOVE_NOT_ACTIVE_MOVER");
+    DEBUG_LOG("世界: Recvd CMSG_MOVE_NOT_ACTIVE_MOVER");
     recv_data.hexlike();
 
     ObjectGuid old_mover_guid;
@@ -414,7 +414,7 @@ void WorldSession::HandleMoveNotActiveMoverOpcode(WorldPacket &recv_data)
             _player->GetGuidStr().c_str(),
             old_mover_guid.GetString().c_str());
 */
-        DEBUG_LOG("World: CMSG_MOVE_NOT_ACTIVE_MOVER %s received, but %s now is active mover!", moverGuid.GetString().c_str(), old_mover_guid.GetString().c_str());
+        DEBUG_LOG("世界: CMSG_MOVE_NOT_ACTIVE_MOVER %s received, but %s now is active mover!", moverGuid.GetString().c_str(), old_mover_guid.GetString().c_str());
         recv_data.rpos(recv_data.wpos());                   // prevent warnings spam
         return;
     }
@@ -424,7 +424,7 @@ void WorldSession::HandleMoveNotActiveMoverOpcode(WorldPacket &recv_data)
 
 void WorldSession::HandleMountSpecialAnimOpcode(WorldPacket& /*recvdata*/)
 {
-    //DEBUG_LOG("WORLD: Recvd CMSG_MOUNTSPECIAL_ANIM");
+    //DEBUG_LOG("世界: Recvd CMSG_MOUNTSPECIAL_ANIM");
 
     WorldPacket data(SMSG_MOUNTSPECIAL_ANIM, 8);
     data << GetPlayer()->GetObjectGuid();

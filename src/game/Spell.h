@@ -771,7 +771,7 @@ namespace MaNGOS
                     }
                     break;
                 default:
-                    sLog.outError("SpellNotifierCreatureAndPlayer: unsupported PUSH_* case %u.", i_push_type);
+                    sLog.outError("SpellNotifierCreatureAndÍæ¼Ò: unsupported PUSH_* case %u.", i_push_type);
             }
         }
 

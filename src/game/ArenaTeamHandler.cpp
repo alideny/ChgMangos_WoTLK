@@ -49,7 +49,7 @@ void WorldSession::HandleInspectArenaTeamsOpcode(WorldPacket & recv_data)
 
 void WorldSession::HandleArenaTeamQueryOpcode(WorldPacket & recv_data)
 {
-    DEBUG_LOG( "WORLD: Received CMSG_ARENA_TEAM_QUERY" );
+    DEBUG_LOG( "世界: Received CMSG_ARENA_TEAM_QUERY" );
 
     uint32 ArenaTeamId;
     recv_data >> ArenaTeamId;
@@ -63,7 +63,7 @@ void WorldSession::HandleArenaTeamQueryOpcode(WorldPacket & recv_data)
 
 void WorldSession::HandleArenaTeamRosterOpcode(WorldPacket & recv_data)
 {
-    DEBUG_LOG( "WORLD: Received CMSG_ARENA_TEAM_ROSTER" );
+    DEBUG_LOG( "世界: Received CMSG_ARENA_TEAM_ROSTER" );
 
     uint32 ArenaTeamId;                                     // arena team id
     recv_data >> ArenaTeamId;
@@ -147,7 +147,7 @@ void WorldSession::HandleArenaTeamInviteOpcode(WorldPacket & recv_data)
     data << arenateam->GetName();
     player->GetSession()->SendPacket(&data);
 
-    DEBUG_LOG("WORLD: Sent SMSG_ARENA_TEAM_INVITE");
+    DEBUG_LOG("世界: Sent SMSG_ARENA_TEAM_INVITE");
 }
 
 void WorldSession::HandleArenaTeamAcceptOpcode(WorldPacket & /*recv_data*/)

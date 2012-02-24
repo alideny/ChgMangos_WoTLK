@@ -30,7 +30,7 @@
 
 void WorldSession::HandleDismissControlledVehicle(WorldPacket &recv_data)
 {
-    DEBUG_LOG("WORLD: Received CMSG_DISMISS_CONTROLLED_VEHICLE");
+    DEBUG_LOG("世界: Received CMSG_DISMISS_CONTROLLED_VEHICLE");
     recv_data.hexlike();
 
     ObjectGuid guid;
@@ -64,7 +64,7 @@ void WorldSession::HandleDismissControlledVehicle(WorldPacket &recv_data)
 
 void WorldSession::HandleRequestVehicleExit(WorldPacket &recv_data)
 {
-    DEBUG_LOG("WORLD: Received CMSG_REQUEST_VEHICLE_EXIT");
+    DEBUG_LOG("世界: Received CMSG_REQUEST_VEHICLE_EXIT");
 
     if(!GetPlayer()->GetVehicle())
         return;
@@ -79,21 +79,21 @@ void WorldSession::HandleRequestVehicleExit(WorldPacket &recv_data)
 
 void WorldSession::HandleRequestVehiclePrevSeat(WorldPacket &recv_data)
 {
-    DEBUG_LOG("WORLD: Received CMSG_REQUEST_VEHICLE_PREV_SEAT");
+    DEBUG_LOG("世界: Received CMSG_REQUEST_VEHICLE_PREV_SEAT");
 
     GetPlayer()->ChangeSeat(-1, false);
 }
 
 void WorldSession::HandleRequestVehicleNextSeat(WorldPacket &recv_data)
 {
-    DEBUG_LOG("WORLD: Received CMSG_REQUEST_VEHICLE_NEXT_SEAT");
+    DEBUG_LOG("世界: Received CMSG_REQUEST_VEHICLE_NEXT_SEAT");
 
     GetPlayer()->ChangeSeat(-1, true);
 }
 
 void WorldSession::HandleRequestVehicleSwitchSeat(WorldPacket &recv_data)
 {
-    DEBUG_LOG("WORLD: Received CMSG_REQUEST_VEHICLE_SWITCH_SEAT");
+    DEBUG_LOG("世界: Received CMSG_REQUEST_VEHICLE_SWITCH_SEAT");
     recv_data.hexlike();
 
     ObjectGuid guid;
@@ -126,7 +126,7 @@ void WorldSession::HandleRequestVehicleSwitchSeat(WorldPacket &recv_data)
 
 void WorldSession::HandleEnterPlayerVehicle(WorldPacket &recv_data)
 {
-    DEBUG_LOG("WORLD: Received CMSG_PLAYER_VEHICLE_ENTER");
+    DEBUG_LOG("世界: Received CMSG_PLAYER_VEHICLE_ENTER");
     recv_data.hexlike();
 
     ObjectGuid guid;
@@ -162,7 +162,7 @@ void WorldSession::HandleEjectPassenger(WorldPacket &recv_data)
     ObjectGuid guid;
     recv_data >> guid;
 
-    DEBUG_LOG("WORLD: Received CMSG_EJECT_PASSENGER %s",guid.GetString().c_str());
+    DEBUG_LOG("世界: Received CMSG_EJECT_PASSENGER %s",guid.GetString().c_str());
 
     Unit* passenger = ObjectAccessor::GetUnit(*GetPlayer(), guid);
 
@@ -197,7 +197,7 @@ void WorldSession::HandleEjectPassenger(WorldPacket &recv_data)
 
 void WorldSession::HandleChangeSeatsOnControlledVehicle(WorldPacket &recv_data)
 {
-    sLog.outDebug("WORLD: Recvd CMSG_CHANGE_SEATS_ON_CONTROLLED_VEHICLE");
+    sLog.outDebug("世界: Recvd CMSG_CHANGE_SEATS_ON_CONTROLLED_VEHICLE");
     recv_data.hexlike();
 
     ObjectGuid guid, guid2;

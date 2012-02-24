@@ -39,7 +39,7 @@ void WorldSession::HandleBattlemasterHelloOpcode(WorldPacket & recv_data)
     ObjectGuid guid;
     recv_data >> guid;
 
-    DEBUG_LOG("WORLD: Recvd CMSG_BATTLEMASTER_HELLO Message from %s", guid.GetString().c_str());
+    DEBUG_LOG("世界: Recvd CMSG_BATTLEMASTER_HELLO Message from %s", guid.GetString().c_str());
 
     Creature *pCreature = GetPlayer()->GetMap()->GetCreature(guid);
 
@@ -97,7 +97,7 @@ void WorldSession::HandleBattlemasterJoinOpcode( WorldPacket & recv_data )
 
     BattleGroundTypeId bgTypeId = BattleGroundTypeId(bgTypeId_);
 
-    DEBUG_LOG( "WORLD: Recvd CMSG_BATTLEMASTER_JOIN Message from %s", guid.GetString().c_str());
+    DEBUG_LOG( "世界: Recvd CMSG_BATTLEMASTER_JOIN Message from %s", guid.GetString().c_str());
 
     // can do this, since it's battleground, not arena
     BattleGroundQueueTypeId bgQueueTypeId = BattleGroundMgr::BGQueueTypeId(bgTypeId, ARENA_TYPE_NONE);
@@ -260,7 +260,7 @@ void WorldSession::HandleBattlemasterJoinOpcode( WorldPacket & recv_data )
 void WorldSession::HandleBattleGroundPlayerPositionsOpcode( WorldPacket & /*recv_data*/ )
 {
                                                             // empty opcode
-    DEBUG_LOG("WORLD: Recvd MSG_BATTLEGROUND_PLAYER_POSITIONS Message");
+    DEBUG_LOG("世界: Recvd MSG_BATTLEGROUND_PLAYER_POSITIONS Message");
 
     BattleGround *bg = _player->GetBattleGround();
     if(!bg)                                                 // can't be received if player not in battleground
@@ -327,7 +327,7 @@ void WorldSession::HandleBattleGroundPlayerPositionsOpcode( WorldPacket & /*recv
 
 void WorldSession::HandlePVPLogDataOpcode( WorldPacket & /*recv_data*/ )
 {
-    DEBUG_LOG( "WORLD: Recvd MSG_PVP_LOG_DATA Message");
+    DEBUG_LOG( "世界: Recvd MSG_PVP_LOG_DATA Message");
 
     BattleGround *bg = _player->GetBattleGround();
     if (!bg)
@@ -341,12 +341,12 @@ void WorldSession::HandlePVPLogDataOpcode( WorldPacket & /*recv_data*/ )
     sBattleGroundMgr.BuildPvpLogDataPacket(&data, bg);
     SendPacket(&data);
 
-    DEBUG_LOG( "WORLD: Sent MSG_PVP_LOG_DATA Message");
+    DEBUG_LOG( "世界: Sent MSG_PVP_LOG_DATA Message");
 }
 
 void WorldSession::HandleBattlefieldListOpcode( WorldPacket &recv_data )
 {
-    DEBUG_LOG( "WORLD: Recvd CMSG_BATTLEFIELD_LIST Message");
+    DEBUG_LOG( "世界: Recvd CMSG_BATTLEFIELD_LIST Message");
 
     uint32 bgTypeId;
     recv_data >> bgTypeId;                                  // id from DBC
@@ -371,7 +371,7 @@ void WorldSession::HandleBattlefieldListOpcode( WorldPacket &recv_data )
 
 void WorldSession::HandleBattleFieldPortOpcode( WorldPacket &recv_data )
 {
-    DEBUG_LOG( "WORLD: Recvd CMSG_BATTLEFIELD_PORT Message");
+    DEBUG_LOG( "世界: Recvd CMSG_BATTLEFIELD_PORT Message");
 
     uint8 type;                                             // arenatype if arena
     uint8 unk2;                                             // unk, can be 0x0 (may be if was invited?) and 0x1
@@ -528,7 +528,7 @@ void WorldSession::HandleBattleFieldPortOpcode( WorldPacket &recv_data )
 
 void WorldSession::HandleLeaveBattlefieldOpcode( WorldPacket& recv_data )
 {
-    DEBUG_LOG( "WORLD: Recvd CMSG_LEAVE_BATTLEFIELD Message");
+    DEBUG_LOG( "世界: Recvd CMSG_LEAVE_BATTLEFIELD Message");
 
     recv_data.read_skip<uint8>();                           // unk1
     recv_data.read_skip<uint8>();                           // unk2
@@ -550,7 +550,7 @@ void WorldSession::HandleLeaveBattlefieldOpcode( WorldPacket& recv_data )
 void WorldSession::HandleBattlefieldStatusOpcode( WorldPacket & /*recv_data*/ )
 {
     // empty opcode
-    DEBUG_LOG( "WORLD: Battleground status" );
+    DEBUG_LOG( "世界: Battleground status" );
 
     WorldPacket data;
     // we must update all queues here
@@ -613,7 +613,7 @@ void WorldSession::HandleBattlefieldStatusOpcode( WorldPacket & /*recv_data*/ )
 
 void WorldSession::HandleAreaSpiritHealerQueryOpcode( WorldPacket & recv_data )
 {
-    DEBUG_LOG("WORLD: CMSG_AREA_SPIRIT_HEALER_QUERY");
+    DEBUG_LOG("世界: CMSG_AREA_SPIRIT_HEALER_QUERY");
 
     BattleGround *bg = _player->GetBattleGround();
     if (!bg)
@@ -634,7 +634,7 @@ void WorldSession::HandleAreaSpiritHealerQueryOpcode( WorldPacket & recv_data )
 
 void WorldSession::HandleAreaSpiritHealerQueueOpcode( WorldPacket & recv_data )
 {
-    DEBUG_LOG("WORLD: CMSG_AREA_SPIRIT_HEALER_QUEUE");
+    DEBUG_LOG("世界: CMSG_AREA_SPIRIT_HEALER_QUEUE");
 
     BattleGround *bg = _player->GetBattleGround();
     if (!bg)
@@ -655,7 +655,7 @@ void WorldSession::HandleAreaSpiritHealerQueueOpcode( WorldPacket & recv_data )
 
 void WorldSession::HandleBattlemasterJoinArena( WorldPacket & recv_data )
 {
-    DEBUG_LOG("WORLD: CMSG_BATTLEMASTER_JOIN_ARENA");
+    DEBUG_LOG("世界: CMSG_BATTLEMASTER_JOIN_ARENA");
     //recv_data.hexlike();
 
     ObjectGuid guid;                                        // arena Battlemaster guid

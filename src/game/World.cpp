@@ -1018,7 +1018,7 @@ void World::LoadConfigSettings(bool reload)
     setConfig(CONFIG_BOOL_RESET_DUEL_AREA_ENABLED, "DuelReset.Enable", false);
     std::string areaIdsEnabledDuel = sConfig.GetStringDefault("DuelReset.AreaIds", "");
     setDuelResetEnableAreaIds(areaIdsEnabledDuel.c_str());
-    sLog.outString("WORLD: reset duel area %sabled", getConfig(CONFIG_BOOL_RESET_DUEL_AREA_ENABLED) ? "en" : "dis");
+    sLog.outString("世界: 双倍经验区域 %s ", getConfig(CONFIG_BOOL_RESET_DUEL_AREA_ENABLED) ? "开启" : "关闭");
 
     // chat log and lexics cutter settings
     if (reload)
@@ -1634,7 +1634,7 @@ void World::SetInitialWorldSettings()
     sLog.outString( "服务器启动用时: %i 分 %i 秒", uStartInterval / 60000, (uStartInterval % 60000) / 1000 );
     sLog.outString( "==============================================================");
     sLog.outString( "感谢您使用  ChgMangos ！祝您游戏愉快！"                        );
-    sLog.outString( "当前版本为：ChgMangos_WoTLK_final_1.0    2012.02.25 "          );
+    sLog.outString( "当前版本为：ChgMangos_WoTLK_final_1.4    2012.02.25 "          );
     sLog.outString();
     sLog.outString( "欢迎访问  ：http://bbs.chglove.tk "                            );
     sLog.outString( "==============================================================");
