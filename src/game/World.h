@@ -28,6 +28,7 @@
 #include "Policies/Singleton.h"
 #include "SharedDefines.h"
 #include "ObjectLock.h"
+#include "Util.h"
 
 #include <map>
 #include <set>
@@ -400,12 +401,15 @@ enum eConfigBoolValues
     CONFIG_BOOL_PLAYERBOT_COLLECT_OBJECTS,
     CONFIG_BOOL_PLAYERBOT_SELL_TRASH,
     CONFIG_BOOL_MMAP_ENABLED,
+    CONFIG_BOOL_RESET_DUEL_AREA_ENABLED,
+
     // PvP Token
     CONFIG_BOOL_PVP_TOKEN_ENABLE,
     // PvP Announcer
     CONFIG_BOOL_PVP_ANNOUNCER,
     // Flying Everywhere
     CONFIG_BOOL_ALLOW_FLYING_MOUNTS_EVERYWHERE,
+
     CONFIG_BOOL_VALUE_COUNT
 };
 
@@ -663,6 +667,10 @@ class World
         // multithread locking (World locking used only if object map == NULL)
         ObjectLockType& GetLock(MapLockType _locktype = MAP_LOCK_TYPE_DEFAULT) { return i_lock[_locktype]; }
 
+        // reset duel system
+        void setDuelResetEnableAreaIds(const char* areas);
+        bool IsAreaIdEnabledDuelReset(uint32 areaId);
+
     protected:
         void _UpdateGameTime();
         // callback for UpdateRealmCharacters
@@ -763,6 +771,9 @@ class World
 
         // World locking for global (not-in-map) objects.
         ObjectLockType   i_lock[MAP_LOCK_TYPE_MAX];
+
+        // reset duel system
+        std::set<uint32> areaEnabledIds; //set of areaIds where is enabled the Duel reset system
 
 };
 
