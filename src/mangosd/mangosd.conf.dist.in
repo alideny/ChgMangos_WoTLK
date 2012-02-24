@@ -1,4 +1,4 @@
-#####################################
+﻿#####################################
 # ChgMangos 服务器配置文件          #
 #####################################
 
@@ -2004,17 +2004,17 @@ VMSS.TrySkipFirstThreadBreak = 1
 VMSS.ForceUnloadDelay = 3000
 
 ###################################################################################################################
-#    Duel Reset System
+#    双倍经验 （精神良好状态） 配置
 #
 #    DuelReset.Enable
-#        Enable duel reset script that resets all Arena Cooldows, set full hp/mana and erase all debuffs. (Need complete DuelReset.areaIds) -- Not Blizzlike
-#        Default: 0 (disabled)
-#                 1 (enabled)
+#        是否开启精神良好控制
+#        默认:    0 关闭
+#                 1 开启
 #
 #    DuelReset.AreaIds
-#        List of area's ids where Duel Reset Script will be enabled. With delimiter ','. You can lookup areas going with a GM to X zone and typing .gps
-#        Default: "12,14,4570" Outdoor Stormwind, Outdoor Orgrimmar, Dalaran's Circle of Wills 
+#        指定获得精神良好状态的区域
+#        示例: "12,14,4570"
 #
 ###################################################################################################################
-DuelReset.Enable = 0
+DuelReset.Enable = 1
 DuelReset.AreaIds = "12,14,4570"
