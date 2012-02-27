@@ -24,6 +24,7 @@
 #include "WorldPvPSI.h"
 #include "WorldPvPTF.h"
 #include "WorldPvPZM.h"
+#include "WorldPvPWG.h"
 #include "Policies/SingletonImp.h"
 
 INSTANTIATE_SINGLETON_1( WorldPvPMgr );
@@ -122,6 +123,18 @@ void WorldPvPMgr::InitWorldPvP()
     if (!pWorldPvP->InitWorldPvPArea())
     {
         sLog.outDebug("WorldPvP : ZANGAMARSH init failed.");
+        delete pWorldPvP;
+    }
+    else
+    {
+        m_WorldPvPSet.push_back(pWorldPvP);
+        ++uiPvPZonesInitialized;
+    }
+
+    pWorldPvP = new WorldPvPWG;
+    if (!pWorldPvP->InitWorldPvPArea())
+    {
+        sLog.outDebug("WorldPvP : WINTERGRASP init failed.");
         delete pWorldPvP;
     }
     else

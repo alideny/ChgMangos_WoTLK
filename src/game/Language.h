@@ -720,7 +720,7 @@ enum MangosStrings
     LANG_ARENA_NOT_ENOUGH_PLAYERS       = 723,              // "Your group does not have enough players to join this match."
     LANG_ARENA_GOLD_WINS                = 724,              // "The Gold Team wins!"
     LANG_ARENA_GREEN_WINS               = 725,              // "The Green Team wins!"
-//                                      = 726, not used
+    //                                  = 726, not used
     LANG_BG_GROUP_OFFLINE_MEMBER        = 727,              // "Your group has an offline member. Please remove him before joining."
     LANG_BG_GROUP_MIXED_FACTION         = 728,              // "Your group has players from the opposing faction. You can't join the battleground as a group."
     LANG_BG_GROUP_MIXED_LEVELS          = 729,              // "Your group has players from different battleground brakets. You can't join as group."
@@ -742,18 +742,12 @@ enum MangosStrings
     LANG_DIST_ARENA_POINTS_TEAM_START   = 744,
     LANG_DIST_ARENA_POINTS_TEAM_END     = 745,
     LANG_DIST_ARENA_POINTS_END          = 746,
-//                                      = 747, not used
-//                                      = 748, not used
-//                                      = 749, not used
+    //                                  = 749, not used
     LANG_BATTLEGROUND_PREMATURE_FINISH_WARNING      = 750,  // "Not enough players. This game will close in %u mins."
     LANG_BATTLEGROUND_PREMATURE_FINISH_WARNING_SECS = 751,  // "Not enough players. This game will close in %u seconds."
     LANG_BATTLEGROUND_ONLY_ALLIANCE_USE = 752,              // "Only The Alliance can use that portal"
     LANG_BATTLEGROUND_ONLY_HORDE_USE    = 753,              // "Only The Horde can use that portal"
-//                                      = 754, not used
-//                                      = 755, not used
-//                                      = 756, not used
-//                                      = 757, not used
-//                                      = 758, not used
+
     LANG_BG_AV_TOWER_TAKEN              = 759,
     LANG_BG_AV_TOWER_ASSAULTED          = 760,
     LANG_BG_AV_TOWER_DEFENDED           = 761,
@@ -780,7 +774,6 @@ enum MangosStrings
     LANG_BG_AV_NODE_TOWER_FROST_W       = 781,
     LANG_BG_AV_NODE_GRAVE_FROST_HUT     = 782,
 
-//                                      = 783, not used
     LANG_BG_AV_START_ONE_MINUTE         = 784,
     LANG_BG_AV_START_HALF_MINUTE        = 785,
     LANG_BG_AV_HAS_BEGUN                = 786,
@@ -789,11 +782,31 @@ enum MangosStrings
     LANG_BG_AV_H_GENERAL_DEAD           = 789,
     LANG_BG_AV_A_GENERAL_DEAD           = 790,
 
+    //Wintergrasp
+    LANG_BG_WG_BATTLE_STARTS            = 754,
+    LANG_BG_WG_DEFENDED                 = 755,
+    LANG_BG_WG_CAPTURED                 = 756,
+    LANG_BG_WG_WORKSHOP_DAMAGED         = 757,
+    LANG_BG_WG_WORKSHOP_DESTROYED       = 758,
+    LANG_BG_WG_TOWER_DAMAGED            = 783,
+    LANG_BG_WG_TOWER_DESTROYED          = 791,
+    LANG_BG_WG_FORTRESS_UNDER_ATTACK    = 792,
+    LANG_BG_WG_SWITCH_FACTION           = 793,
+    LANG_BG_WG_CHANGE_TIMER             = 794,
+    LANG_BG_WG_BATTLE_FORCE_START       = 795,
+    LANG_BG_WG_BATTLE_FORCE_STOP        = 796,
+    LANG_BG_WG_STATUS                   = 797,
+    LANG_BG_WG_DISABLE                  = 798,
+    LANG_BG_WG_ENABLE                   = 799,
+    LANG_BG_WG_RANK1                    = 800,
+    LANG_BG_WG_RANK2                    = 747,
+    LANG_BG_WG_WORLD_ANNOUNCE_30        = 748,
+    LANG_BG_WG_WORLD_ANNOUNCE_10        = 817,
+    LANG_BG_WG_WORLD_NO_DEF             = 818,
+    LANG_BG_WG_WORLD_NO_ATK             = 819,
 
-    // Room for batleground/arena strings 791-799 not used
 
     // in game strings
-    //                                  = 800, not used
     LANG_NOT_ENOUGH_GOLD                = 801,
     LANG_NOT_FREE_TRADE_SLOTS           = 802,
     LANG_NOT_PARTNER_FREE_TRADE_SLOTS   = 803,
@@ -810,7 +823,7 @@ enum MangosStrings
     LANG_GUILD_MEMBER                   = 814,
     LANG_GUILD_INITIATE                 = 815,
     LANG_FAIL_ENTER_SPECTRAL_REALM      = 816,
-    // Room for in-game strings           817-999 not used
+    // Room for in-game strings           820-999 not used
 
     // Level 4 (CLI only commands)
     LANG_COMMAND_EXIT                   = 1000,

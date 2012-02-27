@@ -29,6 +29,7 @@
 #include "../SharedDefines.h"
 #include "../GameObject.h"
 #include "../ObjectMgr.h"
+#include "../Group.h"
 
 
 enum WorldPvPTypes
@@ -40,6 +41,7 @@ enum WorldPvPTypes
     WORLD_PVP_TYPE_TF,
     WORLD_PVP_TYPE_NA,
     WORLD_PVP_TYPE_GH,
+    WORLD_PVP_TYPE_WG,
 };
 
 enum GameObjectArtKits
@@ -55,6 +57,12 @@ enum CaptureState
     PROGRESS    = 1,
     CONTESTED   = 2,
     WIN         = 3
+};
+
+struct WintergraspPlayer
+{
+    time_t  OfflineRemoveTime;                              // for tracking and removing offline players from queue after 5 minutes
+    Team    PlayerTeam;                                     // Player's team
 };
 
 class WorldPvP : public ZoneScript
@@ -103,6 +111,11 @@ class WorldPvP : public ZoneScript
 
         // Get a Player from the zone
         Player* GetPlayerInZone(bool bOnlyAlive = false, bool bCanBeGamemaster = true);
+
+        //WINTERGRASP
+        typedef std::map<ObjectGuid, WintergraspPlayer> WintergraspPlayerMap;
+        WintergraspPlayerMap const& GetPlayers() const { return m_Players; }
+
     protected:
         // Player related stuff
         virtual void HandlePlayerEnterZone(Player* pPlayer);
@@ -121,6 +134,9 @@ class WorldPvP : public ZoneScript
         ObjectGuidSet m_sZonePlayers;
 
         uint32 m_uiTypeId;
+
+        //WINTERGRASP
+        WintergraspPlayerMap  m_Players;
 };
 
 #endif
