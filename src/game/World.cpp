@@ -1589,6 +1589,9 @@ void World::SetInitialWorldSettings()
     sLog.outString( "初始化 交通数据..." );
     sMapMgr.LoadTransports();
 
+    sLog.outString("加载 交通 NPC...");
+    sMapMgr.LoadTransportNPCs();
+
     sLog.outString();
     sLog.outString("删除过期禁止列表..." );
     LoginDatabase.Execute("DELETE FROM ip_banned WHERE unbandate<=UNIX_TIMESTAMP() AND unbandate<>bandate");
