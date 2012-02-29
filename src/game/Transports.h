@@ -25,7 +25,7 @@
 #include <set>
 #include <string>
 
-class MANGOS_DLL_SPEC Transport : public GameObject
+class Transport : public GameObject
 {
     public:
         explicit Transport();
@@ -33,19 +33,14 @@ class MANGOS_DLL_SPEC Transport : public GameObject
         bool Create(uint32 guidlow, uint32 mapid, float x, float y, float z, float ang, uint8 animprogress, uint16 dynamicHighValue);
         bool GenerateWaypoints(uint32 pathid, std::set<uint32> &mapids);
         void Update(uint32 update_diff, uint32 p_time) override;
-        void UpdateNPCPositions();
-        bool AddPassenger(Unit* passenger);
-        bool AddNPCPassenger(uint32 entry, float x, float y, float z, float o, uint32 anim=0);
-        bool RemovePassenger(Unit* passenger);
+        bool AddPassenger(Player* passenger);
+        bool RemovePassenger(Player* passenger);
 
-        void BuildCreateUpdateBlockForPlayer(UpdateData* data, Player* target);
         void BuildStartMovePacket(Map const *targetMap);
         void BuildStopMovePacket(Map const *targetMap);
 
-        typedef std::set<Unit*> UnitSet;
-        UnitSet const& GetUnitPassengers() const { return m_passengers; }
-
-        uint32 GetScriptId() const { return ScriptId; }
+        typedef std::set<Player*> PlayerSet;
+        PlayerSet const& GetPassengers() const { return m_passengers; }
 
     private:
         struct WayPoint
@@ -73,9 +68,7 @@ class MANGOS_DLL_SPEC Transport : public GameObject
         uint32 m_pathTime;
         uint32 m_timer;
 
-        UnitSet m_passengers;
-        uint32 currenttguid;
-        uint32 ScriptId;
+        PlayerSet m_passengers;
 
     public:
         WayPointMap m_WayPoints;

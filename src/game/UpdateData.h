@@ -49,7 +49,7 @@ enum ObjectUpdateFlags
     UPDATEFLAG_ROTATION             = 0x0200
 };
 
-class MANGOS_DLL_SPEC UpdateData
+class UpdateData
 {
     public:
         UpdateData();
