@@ -870,21 +870,33 @@ void World::LoadConfigSettings(bool reload)
     setConfig(CONFIG_UINT32_TIMERBAR_FIRE_MAX,        "TimerBar.Fire.Max", 1);
 
     // PvP Token System
-    setConfig(CONFIG_BOOL_PVP_TOKEN_ENABLE,"PvPToken.Enable", true);
-    setConfig(CONFIG_FLOAT_PVP_TOKEN_ITEMID,"PvPToken.ItemID", 29434);
-    setConfig(CONFIG_FLOAT_PVP_TOKEN_ITEMCOUNT,"PvPToken.ItemCount", 1);
-    setConfig(CONFIG_FLOAT_PVP_TOKEN_GOLD,"PvPToken.Gold", 100000);
-    setConfig(CONFIG_PVP_TOKEN_HONOR,"PvPToken.Honor", 75000);
-    setConfig(CONFIG_PVP_TOKEN_ARENA,"PvPToken.Arena", 5000);
-    setConfig(CONFIG_FLOAT_PVP_TOKEN_RESTRICTION,"PvPToken.MapRestriction", 4);
+    setConfig(CONFIG_BOOL_PVP_TOKEN_ENABLE,         "PvPToken.Enable", true);
+    setConfig(CONFIG_FLOAT_PVP_TOKEN_ITEMID,        "PvPToken.ItemID", 29434);
+    setConfig(CONFIG_FLOAT_PVP_TOKEN_ITEMCOUNT,     "PvPToken.ItemCount", 1);
+    setConfig(CONFIG_FLOAT_PVP_TOKEN_GOLD,          "PvPToken.Gold", 100000);
+    setConfig(CONFIG_PVP_TOKEN_HONOR,               "PvPToken.Honor", 75000);
+    setConfig(CONFIG_PVP_TOKEN_ARENA,               "PvPToken.Arena", 5000);
+    setConfig(CONFIG_FLOAT_PVP_TOKEN_RESTRICTION,   "PvPToken.MapRestriction", 4);
     // PvP Announcer System
-    setConfig(CONFIG_BOOL_PVP_ANNOUNCER,"PvPAnnouncer.Enable", true);
+    setConfig(CONFIG_BOOL_PVP_ANNOUNCER,            "PvPAnnouncer.Enable", true);
 
     if(getConfig(CONFIG_FLOAT_PVP_TOKEN_ITEMCOUNT) < 1)
-        setConfig(CONFIG_FLOAT_PVP_TOKEN_ITEMCOUNT,"PvPToken.ItemCount",1);
+        setConfig(CONFIG_FLOAT_PVP_TOKEN_ITEMCOUNT, "PvPToken.ItemCount",1);
+
+    // 玩家伤害 生命/能量/魔法/怒气 倍率
+    setConfig(CONFIG_FLOAT_RATE_PLAYERS_A_DAMAGE,        "Rate.Player.Alliance.Damage", 1.0f);
+    setConfig(CONFIG_FLOAT_RATE_PLAYERS_H_DAMAGE,        "Rate.Player.Horde.Damage", 1.0f);
+    setConfig(CONFIG_FLOAT_RATE_PLAYERS_A_SPELLDAMAGE,   "Rate.Player.Alliance.SpellDamage", 1.0f);
+    setConfig(CONFIG_FLOAT_RATE_PLAYERS_H_SPELLDAMAGE,   "Rate.Player.Horde.SpellDamage", 1.0f);
+    setConfig(CONFIG_FLOAT_RATE_PLAYERS_A_HP,            "Rate.Player.Alliance.HP", 1.0f);
+    setConfig(CONFIG_FLOAT_RATE_PLAYERS_H_HP,            "Rate.Player.Horde.HP", 1.0f);
+    setConfig(CONFIG_FLOAT_RATE_PLAYERS_A_POWER,         "Rate.Player.Alliance.Power", 1.0f);
+    setConfig(CONFIG_FLOAT_RATE_PLAYERS_H_POWER,         "Rate.Player.Horde.Power", 1.0f);
+    setConfig(CONFIG_FLOAT_RATE_PLAYERS_A_SPEED,         "Rate.Player.Alliance.Speed", 1.0f);
+    setConfig(CONFIG_FLOAT_RATE_PLAYERS_H_SPEED,         "Rate.Player.Horde.Speed", 1.0f);
 
     /* 世界飞行 */
-    setConfig(CONFIG_BOOL_ALLOW_FLYING_MOUNTS_EVERYWHERE, "Custom.AllowFlyingMountsEverywhere", true);
+    setConfig(CONFIG_BOOL_ALLOW_FLYING_MOUNTS_EVERYWHERE,"Custom.AllowFlyingMountsEverywhere", true);
 
     setConfig(CONFIG_BOOL_PET_UNSUMMON_AT_MOUNT,      "PetUnsummonAtMount", true);
 

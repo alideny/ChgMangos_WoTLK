@@ -1355,6 +1355,13 @@ class MANGOS_DLL_SPEC Player : public Unit
         }
         ///世界飞行模块结束
 
+        ///玩家伤害/生命/魔法/能量/怒气倍率控制
+        float GetHealthMod();
+        float GetPowerMod();
+        float GetDamageMod();
+        float GetSpellDamageMod();
+        float GetSpeedMod();
+
         Item* ConvertItem(Item* item, uint32 newItemId);
 
         InventoryResult _CanTakeMoreSimilarItems(uint32 entry, uint32 count, Item* pItem, uint32* no_space_count = NULL) const;

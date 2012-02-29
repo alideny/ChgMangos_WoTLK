@@ -215,6 +215,9 @@ void Player::UpdateMaxHealth()
     UnitMods unitMod = UNIT_MOD_HEALTH;
 
     float value = GetModifierValue(unitMod, BASE_VALUE) + GetCreateHealth();
+
+    // 设置生命值倍率
+	value *= GetHealthMod();
     value *= GetModifierValue(unitMod, BASE_PCT);
     value += GetModifierValue(unitMod, TOTAL_VALUE) + GetHealthBonusFromStamina();
     value *= GetModifierValue(unitMod, TOTAL_PCT);
@@ -232,6 +235,8 @@ void Player::UpdateMaxPower(Powers power)
     float bonusPower = (power == POWER_MANA && create_power > 0) ? GetManaBonusFromIntellect() : 0;
 
     float value = GetModifierValue(unitMod, BASE_VALUE) + create_power;
+    // 设置能量倍率
+	value *= GetPowerMod();
     value *= GetModifierValue(unitMod, BASE_PCT);
     value += GetModifierValue(unitMod, TOTAL_VALUE) +  bonusPower;
     value *= GetModifierValue(unitMod, TOTAL_PCT);

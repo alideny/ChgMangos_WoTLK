@@ -156,7 +156,7 @@ void MapManager::LoadTransportNPCs()
 
     if (!result)
     {
-        sLog.outString(">> Loaded 0 transport NPCs. DB table `creature_transport` is empty!");
+        sLog.outString(">> 加载了 0 个交通 NPC. 数据表 `creature_transport` 是空的！");
         sLog.outString();
         return;
     }
@@ -187,7 +187,7 @@ void MapManager::LoadTransportNPCs()
     }
     while (result->NextRow());
 
-    sLog.outString(">> Loaded %u transport npcs", count);
+    sLog.outString(">> 加载了 %u 个交通 NPC.", count);
     sLog.outString();
 }
 
@@ -656,7 +656,6 @@ void Transport::Update( uint32 update_diff, uint32 /*p_time*/)
         if (m_curr == m_WayPoints.begin())
             DETAIL_FILTER_LOG(LOG_FILTER_TRANSPORT_MOVES, " ************ BEGIN ************** %s", sLog.Utf8ToUnicode(GetName()));
         DETAIL_FILTER_LOG(LOG_FILTER_TRANSPORT_MOVES, "%s moved to %f %f %f %d", sLog.Utf8ToUnicode(GetName()), m_curr->second.x, m_curr->second.y, m_curr->second.z, m_curr->second.mapid);
-
     }
 }
 
