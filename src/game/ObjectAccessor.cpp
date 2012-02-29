@@ -47,7 +47,8 @@ ObjectAccessor::~ObjectAccessor()
     }
 }
 
-Unit* ObjectAccessor::GetUnit(WorldObject const &u, ObjectGuid guid)
+Unit*
+ObjectAccessor::GetUnit(WorldObject const &u, ObjectGuid guid)
 {
     if (!guid)
         return NULL;
@@ -95,7 +96,8 @@ Player* ObjectAccessor::FindPlayerByName(const char *name)
     return NULL;
 }
 
-void ObjectAccessor::SaveAllPlayers()
+void
+ObjectAccessor::SaveAllPlayers()
 {
     HashMapHolder<Player>::ReadGuard g(HashMapHolder<Player>::GetLock());
     HashMapHolder<Player>::MapType& m = sObjectAccessor.GetPlayers();
@@ -113,7 +115,8 @@ void ObjectAccessor::KickPlayer(ObjectGuid guid)
     }
 }
 
-Corpse* ObjectAccessor::GetCorpseForPlayerGUID(ObjectGuid guid)
+Corpse*
+ObjectAccessor::GetCorpseForPlayerGUID(ObjectGuid guid)
 {
     ReadGuard guard(i_guard);
 
@@ -126,7 +129,8 @@ Corpse* ObjectAccessor::GetCorpseForPlayerGUID(ObjectGuid guid)
     return iter->second;
 }
 
-void ObjectAccessor::RemoveCorpse(Corpse *corpse)
+void
+ObjectAccessor::RemoveCorpse(Corpse *corpse)
 {
     MANGOS_ASSERT(corpse && corpse->GetType() != CORPSE_BONES);
 
@@ -145,7 +149,8 @@ void ObjectAccessor::RemoveCorpse(Corpse *corpse)
     i_player2corpse.erase(iter);
 }
 
-void ObjectAccessor::AddCorpse(Corpse *corpse)
+void
+ObjectAccessor::AddCorpse(Corpse *corpse)
 {
     MANGOS_ASSERT(corpse && corpse->GetType() != CORPSE_BONES);
 
@@ -160,7 +165,8 @@ void ObjectAccessor::AddCorpse(Corpse *corpse)
     sObjectMgr.AddCorpseCellData(corpse->GetMapId(), cell_id, corpse->GetOwnerGuid().GetCounter(), corpse->GetInstanceId());
 }
 
-void ObjectAccessor::AddCorpsesToGrid(GridPair const& gridpair,GridType& grid,Map* map)
+void
+ObjectAccessor::AddCorpsesToGrid(GridPair const& gridpair,GridType& grid,Map* map)
 {
     ReadGuard guard(i_guard);
     for(Player2CorpsesMapType::iterator iter = i_player2corpse.begin(); iter != i_player2corpse.end(); ++iter)
@@ -181,7 +187,8 @@ void ObjectAccessor::AddCorpsesToGrid(GridPair const& gridpair,GridType& grid,Ma
     }
 }
 
-Corpse* ObjectAccessor::ConvertCorpseForPlayer(ObjectGuid player_guid, bool insignia)
+Corpse*
+ObjectAccessor::ConvertCorpseForPlayer(ObjectGuid player_guid, bool insignia)
 {
     Corpse *corpse = GetCorpseForPlayerGUID(player_guid);
     if(!corpse)
