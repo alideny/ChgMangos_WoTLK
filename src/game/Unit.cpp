@@ -1657,12 +1657,6 @@ void Unit::DealSpellDamage(DamageInfo* damageInfo, bool durabilityLoss)
     // Call default DealDamage (send critical in hit info for threat calculation)
     damageInfo->CleanDamage(0, damageInfo->absorb, BASE_ATTACK, damageInfo->HitInfo & SPELL_HIT_TYPE_CRIT ? MELEE_HIT_CRIT : MELEE_HIT_NORMAL);
     damageInfo->damageType = SPELL_DIRECT_DAMAGE;
-
-    // 计算玩家技能伤害倍率
-	if(GetTypeId() == TYPEID_PLAYER)
-	{
-		damageInfo->damage *= ((Player*)this)->GetSpellDamageMod();
-    }
     DealDamage(pVictim, damageInfo, durabilityLoss);
 }
 
@@ -2007,11 +2001,6 @@ void Unit::DealMeleeDamage(DamageInfo* damageInfo, bool durabilityLoss)
         }
     }
 
-    // 玩家物理伤害倍率
-	if (GetTypeId() == TYPEID_PLAYER)
-	{
-		damageInfo->damage *= ((Player*)this)->GetDamageMod();
-	}
     // Call default DealDamage
     damageInfo->damageType = DIRECT_DAMAGE;
     DealDamage(pVictim, damageInfo, durabilityLoss);
@@ -2869,6 +2858,10 @@ void Unit::AttackerStateUpdate (Unit *pVictim, WeaponAttackType attType, bool ex
 
     DamageInfo damageInfo = DamageInfo(this, pVictim);
     CalculateMeleeDamage(pVictim, 0, &damageInfo, attType);
+
+    // 玩家物理伤害倍率
+    if (GetTypeId() == TYPEID_PLAYER)
+        damageInfo.damage *= ((Player*)this)->GetDamageMod();
 
     // Send log damage message to client
     DealDamageMods(pVictim,damageInfo.damage,&damageInfo.absorb);

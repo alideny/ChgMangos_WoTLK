@@ -1201,6 +1201,10 @@ void Spell::DoAllEffectOnTarget(TargetInfo *target)
 
         unitTarget->CalculateAbsorbResistBlock(caster, &damageInfo, m_spellInfo);
 
+        // 计算玩家技能伤害倍率
+        if(caster->GetTypeId() == TYPEID_PLAYER)
+            damageInfo.damage *= ((Player*)caster)->GetSpellDamageMod();
+
         caster->DealDamageMods(damageInfo.target, damageInfo.damage, &damageInfo.absorb);
 
         // Send log damage message to client
