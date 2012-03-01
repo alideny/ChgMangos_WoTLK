@@ -24668,9 +24668,9 @@ float Player::GetHealthMod()
 {
     if (((Player*)this)->GetTeam() == ALLIANCE)
         return sWorld.getConfig(CONFIG_FLOAT_RATE_PLAYERS_A_HP);
-	else if (((Player*)this)->GetTeam() == HORDE)
-		return sWorld.getConfig(CONFIG_FLOAT_RATE_PLAYERS_H_HP);
-	else
+    else if (((Player*)this)->GetTeam() == HORDE)
+        return sWorld.getConfig(CONFIG_FLOAT_RATE_PLAYERS_H_HP);
+    else
         return 1.0f;
 }
 
@@ -24678,9 +24678,9 @@ float Player::GetPowerMod()
 {
     if (((Player*)this)->GetTeam() == ALLIANCE)
         return sWorld.getConfig(CONFIG_FLOAT_RATE_PLAYERS_A_POWER);
-	else if (((Player*)this)->GetTeam() == HORDE)
-		return sWorld.getConfig(CONFIG_FLOAT_RATE_PLAYERS_H_POWER);
-	else
+    else if (((Player*)this)->GetTeam() == HORDE)
+        return sWorld.getConfig(CONFIG_FLOAT_RATE_PLAYERS_H_POWER);
+    else
         return 1.0f;
 }
 
@@ -24688,9 +24688,9 @@ float Player::GetDamageMod()
 {
     if (((Player*)this)->GetTeam() == ALLIANCE)
         return sWorld.getConfig(CONFIG_FLOAT_RATE_PLAYERS_A_DAMAGE);
-	else if (((Player*)this)->GetTeam() == HORDE)
-		return sWorld.getConfig(CONFIG_FLOAT_RATE_PLAYERS_H_DAMAGE);
-	else
+    else if (((Player*)this)->GetTeam() == HORDE)
+        return sWorld.getConfig(CONFIG_FLOAT_RATE_PLAYERS_H_DAMAGE);
+    else
         return 1.0f;
 }
 
@@ -24698,9 +24698,9 @@ float Player::GetSpellDamageMod()
 {
     if (((Player*)this)->GetTeam() == ALLIANCE)
         return sWorld.getConfig(CONFIG_FLOAT_RATE_PLAYERS_A_SPELLDAMAGE);
-	else if (((Player*)this)->GetTeam() == HORDE)
-		return sWorld.getConfig(CONFIG_FLOAT_RATE_PLAYERS_H_SPELLDAMAGE);
-	else
+    else if (((Player*)this)->GetTeam() == HORDE)
+        return sWorld.getConfig(CONFIG_FLOAT_RATE_PLAYERS_H_SPELLDAMAGE);
+    else
         return 1.0f;
 }
 
@@ -24708,9 +24708,9 @@ float Player::GetSpeedMod()
 {
     if (GetTeam() == ALLIANCE)
         return sWorld.getConfig(CONFIG_FLOAT_RATE_PLAYERS_A_SPEED);
-	else if (GetTeam() == HORDE)
-		return sWorld.getConfig(CONFIG_FLOAT_RATE_PLAYERS_H_SPEED);
-	else
+    else if (GetTeam() == HORDE)
+        return sWorld.getConfig(CONFIG_FLOAT_RATE_PLAYERS_H_SPEED);
+    else
         return 1.0f;
 }
 
