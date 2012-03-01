@@ -25,7 +25,7 @@
 #include <set>
 #include <string>
 
-class Transport : public GameObject
+class MANGOS_DLL_SPEC Transport : public GameObject
 {
     public:
         explicit Transport();
