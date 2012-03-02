@@ -14214,34 +14214,30 @@ void Player::OnGossipSelect(WorldObject* pSource, uint32 gossipListId, uint32 me
 
 void Player::OnGossipSelectItem(Item *pItem, uint32 gossipListId, uint32 menuId)
 {
-  GossipMenu& gossipmenu = PlayerTalkClass->GetGossipMenu();
+    GossipMenu& gossipmenu = PlayerTalkClass->GetGossipMenu();
 
-  if (gossipListId >= gossipmenu.MenuItemCount())
-      return;
+    if (gossipListId >= gossipmenu.MenuItemCount())
+        return;
 
-  // if not same, then something funky is going on
-  if (menuId != gossipmenu.GetMenuId())
-      return;
+    if (menuId != gossipmenu.GetMenuId())
+        return;
 
-  GossipMenuItem const&  menu_item = gossipmenu.GetItem(gossipListId);
+    GossipMenuItem const&  menu_item = gossipmenu.GetItem(gossipListId);
 
-  uint32 gossipOptionId = menu_item.m_gOptionId;
-  ObjectGuid guid = pItem->GetObjectGuid();
-  uint32 moneyTake = menu_item.m_gBoxMoney;
+    uint32 moneyTake = menu_item.m_gBoxMoney;
 
-  // if this function called and player have money for pay MoneyTake or cheating, proccess both cases
-  if (moneyTake > 0)
-  {
-      if (GetMoney() >= moneyTake)
-          ModifyMoney(-int32(moneyTake));
-      else
-          return;                                         // cheating
-  }
+    if (moneyTake > 0)
+    {
+        if (GetMoney() >= moneyTake)
+            ModifyMoney(-int32(moneyTake));
+        else
+            return;                                         // cheating
+    }
 
-  GossipMenuItemData pMenuData = gossipmenu.GetItemData(gossipListId);
+    GossipMenuItemData pMenuData = gossipmenu.GetItemData(gossipListId);
 
-  if (pMenuData.m_gAction_poi)
-      PlayerTalkClass->SendPointOfInterest(pMenuData.m_gAction_poi);
+    if (pMenuData.m_gAction_poi)
+        PlayerTalkClass->SendPointOfInterest(pMenuData.m_gAction_poi);
 }
 
 uint32 Player::GetGossipTextId(WorldObject *pSource)
@@ -20492,6 +20488,89 @@ void Player::TakeExtendedCost(uint32 extendedCostId, uint32 count)
 // Return true is the bought item has a max count to force refresh of window by caller
 bool Player::BuyItemFromVendorSlot(ObjectGuid vendorGuid, uint32 vendorslot, uint32 item, uint8 count, uint8 bag, uint8 slot)
 {
+    if (vendorGuid.IsPlayer())
+    {
+        if (count < 1) count = 1;
+
+        if (!isAlive())
+            return false;
+
+        ItemPrototype const *pProto = ObjectMgr::GetItemPrototype(item);
+        if (!pProto)
+        {
+            SendBuyError(BUY_ERR_CANT_FIND_ITEM, NULL, item, 0);
+            return false;
+        }
+
+        uint32 totalCount = pProto->BuyCount * count;
+
+        uint32 price = pProto->BuyPrice * count;
+
+        if (GetMoney() < price)
+        {
+            return false;
+        }
+
+        Item* pItem = NULL;
+
+        if ((bag == NULL_BAG && slot == NULL_SLOT) || IsInventoryPos(bag, slot))
+        {
+            ItemPosCountVec dest;
+            InventoryResult msg = CanStoreNewItem(bag, slot, dest, item, totalCount);
+            if (msg != EQUIP_ERR_OK)
+            {
+                SendEquipError(msg, NULL, NULL, item);
+                return false;
+            }
+
+            ModifyMoney(-int32(price));
+
+            pItem = StoreNewItem(dest, item, true);
+        }
+        else if (IsEquipmentPos(bag, slot))
+        {
+            if (totalCount != 1)
+            {
+                SendEquipError(EQUIP_ERR_ITEM_CANT_BE_EQUIPPED, NULL, NULL);
+                return false;
+            }
+
+            uint16 dest;
+            InventoryResult msg = CanEquipNewItem(slot, dest, item, false);
+            if (msg != EQUIP_ERR_OK)
+            {
+                SendEquipError(msg, NULL, NULL, item);
+                return false;
+            }
+
+            ModifyMoney(-int32(price));
+
+            pItem = EquipNewItem(dest, item, true);
+
+            if (pItem)
+                AutoUnequipOffhandIfNeed();
+        }
+        else
+        {
+            SendEquipError(EQUIP_ERR_ITEM_DOESNT_GO_TO_SLOT, NULL, NULL);
+            return false;
+        }
+
+        if (!pItem)
+            return false;
+
+        WorldPacket data(SMSG_BUY_ITEM, 8+4+4+4);
+        data << GetObjectGuid();
+        data << uint32(vendorslot + 1);                 // numbered from 1 at client
+        data << uint32(1);
+        data << uint32(count);
+        GetSession()->SendPacket(&data);
+
+        SendNewItem(pItem, totalCount, true, false, false);
+
+        return true;
+    }
+
     // cheating attempt
     if (count < 1) count = 1;
 

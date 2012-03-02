@@ -449,6 +449,7 @@
     <None Include="..\..\INSTALL" />
     <None Include="..\..\NEWS" />
     <None Include="..\..\README" />
+    <None Include="..\..\src\mangosd\mangosR2.ico" />
     <None Include="..\..\THANKS" />
     <None Include="..\..\WARNING" />
   </ItemGroup>
@@ -466,6 +467,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\dep\include\gsoap\stdsoap2.h" />
+    <ClInclude Include="..\..\src\mangosd\resource.h" />
     <ClInclude Include="..\..\src\mangosd\soapStub.h" />
     <ClInclude Include="..\..\src\mangosd\soapH.h" />
     <ClInclude Include="..\..\src\mangosd\MaNGOSsoap.h" />

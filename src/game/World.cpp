@@ -1646,7 +1646,7 @@ void World::SetInitialWorldSettings()
     sLog.outString( "服务器启动用时: %i 分 %i 秒", uStartInterval / 60000, (uStartInterval % 60000) / 1000 );
     sLog.outString( "==============================================================");
     sLog.outString( "感谢您使用  ChgMangos ！祝您游戏愉快！"                        );
-    sLog.outString( "当前版本为：ChgMangos_WoTLK_final_1.4    2012.02.25 "          );
+    sLog.outString( "当前版本为：ChgMangos_WoTLK_final_1.4.1  2012.03.01 "          );
     sLog.outString();
     sLog.outString( "欢迎访问  ：http://bbs.chglove.tk "                            );
     sLog.outString( "==============================================================");

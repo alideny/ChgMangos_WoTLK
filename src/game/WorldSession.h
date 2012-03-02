@@ -262,6 +262,7 @@ class MANGOS_DLL_SPEC WorldSession
         void SendTrainerList(ObjectGuid guid, const std::string& strTitle );
 
         void SendListInventory(ObjectGuid guid);
+        void SendListInventory(uint32 entry);
         bool CheckBanker(ObjectGuid guid);
         void SendShowBank(ObjectGuid guid);
         bool CheckMailBox(ObjectGuid guid);

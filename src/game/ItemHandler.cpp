@@ -491,6 +491,90 @@ void WorldSession::HandleSellItemOpcode( WorldPacket & recv_data )
     if (!itemGuid)
         return;
 
+    if (vendorGuid.IsPlayer())
+    {
+        // remove fake death
+        if (GetPlayer()->hasUnitState(UNIT_STAT_DIED))
+            GetPlayer()->RemoveSpellsCausingAura(SPELL_AURA_FEIGN_DEATH);
+
+        Item *pItem = _player->GetItemByGuid(itemGuid);
+        if (pItem)
+        {
+            // prevent sell not owner item
+            if (_player->GetObjectGuid() != pItem->GetOwnerGuid())
+            {
+                return;
+            }
+
+            // prevent sell non empty bag by drag-and-drop at vendor's item list
+            if (pItem->IsBag() && !((Bag*)pItem)->IsEmpty())
+            {
+                return;
+            }
+
+            // prevent sell currently looted item
+            if (_player->GetLootGuid() == pItem->GetObjectGuid())
+            {
+                return;
+            }
+
+            // special case at auto sell (sell all)
+            if (count == 0)
+            {
+                count = pItem->GetCount();
+            }
+            else
+            {
+                // prevent sell more items that exist in stack (possible only not from client)
+                if (count > pItem->GetCount())
+                {
+                    return;
+                }
+            }
+
+            ItemPrototype const *pProto = pItem->GetProto();
+            if (pProto)
+            {
+                if (pProto->SellPrice > 0)
+                {
+                    if (count < pItem->GetCount())              // need split items
+                    {
+                        Item *pNewItem = pItem->CloneItem( count, _player );
+                        if (!pNewItem)
+                        {
+                            sLog.outError("世界: HandleSellItemOpcode - could not create clone of item %u; count = %u", pItem->GetEntry(), count );
+                            return;
+                        }
+
+                        pItem->SetCount(pItem->GetCount() - count);
+                        _player->ItemRemovedQuestCheck(pItem->GetEntry(), count);
+                        if (_player->IsInWorld())
+                            pItem->SendCreateUpdateToPlayer(_player);
+                        pItem->SetState(ITEM_CHANGED, _player);
+
+                        _player->AddItemToBuyBackSlot(pNewItem);
+                        if (_player->IsInWorld())
+                            pNewItem->SendCreateUpdateToPlayer(_player);
+                    }
+                    else
+                    {
+                        _player->ItemRemovedQuestCheck(pItem->GetEntry(), pItem->GetCount());
+                        _player->RemoveItem(pItem->GetBagSlot(), pItem->GetSlot(), true);
+                        pItem->RemoveFromUpdateQueueOf(_player);
+                        _player->AddItemToBuyBackSlot(pItem);
+                    }
+
+                    uint32 money = pProto->SellPrice * count;
+
+                    _player->ModifyMoney(money);
+                    _player->GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_MONEY_FROM_VENDORS, money);
+                }
+                return;
+            }
+        }
+        return;
+    }
+
     Creature *pCreature = GetPlayer()->GetNPCIfCanInteractWith(vendorGuid, UNIT_NPC_FLAG_VENDOR);
     if (!pCreature)
     {
@@ -596,6 +680,32 @@ void WorldSession::HandleBuybackItem(WorldPacket & recv_data)
     uint32 slot;
 
     recv_data >> vendorGuid >> slot;
+
+    if (vendorGuid.IsPlayer())
+    {
+        Item *pItem = _player->GetItemFromBuyBackSlot( slot );
+        if (pItem)
+        {
+            uint32 price = _player->GetUInt32Value( PLAYER_FIELD_BUYBACK_PRICE_1 + slot - BUYBACK_SLOT_START );
+            if (_player->GetMoney() < price)
+                return;
+
+            ItemPosCountVec dest;
+            InventoryResult msg = _player->CanStoreItem( NULL_BAG, NULL_SLOT, dest, pItem, false );
+            if (msg == EQUIP_ERR_OK)
+            {
+                _player->ModifyMoney( -(int32)price );
+                _player->RemoveItemFromBuyBackSlot( slot, false );
+                _player->ItemAddedQuestCheck( pItem->GetEntry(), pItem->GetCount());
+                _player->GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_RECEIVE_EPIC_ITEM, pItem->GetEntry(), pItem->GetCount());
+                _player->StoreItem( dest, pItem, true );
+            }
+            else
+                _player->SendEquipError( msg, pItem, NULL );
+            return;
+        }
+        return;
+    }
 
     Creature *pCreature = GetPlayer()->GetNPCIfCanInteractWith(vendorGuid, UNIT_NPC_FLAG_VENDOR);
     if (!pCreature)
@@ -716,6 +826,8 @@ void WorldSession::SendListInventory(ObjectGuid vendorguid)
 {
     DEBUG_LOG("世界: Sent SMSG_LIST_INVENTORY");
 
+    GetPlayer()->SetUInt32Value(UNIT_NPC_FLAGS, 0);
+
     Creature *pCreature = GetPlayer()->GetNPCIfCanInteractWith(vendorguid, UNIT_NPC_FLAG_VENDOR);
 
     if (!pCreature)
@@ -824,6 +936,125 @@ void WorldSession::SendListInventory(ObjectGuid vendorguid)
 
     data.put<uint8>(count_pos, count);
     SendPacket(&data);
+}
+
+void WorldSession::SendListInventory(uint32 vendorentry)
+{
+    DEBUG_LOG("世界: Sent SMSG_LIST_INVENTORY");
+
+    CreatureInfo const *cinfo = ObjectMgr::GetCreatureTemplate(vendorentry);
+    if (!cinfo)
+    {
+        return;
+    }
+
+    Map* map = GetPlayer()->GetMap();
+    Creature* pCreature = new Creature;
+
+    CreatureCreatePos pos(map, GetPlayer()->GetPositionX(), GetPlayer()->GetPositionY(), GetPlayer()->GetPositionZ(), GetPlayer()->GetOrientation(), 0);
+
+    if (!pCreature->Create(map->GenerateLocalLowGuid(HIGHGUID_UNIT), pos, cinfo))
+    {
+        delete pCreature;
+        return;
+    }
+
+    if (!pCreature)
+    {
+        DEBUG_LOG("世界: SendListInventory - %s not found or you can't interact with him.", pCreature->GetName());
+        _player->SendSellError(SELL_ERR_CANT_FIND_VENDOR, NULL, ObjectGuid(), 0);
+        return;
+    }
+
+    if (GetPlayer()->hasUnitState(UNIT_STAT_DIED))
+        GetPlayer()->RemoveSpellsCausingAura(SPELL_AURA_FEIGN_DEATH);
+
+    VendorItemData const* vItems = pCreature->GetVendorItems();
+    VendorItemData const* tItems = pCreature->GetVendorTemplateItems();
+    GetPlayer()->SetUInt32Value(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_REPAIR);
+
+    if (!vItems && !tItems)
+    {
+        WorldPacket data( SMSG_LIST_INVENTORY, (8+1+1) );
+        data << ObjectGuid(GetPlayer()->GetObjectGuid());
+        data << uint8(0);
+        data << uint8(0);
+        SendPacket(&data);
+        return;
+    }
+
+    uint8 customitems = vItems ? vItems->GetItemCount() : 0;
+    uint8 numitems = customitems + (tItems ? tItems->GetItemCount() : 0);
+
+    uint8 count = 0;
+    WorldPacket data( SMSG_LIST_INVENTORY, (8+1+numitems*8*4) );
+    data << ObjectGuid(GetPlayer()->GetObjectGuid());
+
+    size_t count_pos = data.wpos();
+    data << uint8(count);
+
+    float discountMod = _player->GetReputationPriceDiscount(pCreature);
+
+    for(uint8 vendorslot = 0; vendorslot < numitems; ++vendorslot )
+    {
+        VendorItem const* crItem = vendorslot < customitems ? vItems->GetItem(vendorslot) : tItems->GetItem(vendorslot - customitems);
+
+        if (crItem)
+        {
+            uint32 itemId = crItem->item;
+            ItemPrototype const *pProto = ObjectMgr::GetItemPrototype(itemId);
+            if (pProto)
+            {
+                if (!_player->isGameMaster())
+                {
+                    if ((pProto->AllowableClass & _player->getClassMask()) == 0 && pProto->Bonding == BIND_WHEN_PICKED_UP)
+                        continue;
+
+                    if ((pProto->Flags2 & ITEM_FLAG2_HORDE_ONLY) && _player->GetTeam() != HORDE)
+                        continue;
+
+                    if ((pProto->Flags2 & ITEM_FLAG2_ALLIANCE_ONLY) && _player->GetTeam() != ALLIANCE)
+                        continue;
+
+                    if ((pProto->AllowableRace & _player->getRaceMask()) == 0)
+                        continue;
+                }
+
+                if (pProto->Flags & ITEM_FLAG_BOA)
+                {
+                    if (pProto->RequiredReputationFaction && uint32(_player->GetReputationRank(pProto->RequiredReputationFaction)) >= pProto->RequiredReputationRank)
+                    {
+                        if (uint32 newItemId = sObjectMgr.GetItemConvert(itemId, _player->getRaceMask()))
+                            pProto = ObjectMgr::GetItemPrototype(newItemId);
+                    }
+                }
+
+                ++count;
+
+                uint32 price = (crItem->ExtendedCost == 0 || pProto->Flags2 & ITEM_FLAG2_EXT_COST_REQUIRES_GOLD) ? uint32(floor(pProto->BuyPrice * discountMod)) : 0;
+
+                data << uint32(vendorslot +1);
+                data << uint32(pProto->ItemId);
+                data << uint32(pProto->DisplayInfoID);
+                data << uint32(crItem->maxcount <= 0 ? 0xFFFFFFFF : pCreature->GetVendorItemCurrentCount(crItem));
+                data << uint32(price);
+                data << uint32(pProto->MaxDurability);
+                data << uint32(pProto->BuyCount);
+                data << uint32(crItem->ExtendedCost);
+            }
+        }
+    }
+
+    if (count == 0)
+    {
+        data << uint8(0);
+        SendPacket(&data);
+        return;
+    }
+
+    data.put<uint8>(count_pos, count);
+    SendPacket(&data);
+    delete pCreature;
 }
 
 void WorldSession::HandleAutoStoreBagItemOpcode( WorldPacket & recv_data )
