@@ -1765,6 +1765,24 @@ bool Player::TeleportTo(uint32 mapid, float x, float y, float z, float orientati
         return false;
 
     // client without expansion support
+    if (GetSession()->Expansion() < mEntry->Expansion())
+    {
+        DEBUG_LOG("Player %s using client without required expansion tried teleport to non accessible map %u", GetName(), mapid);
+
+        if(GetTransport())
+        {
+            GetTransport()->RemovePassenger(this);
+            m_movementInfo.SetTransportData(ObjectGuid(), 0.0f, 0.0f, 0.0f, 0.0f, 0, -1);
+            TeleportToHomebind();
+        }
+        SendTransferAborted(mapid, TRANSFER_ABORT_INSUF_EXPAN_LVL, mEntry->Expansion());
+
+        return false;                                       // normal client can't teleport to this map...
+    }
+    else
+    {
+        DEBUG_LOG("Player %s is being teleported to map %u", GetName(), mapid);
+    }
 
     if (Group* grp = GetGroup())
         grp->SetPlayerMap(GetObjectGuid(), mapid);

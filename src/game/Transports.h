@@ -20,12 +20,13 @@
 #define TRANSPORTS_H
 
 #include "GameObject.h"
+#include "Common.h"
 
 #include <map>
 #include <set>
 #include <string>
 
-class Transport : public GameObject
+class MANGOS_DLL_SPEC Transport : public GameObject
 {
     public:
         explicit Transport();
@@ -33,14 +34,18 @@ class Transport : public GameObject
         bool Create(uint32 guidlow, uint32 mapid, float x, float y, float z, float ang, uint8 animprogress, uint16 dynamicHighValue);
         bool GenerateWaypoints(uint32 pathid, std::set<uint32> &mapids);
         void Update(uint32 update_diff, uint32 p_time) override;
-        bool AddPassenger(Player* passenger);
-        bool RemovePassenger(Player* passenger);
+        void UpdateNPCPositions();
+        bool AddPassenger(Unit* passenger);
+        bool AddNPCPassenger(uint32 entry, float x, float y, float z, float o, uint32 anim=0);
+        bool RemovePassenger(Unit* passenger);
 
         void BuildStartMovePacket(Map const *targetMap);
         void BuildStopMovePacket(Map const *targetMap);
 
-        typedef std::set<Player*> PlayerSet;
-        PlayerSet const& GetPassengers() const { return m_passengers; }
+        typedef std::set<Unit*> UnitSet;
+        UnitSet const& GetPassengers() const { return m_passengers; }
+
+        void BuildCreateUpdateBlockForPlayer(UpdateData* data, Player* target);
 
     private:
         struct WayPoint
@@ -68,7 +73,7 @@ class Transport : public GameObject
         uint32 m_pathTime;
         uint32 m_timer;
 
-        PlayerSet m_passengers;
+        UnitSet m_passengers;
 
     public:
         WayPointMap m_WayPoints;
