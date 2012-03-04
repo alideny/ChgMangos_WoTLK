@@ -22,6 +22,7 @@
 #include "WorldPacket.h"
 #include "Database/DatabaseEnv.h"
 #include "ItemEnchantmentMgr.h"
+#include "World.h"
 
 void AddItemsSetItem(Player* player, Item* item)
 {
@@ -267,6 +268,17 @@ bool Item::Create(uint32 guidlow, uint32 itemid, Player const* owner)
         SetSpellCharges(i,itemProto->Spells[i].SpellCharges);
 
     SetUInt32Value(ITEM_FIELD_DURATION, itemProto->Duration);
+
+    // For Armory support
+    if (sWorld.getConfig(CONFIG_BOOL_ARMORY_ENABLE))
+    {
+        if (itemProto->Quality > 2 && itemProto->Flags != 2048 && (itemProto->Class == ITEM_CLASS_WEAPON || itemProto->Class == ITEM_CLASS_ARMOR))
+        {
+            if (!GetOwner())
+                return true;
+            GetOwner()->CreateWowarmoryFeed(2, itemid, guidlow, itemProto->Quality);
+        }
+    }
 
     return true;
 }

@@ -420,6 +420,8 @@ enum eConfigBoolValues
     CONFIG_BOOL_PVP_ANNOUNCER,
     // Flying Everywhere
     CONFIG_BOOL_ALLOW_FLYING_MOUNTS_EVERYWHERE,
+    // For Armory support
+    CONFIG_BOOL_ARMORY_ENABLE,
 
     CONFIG_BOOL_VALUE_COUNT
 };

@@ -898,13 +898,16 @@ void World::LoadConfigSettings(bool reload)
     /*  ¿ΩÁ∑…–– */
     setConfig(CONFIG_BOOL_ALLOW_FLYING_MOUNTS_EVERYWHERE,"Custom.AllowFlyingMountsEverywhere", true);
 
-    setConfig(CONFIG_BOOL_PET_UNSUMMON_AT_MOUNT,      "PetUnsummonAtMount", true);
+    // For Armory support
+    setConfig(CONFIG_BOOL_ARMORY_ENABLE,                 "Custom.ArmorySupport", true);
 
-    setConfig(CONFIG_BOOL_PET_SAVE_ALL,      "PetSaveAllInDB", false);
+    setConfig(CONFIG_BOOL_PET_UNSUMMON_AT_MOUNT,         "PetUnsummonAtMount", true);
 
-    setConfig(CONFIG_BOOL_RAID_FLAGS_UNIQUE,      "RaidFlags.Unique", false);
+    setConfig(CONFIG_BOOL_PET_SAVE_ALL,                  "PetSaveAllInDB", false);
 
-    setConfig(CONFIG_BOOL_ALLOW_FLIGHT_ON_OLD_MAPS, "AllowFlightOnOldMaps", false);
+    setConfig(CONFIG_BOOL_RAID_FLAGS_UNIQUE,             "RaidFlags.Unique", false);
+
+    setConfig(CONFIG_BOOL_ALLOW_FLIGHT_ON_OLD_MAPS,      "AllowFlightOnOldMaps", false);
 
     m_relocation_ai_notify_delay = sConfig.GetIntDefault("Visibility.AIRelocationNotifyDelay", 1000u);
     m_relocation_lower_limit_sq  = pow(sConfig.GetFloatDefault("Visibility.RelocationLowerLimit",10), 2);

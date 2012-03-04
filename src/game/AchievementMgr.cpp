@@ -2365,6 +2365,9 @@ void AchievementMgr::CompletedAchievement(AchievementEntry const* achievement)
         return;
 
     SendAchievementEarned(achievement);
+    // For Armory support
+    if (sWorld.getConfig(CONFIG_BOOL_ARMORY_ENABLE))
+        GetPlayer()->CreateWowarmoryFeed(1, achievement->ID, 0, 0);
     CompletedAchievementData& ca =  m_completedAchievements[achievement->ID];
     ca.date = time(NULL);
     ca.changed = true;
