@@ -9671,6 +9671,8 @@ void Unit::UpdateSpeed(UnitMoveType mtype, bool forced, float ratio)
     {
         if (getDeathState() == CORPSE)
             speed *= sWorld.getConfig(((Player*)this)->InBattleGround() ? CONFIG_FLOAT_GHOST_RUN_SPEED_BG : CONFIG_FLOAT_GHOST_RUN_SPEED_WORLD);
+        else
+            speed *= ((Player*)this)->GetSpeedMod();
     }
 
     // Apply strongest slow aura mod to speed

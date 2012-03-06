@@ -1174,6 +1174,10 @@ void Spell::DoAllEffectOnTarget(TargetInfo *target)
             damageInfo.procAttacker = saveAttacker;
         }
 
+        // 计算玩家技能治疗倍率
+        if(caster->GetTypeId() == TYPEID_PLAYER)
+            damageInfo.damage *= ((Player*)caster)->GetDealHealthMod();
+
         int32 gain = caster->DealHeal(unitTarget, damageInfo.damage, m_spellInfo, crit, damageInfo.absorb);
 
         if (real_caster)

@@ -661,8 +661,7 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder *holder)
     SendPacket(&data);
 
     // 上线公告
-    static uint32 loginbroad = sConfig.GetIntDefault("LoginBroad.On", 0);
-    if ( loginbroad == 1)
+    if ( sWorld.getConfig(CONFIG_BOOL_LOGIN_BROADCAST))
     {
         std::string playername = pCurrChar->GetName();
         std::string loginmsg = "[" + playername +"]  ";

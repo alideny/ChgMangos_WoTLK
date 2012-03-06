@@ -24830,7 +24830,7 @@ bool Player::CanUseFlyingMounts(SpellEntry const* sEntry)
     return true;
 }
 
-///玩家伤害/生命/魔法/能量/怒气倍率控制
+///玩家伤害/治疗/生命/魔法/能量/怒气/速度倍率控制
 float Player::GetHealthMod()
 {
     if (((Player*)this)->GetTeam() == ALLIANCE)
@@ -24867,6 +24867,16 @@ float Player::GetSpellDamageMod()
         return sWorld.getConfig(CONFIG_FLOAT_RATE_PLAYERS_A_SPELLDAMAGE);
     else if (((Player*)this)->GetTeam() == HORDE)
         return sWorld.getConfig(CONFIG_FLOAT_RATE_PLAYERS_H_SPELLDAMAGE);
+    else
+        return 1.0f;
+}
+
+float Player::GetDealHealthMod()
+{
+    if (((Player*)this)->GetTeam() == ALLIANCE)
+        return sWorld.getConfig(CONFIG_FLOAT_RATE_PLAYERS_A_HEAL);
+    else if (((Player*)this)->GetTeam() == HORDE)
+        return sWorld.getConfig(CONFIG_FLOAT_RATE_PLAYERS_H_HEAL);
     else
         return 1.0f;
 }

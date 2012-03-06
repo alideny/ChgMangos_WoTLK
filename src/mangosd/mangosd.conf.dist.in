@@ -839,10 +839,6 @@ LexicsCutterNoActionOnGM = 1
 #        检测客户端缓存数据
 #        默认: 0 (仅使用服务器数据)
 #
-#    Event.Announce
-#        默认: 0 (关闭)
-#              1 (开启)
-#
 #    BeepAtStart
 #        在服务器启动完成后提示声音
 #        默认: 1 (开启)
@@ -952,7 +948,6 @@ PetSaveAllInDB = 0
 RaidFlags.Unique = 0
 AllowFlightOnOldMaps = 0
 ClientCacheVersion = 0
-Event.Announce = 0
 BeepAtStart = 1
 ShowProgressBars = 1
 WaitAtStartupError = 0
@@ -2045,13 +2040,24 @@ Custom.AllowFlyingMountsEverywhere = 1
 ###################################################################################################################
 #  上线公告
 #    
-#         LoginBroad.On
+#         Custom.LoginBroadCast
 #             是否开启上线公告功能  1为开启  0为关闭.
 #             默认: 1 开启
 #
 ###################################################################################################################
 
-LoginBroad.On = 1
+Custom.LoginBroadCast = 1
+
+###################################################################################################################
+#  游戏事件公告
+#
+#         Custom.EventAnnouncer
+#             是否开启游戏内事件公告功能  1为开启  0为关闭.
+#             默认: 1 开启
+#
+###################################################################################################################
+
+Custom.EventAnnouncer = 1
 
 ###################################################################################################################
 #    野外PvP 掉落系统
@@ -2124,7 +2130,7 @@ PvPAnnouncer.ColorArea   = |CFFFE8A0E
 
 ###################################################################################################################
 #
-#    玩家伤害/生命/能量/魔法/怒气/速度 倍率控制
+#    玩家伤害/治疗/生命/能量/魔法/怒气/速度 倍率控制
 #    注意，调整这些配置将可能导致游戏不平衡的问题，请慎重选择，建议单机玩家更改
 #    可以结合之前的 怪物 伤害倍率来调整服务器的数据 ，比如你想建立的是 仿官方/轻变态/中变态/极变态 类型服务器
 #
@@ -2140,6 +2146,11 @@ PvPAnnouncer.ColorArea   = |CFFFE8A0E
 #        玩家技能伤害倍率，必须大于 0
 #        默认：    1
 #
+#    Rate.Player.Alliance.Heal
+#    Rate.Player.Horde.Heal
+#        玩家技能治疗效果，必须大于 0
+#        默认：    1
+#
 #    Rate.Player.Alliance.HP
 #    Rate.Player.Horde.HP
 #        玩家生命值倍率，必须大于 0
@@ -2152,22 +2163,24 @@ PvPAnnouncer.ColorArea   = |CFFFE8A0E
 #
 #    Rate.Player.Alliance.Speed
 #    Rate.Player.Horde.Speed
-#        玩家移动速度倍率（只包含 陆地移动速度），必须大于 0
+#        玩家移动速度倍率（包含所有移动类型），必须大于 0
 #        默认：    1
 #        
 #
 ###################################################################################################################
 
-Rate.Player.Alliance.Damage      = 10
+Rate.Player.Alliance.Damage      = 5
 Rate.Player.Horde.Damage         = 5
-Rate.Player.Alliance.SpellDamage = 10
+Rate.Player.Alliance.SpellDamage = 5
 Rate.Player.Horde.SpellDamage    = 5
-Rate.Player.Alliance.HP          = 10
+Rate.Player.Alliance.Heal        = 5
+Rate.Player.Horde.Heal           = 5
+Rate.Player.Alliance.HP          = 5
 Rate.Player.Horde.HP             = 5
-Rate.Player.Alliance.Power       = 10
+Rate.Player.Alliance.Power       = 5
 Rate.Player.Horde.Power          = 5
-Rate.Player.Alliance.Speed       = 10
-Rate.Player.Horde.Speed          = 5
+Rate.Player.Alliance.Speed       = 1
+Rate.Player.Horde.Speed          = 1
 
 ###################################################################################################################
 #

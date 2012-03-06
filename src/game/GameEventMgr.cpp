@@ -669,7 +669,7 @@ void GameEventMgr::ApplyNewEvent(uint16 event_id, bool resume)
     m_ActiveEvents.insert(event_id);
     CharacterDatabase.PExecute("REPLACE INTO game_event_status (event) VALUES (%u)", event_id);
 
-    if (sWorld.getConfig(CONFIG_BOOL_EVENT_ANNOUNCE))
+    if (sWorld.getConfig(CONFIG_BOOL_EVENT_ANNOUNCER))
         sWorld.SendWorldText(LANG_EVENTMESSAGE, mGameEvent[event_id].description.c_str());
 
     sLog.outString("开始游戏事件 %u%s \"%s\" ", event_id, (event_id > 9 ? "": " "), sLog.Utf8ToUnicode(mGameEvent[event_id].description.c_str()));

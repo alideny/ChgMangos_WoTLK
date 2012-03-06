@@ -764,8 +764,6 @@ void World::LoadConfigSettings(bool reload)
     setConfig(CONFIG_UINT32_CHATFLOOD_MESSAGE_DELAY, "ChatFlood.MessageDelay", 1);
     setConfig(CONFIG_UINT32_CHATFLOOD_MUTE_TIME,     "ChatFlood.MuteTime", 10);
 
-    setConfig(CONFIG_BOOL_EVENT_ANNOUNCE, "Event.Announce", false);
-
     setConfig(CONFIG_UINT32_CREATURE_FAMILY_ASSISTANCE_DELAY, "CreatureFamilyAssistanceDelay", 1500);
     setConfig(CONFIG_UINT32_CREATURE_FAMILY_FLEE_DELAY,       "CreatureFamilyFleeDelay",       7000);
 
@@ -879,15 +877,21 @@ void World::LoadConfigSettings(bool reload)
     setConfig(CONFIG_FLOAT_PVP_TOKEN_RESTRICTION,   "PvPToken.MapRestriction", 4);
     // PvP Announcer System
     setConfig(CONFIG_BOOL_PVP_ANNOUNCER,            "PvPAnnouncer.Enable", true);
+    // Login BroadCast
+    setConfig(CONFIG_BOOL_LOGIN_BROADCAST,          "Custom.LoginBroadCast", true);
+    // Event Announcer
+    setConfig(CONFIG_BOOL_EVENT_ANNOUNCER,          "Custom.EventAnnouncer", true);
 
     if(getConfig(CONFIG_FLOAT_PVP_TOKEN_ITEMCOUNT) < 1)
         setConfig(CONFIG_FLOAT_PVP_TOKEN_ITEMCOUNT, "PvPToken.ItemCount",1);
 
-    // 玩家伤害 生命/能量/魔法/怒气 倍率
+    // 玩家伤害,治疗 生命/能量/魔法/怒气/速度 倍率
     setConfig(CONFIG_FLOAT_RATE_PLAYERS_A_DAMAGE,        "Rate.Player.Alliance.Damage", 1.0f);
     setConfig(CONFIG_FLOAT_RATE_PLAYERS_H_DAMAGE,        "Rate.Player.Horde.Damage", 1.0f);
     setConfig(CONFIG_FLOAT_RATE_PLAYERS_A_SPELLDAMAGE,   "Rate.Player.Alliance.SpellDamage", 1.0f);
     setConfig(CONFIG_FLOAT_RATE_PLAYERS_H_SPELLDAMAGE,   "Rate.Player.Horde.SpellDamage", 1.0f);
+    setConfig(CONFIG_FLOAT_RATE_PLAYERS_A_HEAL,          "Rate.Player.Alliance.Heal", 1.0f);
+    setConfig(CONFIG_FLOAT_RATE_PLAYERS_H_HEAL,          "Rate.Player.Horde.Heal", 1.0f);
     setConfig(CONFIG_FLOAT_RATE_PLAYERS_A_HP,            "Rate.Player.Alliance.HP", 1.0f);
     setConfig(CONFIG_FLOAT_RATE_PLAYERS_H_HP,            "Rate.Player.Horde.HP", 1.0f);
     setConfig(CONFIG_FLOAT_RATE_PLAYERS_A_POWER,         "Rate.Player.Alliance.Power", 1.0f);
@@ -1652,7 +1656,7 @@ void World::SetInitialWorldSettings()
     sLog.outString( "服务器启动用时: %i 分 %i 秒", uStartInterval / 60000, (uStartInterval % 60000) / 1000 );
     sLog.outString( "==============================================================");
     sLog.outString( "感谢您使用  ChgMangos ！祝您游戏愉快！"                        );
-    sLog.outString( "当前版本为：ChgMangos_WoTLK_final_1.4.1  2012.03.01 "          );
+    sLog.outString( "当前版本为：ChgMangos_WoTLK_final_1.4.2  2012.03.08 "          );
     sLog.outString();
     sLog.outString( "欢迎访问  ：http://bbs.chglove.tk "                            );
     sLog.outString( "==============================================================");

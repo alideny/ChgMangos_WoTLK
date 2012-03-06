@@ -1370,11 +1370,12 @@ class MANGOS_DLL_SPEC Player : public Unit
         }
         ///世界飞行模块结束
 
-        ///玩家伤害/生命/魔法/能量/怒气倍率控制
+        ///玩家伤害/治疗/生命/魔法/能量/怒气/速度倍率控制
         float GetHealthMod();
         float GetPowerMod();
         float GetDamageMod();
         float GetSpellDamageMod();
+        float GetDealHealthMod();
         float GetSpeedMod();
 
         Item* ConvertItem(Item* item, uint32 newItemId);
