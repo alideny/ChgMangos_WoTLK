@@ -1275,7 +1275,7 @@ bool ChatHandler::HandleAccountSetVipCommand(char *args)
 
     if (arg1 && !arg3)
     {
-        if (!handler->getSelectedPlayer())
+        if (!getSelectedPlayer())
             return false;
         isAccountNameGiven = false;
     }
@@ -1298,7 +1298,7 @@ bool ChatHandler::HandleAccountSetVipCommand(char *args)
 
     Vip = (isAccountNameGiven) ? atoi(arg2) : atoi(arg1);
     Point = (isAccountNameGiven) ? atoi(arg3) : atoi(arg2);
-    AccountId = (isAccountNameGiven) ? sAccountMgr->GetId(AccountName) : getSelectedPlayer()->GetSession()->GetAccountId();
+    AccountId = (isAccountNameGiven) ? sAccountMgr.GetId(AccountName) : getSelectedPlayer()->GetSession()->GetAccountId();
 
     if (Vip >= 0 && Point >= 0 && AccountId != 0)
     {
@@ -7389,7 +7389,7 @@ bool ChatHandler::HandleMmapTestArea(char* args)
  *----------------------------------------*/
 
 // 积分系统
-bool ChatHandler::HandleSetVipCommand(const char *args)
+bool ChatHandler::HandleSetVipCommand(char *args)
 {
     if (!*args)
         return false;
@@ -7413,8 +7413,8 @@ bool ChatHandler::HandleSetVipCommand(const char *args)
 
     if (nameStr)
     {
-        std::string name = extractPlayerNameFromLink(arg1);
-        pPlayer = sObjectMgr->GetPlayer(name.c_str());
+        std::string name = ExtractPlayerNameFromLink(&arg1);
+        pPlayer = sObjectMgr.GetPlayer(name.c_str());
         if (pPlayer == NULL)
         {
             SendSysMessage(LANG_PLAYER_NOT_FOUND);
@@ -7434,7 +7434,7 @@ bool ChatHandler::HandleSetVipCommand(const char *args)
     }
 
     vip = (nameStr) ? atoi(arg2) : atoi(arg1);
-    sAccountMgr->GetName(m_session->GetAccountId(), accName);
+    sAccountMgr.GetName(m_session->GetAccountId(), accName);
 
     if (vip >=0)
     {
@@ -7452,7 +7452,7 @@ bool ChatHandler::HandleSetVipCommand(const char *args)
 
 }
 
-bool ChatHandler::HandleSetPointCommand(const char *args)
+bool ChatHandler::HandleSetPointCommand(char *args)
 {
     if (!*args)
         return false;
@@ -7476,8 +7476,8 @@ bool ChatHandler::HandleSetPointCommand(const char *args)
 
     if (nameStr)
     {
-        std::string name = extractPlayerNameFromLink(arg1);
-        pPlayer = sObjectMgr->GetPlayer(name.c_str());
+        std::string name = ExtractPlayerNameFromLink(&arg1);
+        pPlayer = sObjectMgr.GetPlayer(name.c_str());
         if (pPlayer == NULL)
         {
             SendSysMessage(LANG_PLAYER_NOT_FOUND);
@@ -7497,7 +7497,7 @@ bool ChatHandler::HandleSetPointCommand(const char *args)
     }
 
     point = (nameStr) ? atoi(arg2) : atoi(arg1);
-    sAccountMgr->GetName(m_session->GetAccountId(), accName);
+    sAccountMgr.GetName(m_session->GetAccountId(), accName);
 
     if (point >= 0)
     {
@@ -7514,7 +7514,7 @@ bool ChatHandler::HandleSetPointCommand(const char *args)
     return true;
 }
 
-bool ChatHandler::HandleModifyPointCommand(const char *args)
+bool ChatHandler::HandleModifyPointCommand(char *args)
 {
     if (!*args)
     {
@@ -7525,10 +7525,8 @@ bool ChatHandler::HandleModifyPointCommand(const char *args)
     char* arg1 = strtok((char*)args, " ");
     char* arg2 = strtok(NULL, " ");
     bool nameStr = true;
-    Player *pPlayer = NULL;
-    int point = 0;
+    Player* pPlayer = NULL;
     int addPoint = 0;
-    int targetPoint = 0;
     std::string accName;
 
     if (arg1 && !arg2)
@@ -7543,15 +7541,14 @@ bool ChatHandler::HandleModifyPointCommand(const char *args)
 
     if (nameStr)
     {
-        std::string name = extractPlayerNameFromLink(arg1);
-        pPlayer = sObjectMgr->GetPlayer(name.c_str());
+        std::string name = ExtractPlayerNameFromLink(&arg1);
+        pPlayer = sObjectMgr.GetPlayer(name.c_str());
         if (pPlayer == NULL)
         {
             SendSysMessage(LANG_PLAYER_NOT_FOUND);
             SetSentErrorMessage(true);
             return false;
         }
-        point = pPlayer->GetPoint();
     }
     else
     {
@@ -7562,15 +7559,13 @@ bool ChatHandler::HandleModifyPointCommand(const char *args)
             SetSentErrorMessage(true);
             return false;
         }
-        point = pPlayer->GetPoint();
     }
 
     addPoint = (nameStr) ? atoi(arg2) : atoi(arg1);
-    targetPoint = ((point + addPoint) >= 0) ? (point + addPoint) : 0;
-    sAccountMgr->GetName(m_session->GetAccountId(), accName);
+    sAccountMgr.GetName(m_session->GetAccountId(), accName);
 
-    pPlayer->SetPoint(targetPoint);
-    PSendSysMessage(LANG_MODIFY_POINT_SUCESS, pPlayer->GetName(), accName.c_str(), addPoint, targetPoint);
+    pPlayer->ModifyPoint(addPoint);
+    PSendSysMessage(LANG_MODIFY_POINT_SUCESS, pPlayer->GetName(), accName.c_str(), addPoint, pPlayer->GetPoint());
 
     return true;
 }

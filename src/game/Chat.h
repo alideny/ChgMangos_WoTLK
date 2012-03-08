@@ -701,11 +701,11 @@ class MANGOS_DLL_SPEC ChatHandler
         bool HandleSendMoneyHelper(MailDraft& draft, char* args);
 
         // 积分系统
-        bool HandleSetVipCommand(const char *args);
-        bool HandleSetPointCommand(const char *args);
-        bool HandleModifyPointCommand(const char* args);
-        bool HandleVipCommand(const char* args);
-        bool HandlePointCommand(const char* args);
+        bool HandleSetVipCommand(char *args);
+        bool HandleSetPointCommand(char *args);
+        bool HandleModifyPointCommand(char* args);
+        bool HandleVipCommand(char* args);
+        bool HandlePointCommand(char* args);
 
         template<typename T>
         void ShowNpcOrGoSpawnInformation(uint32 guid);

@@ -907,12 +907,22 @@ void World::LoadConfigSettings(bool reload)
 
     // VIP System
     setConfig(CONFIG_BOOL_VIP_AUTO_POINT,                "Custom.Vip.AutoPoint.Enable", true);
-    setConfig(CONFIG_VIP_TIMER,                          "Custom.Vip.AutoPoint.Timer", 3600000);
-    setConfig(CONFIG_VIP_POINT,                          "Custom.Vip.AutoPoint.Point", 20);
-    if(getConfig(CONFIG_VIP_TIMER) < 0)
-        setConfig(CONFIG_VIP_TIMER, "Custom.Vip.AutoPoint.Timer", 3600000);
-    if(getConfig(CONFIG_VIP_POINT) < 0)
-        setConfig(CONFIG_VIP_POINT, "Custom.Vip.AutoPoint.Point", 0);
+    setConfig(CONFIG_FLOAT_VIP_TIMER,                    "Custom.Vip.AutoPoint.Timer", 3600000);
+    setConfig(CONFIG_FLOAT_VIP_POINT,                    "Custom.Vip.AutoPoint.Point", 20);
+    setConfig(CONFIG_BOOL_VIP_ATUO_EXP,                  "Custom.Vip.AutoExp.Enable", true);
+    setConfig(CONFIG_FLOAT_VIP_EXP_TIMER,                "Custom.Vip.AutoExp.Timer", 1800000);
+    setConfig(CONFIG_FLOAT_VIP_EXP_POINT,                "Custom.Vip.AutoExp.Point", 1000);
+    setConfig(CONFIG_FLOAT_VIP_EXP_LEVEL,                "Custom.Vip.AutoExp.Level", 80);
+    setConfig(CONFIG_FLOAT_VIP_MONEY_POINT,              "Custom.Vip.AutoMoney.Point", 50000);
+    if(getConfig(CONFIG_FLOAT_VIP_TIMER) < 0)
+        setConfig(CONFIG_FLOAT_VIP_TIMER, "Custom.Vip.AutoPoint.Timer", 3600000);
+    if(getConfig(CONFIG_FLOAT_VIP_POINT) < 0)
+        setConfig(CONFIG_FLOAT_VIP_POINT, "Custom.Vip.AutoPoint.Point", 0);
+    if (getConfig(CONFIG_FLOAT_VIP_EXP_LEVEL) > sConfig.GetIntDefault("MaxPlayerLevel", DEFAULT_MAX_LEVEL))
+    {
+        //sLog->outError("PlayerSave.Stats.MinLevel (%i) must be in range 0..80. Using default, do not save character stats (0).", m_int_configs[CONFIG_MIN_LEVEL_STAT_SAVE]);
+        setConfig(CONFIG_FLOAT_VIP_EXP_LEVEL, "Custom.Vip.AutoExp.Level", (float)sConfig.GetIntDefault("MaxPlayerLevel", DEFAULT_MAX_LEVEL));
+    }
 
     setConfig(CONFIG_BOOL_PET_UNSUMMON_AT_MOUNT,         "PetUnsummonAtMount", true);
 
@@ -1589,7 +1599,8 @@ void World::SetInitialWorldSettings()
     m_timers[WUPDATE_AHBOT].SetInterval(20*IN_MILLISECONDS); // every 20 sec
 
     // for Vip System
-    m_timers[WUPDATE_AUTOPOINT].SetInterval(getConfig(CONFIG_VIP_TIMER));
+    m_timers[WUPDATE_AUTOPOINT].SetInterval(getConfig(CONFIG_FLOAT_VIP_TIMER));
+    m_timers[WUPDATE_AUTOEXP].SetInterval(getConfig(CONFIG_FLOAT_VIP_EXP_TIMER));
 
     //to set mailtimer to return mails every day between 4 and 5 am
     //mailtimer is increased when updating auctions
@@ -1861,6 +1872,15 @@ void World::Update(uint32 diff)
         {
             m_timers[WUPDATE_AUTOPOINT].Reset();
             SetPlayerPoint();
+        }
+    }
+
+    if (getConfig(CONFIG_BOOL_VIP_ATUO_EXP))
+    {
+        if (m_timers[WUPDATE_AUTOEXP].Passed())
+        {
+            m_timers[WUPDATE_AUTOEXP].Reset();
+            SetPlayerExp();
         }
     }
 
@@ -2351,25 +2371,52 @@ void World::SetPlayerPoint()
    // QueryResult result = CharacterDatabase.Query("SELECT guid FROM characters WHERE online = '1'");
    // if (result)
    // {
-   //     Player* pPlayer = NULL;
+    Player* pPlayer = NULL;
    //     int point = getConfig(CONFIG_VIP_POINT);
    //     int count = int(result->GetRowCount());
 
-   //     do
-   //     {
-   //         Field *fields = result->Fetch();
-			//pPlayer = sObjectMgr.GetPlayer(fields[0].GetUInt32());
-
-   //         if (pPlayer->IsInWorld())
-   //         {
-   //             pPlayer->SetPoint(int(pPlayer->GetPoint()) + point);
-   //             ChatHandler(pPlayer).PSendSysMessage(LANG_AUTO_GET_POINT, point);
-   //         }
-   //     }
-   //     while (result->NextRow());
-   // }
     for (SessionMap::const_iterator itr = m_sessions.begin(); itr != m_sessions.end(); ++itr)
-        itr->second->KickPlayer();
+    {
+        pPlayer = itr->second->GetPlayer();
+        if(pPlayer != NULL && pPlayer->IsInWorld())
+        {
+        }
+    }
+}
+
+void World::SetPlayerExp()
+{
+    Player* pPlayer  = NULL;
+    uint32 autoXP    = getConfig(CONFIG_FLOAT_VIP_EXP_POINT);
+    uint32 autoMoney = getConfig(CONFIG_FLOAT_VIP_MONEY_POINT);
+
+    for (SessionMap::const_iterator itr = m_sessions.begin(); itr != m_sessions.end(); ++itr)
+    {
+        pPlayer = itr->second->GetPlayer();
+        if(pPlayer != NULL && pPlayer->IsInWorld())
+        {
+            uint8 level = pPlayer->getLevel();
+            if(level <= getConfig(CONFIG_FLOAT_VIP_EXP_LEVEL) && level < getConfig(CONFIG_UINT32_MAX_PLAYER_LEVEL))
+            {
+                uint32 nextLvlXP = pPlayer->GetUInt32Value(PLAYER_NEXT_LEVEL_XP);
+                uint32 curXP = pPlayer->GetUInt32Value(PLAYER_XP);
+                uint32 addXP = level * autoXP;
+
+                uint32 newXP = curXP + addXP;
+                while (newXP >= nextLvlXP && level <= getConfig(CONFIG_FLOAT_VIP_EXP_LEVEL) && level < getConfig(CONFIG_UINT32_MAX_PLAYER_LEVEL))
+                {
+                    newXP -= nextLvlXP;
+                    pPlayer->GiveLevel(level + 1);
+
+                    level = pPlayer->getLevel();
+                    nextLvlXP = pPlayer->GetUInt32Value(PLAYER_NEXT_LEVEL_XP);
+                }
+                pPlayer->SetUInt32Value(PLAYER_XP, newXP);
+                ChatHandler(pPlayer).PSendSysMessage(LANG_AUTO_GET_EXP, addXP, autoMoney/10000);
+                pPlayer->SaveToDB();
+            }
+        }
+    }
 }
 
 void World::InitResultQueue()

@@ -9117,7 +9117,7 @@ void ObjectMgr::LoadGossipMenuItems(std::set<uint32>& gossipScriptSet)
 
     QueryResult *result = WorldDatabase.Query(
         "SELECT menu_id, id, option_icon, option_text, option_id, npc_option_npcflag, "
-        "action_menu_id, action_poi_id, action_script_id, box_coded, box_money, box_text, "
+        "action_menu_id, action_poi_id, action_script_id, box_coded, box_money, box_point, box_text, "
         "cond_1, cond_1_val_1, cond_1_val_2, "
         "cond_2, cond_2_val_1, cond_2_val_2, "
         "cond_3, cond_3_val_1, cond_3_val_2 "
@@ -9180,17 +9180,18 @@ void ObjectMgr::LoadGossipMenuItems(std::set<uint32>& gossipScriptSet)
         gMenuItem.action_script_id      = fields[8].GetUInt32();
         gMenuItem.box_coded             = fields[9].GetUInt8() != 0;
         gMenuItem.box_money             = fields[10].GetUInt32();
-        gMenuItem.box_text              = fields[11].GetCppString();
+        gMenuItem.box_point             = fields[11].GetUInt32();
+        gMenuItem.box_text              = fields[12].GetCppString();
 
-        ConditionType cond_1            = (ConditionType)fields[12].GetUInt32();
-        uint32 cond_1_val_1             = fields[13].GetUInt32();
-        uint32 cond_1_val_2             = fields[14].GetUInt32();
-        ConditionType cond_2            = (ConditionType)fields[15].GetUInt32();
-        uint32 cond_2_val_1             = fields[16].GetUInt32();
-        uint32 cond_2_val_2             = fields[17].GetUInt32();
-        ConditionType cond_3            = (ConditionType)fields[18].GetUInt32();
-        uint32 cond_3_val_1             = fields[19].GetUInt32();
-        uint32 cond_3_val_2             = fields[20].GetUInt32();
+        ConditionType cond_1            = (ConditionType)fields[13].GetUInt32();
+        uint32 cond_1_val_1             = fields[14].GetUInt32();
+        uint32 cond_1_val_2             = fields[15].GetUInt32();
+        ConditionType cond_2            = (ConditionType)fields[16].GetUInt32();
+        uint32 cond_2_val_1             = fields[17].GetUInt32();
+        uint32 cond_2_val_2             = fields[18].GetUInt32();
+        ConditionType cond_3            = (ConditionType)fields[19].GetUInt32();
+        uint32 cond_3_val_1             = fields[20].GetUInt32();
+        uint32 cond_3_val_2             = fields[21].GetUInt32();
 
         if (gMenuItem.menu_id)                              // == 0 id is special and not have menu_id data
         {

@@ -14044,7 +14044,7 @@ void Player::PrepareGossipMenu(WorldObject *pSource, uint32 menuId)
                 }
             }
 
-            pMenu->GetGossipMenu().AddMenuItem(itr->second.option_icon, strOptionText, 0, itr->second.option_id, strBoxText, itr->second.box_money, itr->second.box_coded);
+            pMenu->GetGossipMenu().AddMenuItem(itr->second.option_icon, strOptionText, 0, itr->second.option_id, strBoxText, itr->second.box_money, itr->second.box_point, itr->second.box_coded);
             pMenu->GetGossipMenu().AddGossipMenuItemData(itr->second.action_menu_id, itr->second.action_poi_id, itr->second.action_script_id);
         }
     }
@@ -14126,6 +14126,7 @@ void Player::OnGossipSelect(WorldObject* pSource, uint32 gossipListId, uint32 me
     uint32 gossipOptionId = menu_item.m_gOptionId;
     ObjectGuid guid = pSource->GetObjectGuid();
     uint32 moneyTake = menu_item.m_gBoxMoney;
+    uint32 pointTake = gossipmenu.GetItem(gossipListId).m_gBoxPoint;
 
     // if this function called and player have money for pay MoneyTake or cheating, proccess both cases
     if (moneyTake > 0)
@@ -14135,6 +14136,15 @@ void Player::OnGossipSelect(WorldObject* pSource, uint32 gossipListId, uint32 me
         else
             return;                                         // cheating
     }
+
+    if (!HasEnoughPoint(pointTake))
+    {
+        ChatHandler(this).PSendSysMessage(LANG_NOT_ENOUGH_POINT);
+        PlayerTalkClass->CloseGossip();
+        return;
+    }
+    else
+        ModifyPoint(-int(pointTake));
 
     if (pSource->GetTypeId() == TYPEID_GAMEOBJECT)
     {
@@ -17074,9 +17084,18 @@ bool Player::LoadFromDB(ObjectGuid guid, SqlQueryHolder *holder )
     }
 
     // 积分系统
-    QueryResult result = LoginDatabase.PQuery("SELECT vip, point FROM account_vip WHERE id = '%u'",m_session->GetAccountId());
-    SetVip((( result) ? (*result)[0].GetUInt32() : 0));
-    SetPoint((( result) ? (*result)[1].GetUInt32() : 0));
+    QueryResult *result1 = LoginDatabase.PQuery("SELECT vip, point FROM account_vip WHERE id = '%u'",m_session->GetAccountId());
+    if(result1)
+    {
+        SetVip((*result1)[0].GetUInt32());
+        SetPoint((*result1)[1].GetUInt32());
+        delete result1;
+    }
+    else
+    {
+        SetVip(0);
+        SetPoint(0);
+    }
 
     return true;
 }
@@ -25712,4 +25731,27 @@ float Player::GetCollisionHeight(bool mounted)
 
         return modelData->CollisionHeight;
     }
+}
+
+void Player::ModifyPoint(int point)
+{
+    SetPoint(int(GetPoint()) + point);
+}
+
+void Player::ModifyXp(uint32 addXP)
+{
+    uint8 level = getLevel();
+    uint32 nextLvlXP = GetUInt32Value(PLAYER_NEXT_LEVEL_XP);
+    uint32 curXP = GetUInt32Value(PLAYER_XP);
+    uint32 newXP = curXP + addXP;
+    while (newXP >= nextLvlXP && level < sWorld.getConfig(CONFIG_UINT32_MAX_PLAYER_LEVEL))
+    {
+        newXP -= nextLvlXP;
+        GiveLevel(level + 1);
+
+        level = getLevel();
+        nextLvlXP = GetUInt32Value(PLAYER_NEXT_LEVEL_XP);
+    }
+    SetUInt32Value(PLAYER_XP, newXP);
+    SaveToDB();
 }

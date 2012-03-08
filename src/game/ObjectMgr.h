@@ -339,6 +339,7 @@ struct GossipMenuItems
     uint32          action_script_id;
     bool            box_coded;
     uint32          box_money;
+    uint32          box_point;
     std::string     box_text;
     uint16          cond_1;
     uint16          cond_2;

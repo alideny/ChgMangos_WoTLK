@@ -73,7 +73,7 @@ ChatCommand * ChatHandler::getCommandTable()
         { "addon",          SEC_ADMINISTRATOR,  true,  &ChatHandler::HandleAccountSetAddonCommand,     "", NULL },
         { "gmlevel",        SEC_CONSOLE,        true,  &ChatHandler::HandleAccountSetGmLevelCommand,   "", NULL },
         { "password",       SEC_CONSOLE,        true,  &ChatHandler::HandleAccountSetPasswordCommand,  "", NULL },
-        { "vip",            SEC_ADMINISTRATOR,  true,  &ChatHandler::HandleAccointSetVipCommand,       "", NULL },
+        { "vip",            SEC_ADMINISTRATOR,  true,  &ChatHandler::HandleAccountSetVipCommand,       "", NULL },
         { NULL,             0,                  false, NULL,                                           "", NULL }
     };
 

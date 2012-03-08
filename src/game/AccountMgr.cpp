@@ -173,22 +173,38 @@ AccountTypes AccountMgr::GetSecurity(uint32 acc_id)
 
 uint32 AccountMgr::GetPoint(uint32 accountId)
 {
-    QueryResult result = LoginDatabase.PQuery("SELECT point FROM account_vip WHERE id = '%u'", accountId);
-    return (result) ? (*result)[0].GetUInt32() : 0;
+    QueryResult *result = LoginDatabase.PQuery("SELECT point FROM account_vip WHERE id = '%u'", accountId);
+    if (result)
+    {
+        uint32 point = (*result)[0].GetUInt32();
+        delete result;
+        return point;
+    }
+    else
+        return 0;
 }
 
 uint32 AccountMgr::GetVip(uint32 accountId)
 {
-    QueryResult result = LoginDatabase.PQuery("SELECT vip FROM account_vip WHERE id = '%u'", accountId);
-    return (result) ? (*result)[0].GetUInt32() : 0;
+    QueryResult *result = LoginDatabase.PQuery("SELECT vip FROM account_vip WHERE id = '%u'", accountId);
+    if (result)
+    {
+        uint32 vip = (*result)[0].GetUInt32();
+        delete result;
+        return vip;
+    }
+    else
+        return 0;
 }
 
 bool AccountMgr::IsVip(uint32 accountId)
 {
-    QueryResult result = LoginDatabase.PQuery("SELECT vip FROM account_vip WHERE id = '%u'", accountId);
+    QueryResult *result = LoginDatabase.PQuery("SELECT vip FROM account_vip WHERE id = '%u'", accountId);
     if (result)
     {
-        return ((*result)[0].GetUInt32() > 0) ? true : false;
+        bool isvip =((*result)[0].GetUInt32() > 0) ? true : false;
+        delete result;
+        return isvip;
     }
     else
         return false;

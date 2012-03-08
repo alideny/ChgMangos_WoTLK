@@ -103,6 +103,8 @@ enum eScriptCommand
                                                             // datalong=NPCFlags
                                                             // datalong1=creature entry, datalong2=search radius
                                                             // data_flags = 0x01=add, 0x02=remove
+    SCRIPT_COMMAND_GIVEXP                   = 35,           // VIP Point System
+    SCRIPT_COMMAND_GIVEMONEY                = 36,           // VIP Point System
 };
 
 #define MAX_TEXT_ID 4                                       // used for SCRIPT_COMMAND_TALK
@@ -324,6 +326,16 @@ struct ScriptInfo
         {
             uint32 data[9];
         } raw;
+
+        struct                                              // SCRIPT_COMMAND_GIVEXP (35)
+        {
+            uint32 Xp;                                      // datalong
+        } GiveXp;
+
+        struct                                              // SCRIPT_COMMAND_GIVEMONEY (36)
+        {
+            uint32 Money;                                   // datalong
+        } GiveMoney;
     };
 
     float x;

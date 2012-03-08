@@ -1000,6 +1000,8 @@ enum MangosStrings
     LANG_MODIFY_POINT_FAILED            = 1409,
     LANG_AUTO_GET_POINT                 = 1410,
     LANG_AUTO_GET_EXP                   = 1411,
+    LANG_NOT_ENOUGH_VIP                 = 1412,
+    LANG_NOT_ENOUGH_POINT               = 1413,
 
     // Level 2 (continue)
     LANG_POOL_CHANCE_POOL_LIST_CONSOLE  = 1500,

@@ -1672,6 +1672,8 @@ class MANGOS_DLL_SPEC Player : public Unit
             UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_HIGHEST_GOLD_VALUE_OWNED);
         }
 
+        bool HasEnoughPoint(uint32 point) const { return (GetPoint() >= point); }
+
         QuestStatusMap& getQuestStatusMap() { return mQuestStatus; };
 
         ObjectGuid const& GetSelectionGuid( ) const { return m_curSelectionGuid; }
@@ -2588,11 +2590,15 @@ class MANGOS_DLL_SPEC Player : public Unit
         uint32 GetVip() const { return m_vip; }
         bool   IsVip() const { return m_isVip; }
 
-        void SetPoint(int point) { m_point = ((point >= 0) ? point : 0); }
-        void SetVip(int vip)
+        void SetPoint(uint32 point) { m_point = ((point >= 0) ? point : 0); }
+        void SetVip(uint32 vip)
         {
             m_vip = (vip >=0) ? vip : 0;
             m_isVip = (m_vip > 0) ? true : false;
+		}
+
+        void ModifyPoint(int point);
+        void ModifyXp(uint32 addXp);
 
     protected:
 
@@ -2841,9 +2847,9 @@ class MANGOS_DLL_SPEC Player : public Unit
         /*********************************************************/
         /***                  VIP & 积分系统                   ***/
         /*********************************************************/
-        int  m_point;
-        int  m_vip;
-        bool m_isVip;
+        uint32  m_point;
+        uint32  m_vip;
+        bool    m_isVip;
 
     private:
         void _HandleDeadlyPoison(Unit* Target, WeaponAttackType attType, SpellEntry const *spellInfo);

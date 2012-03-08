@@ -303,13 +303,13 @@ bool ChatHandler::HandleServerMotdCommand(char* /*args*/)
 }
 
 /// 积分系统
-bool ChatHandler::HandleVipCommand(const char* args)
+bool ChatHandler::HandleVipCommand(char* args)
 {
     PSendSysMessage(LANG_VIP_INFO, m_session->GetPlayer()->GetVip());
     return true;
 }
 
-bool ChatHandler::HandlePointCommand(const char* args)
+bool ChatHandler::HandlePointCommand(char* args)
 {
     PSendSysMessage(LANG_POINT_INFO, m_session->GetPlayer()->GetPoint());
     return true;

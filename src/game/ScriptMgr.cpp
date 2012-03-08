@@ -594,6 +594,17 @@ void ScriptMgr::LoadScripts(ScriptMapMap& scripts, const char* tablename)
 
                 break;
             }
+            case SCRIPT_COMMAND_GIVEXP:
+            case SCRIPT_COMMAND_GIVEMONEY:
+            {
+                if (tmp.GiveXp.Xp < 0 || tmp.GiveMoney.Money < 0)
+                {
+                    sLog.outErrorDb("Table `%s` SCRIPT_COMMAND_GIVEXP or SCRIPT_COMMAND_GIVEMONEY but value is %u for script id %u",
+                        tablename, tmp.GiveMoney.Money, tmp.id);
+                    continue;
+                }
+                break;
+            }
         }
 
         if (scripts.find(tmp.id) == scripts.end())

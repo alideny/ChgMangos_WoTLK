@@ -3084,6 +3084,24 @@ void Map::ScriptsProcess()
 
                 break;
             }
+            case SCRIPT_COMMAND_GIVEXP:
+                // Source must be player.
+                if (target->GetTypeId() == TYPEID_PLAYER)
+                {
+                    Player* pReceiver = (Player*)target;
+                    if (pReceiver->getLevel() < sWorld.getConfig(CONFIG_UINT32_MAX_PLAYER_LEVEL))
+                        pReceiver->ModifyXp(step.script->GiveXp.Xp);
+                }
+                break;
+            case SCRIPT_COMMAND_GIVEMONEY:
+                // Source must be player.
+                if (target->GetTypeId() == TYPEID_PLAYER)
+                {
+                    Player* pReceiver = (Player*)target;
+                    pReceiver->ModifyMoney(int32(step.script->GiveMoney.Money * 10000));
+                }
+                break;
+
             default:
                 sLog.outError("Unknown SCRIPT_COMMAND_ %u called for script id %u.", step.script->command, step.script->id);
                 break;
