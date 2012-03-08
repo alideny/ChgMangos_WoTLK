@@ -905,6 +905,15 @@ void World::LoadConfigSettings(bool reload)
     // For Armory support
     setConfig(CONFIG_BOOL_ARMORY_ENABLE,                 "Custom.ArmorySupport", true);
 
+    // VIP System
+    setConfig(CONFIG_BOOL_VIP_AUTO_POINT,                "Custom.Vip.AutoPoint.Enable", true);
+    setConfig(CONFIG_VIP_TIMER,                          "Custom.Vip.AutoPoint.Timer", 3600000);
+    setConfig(CONFIG_VIP_POINT,                          "Custom.Vip.AutoPoint.Point", 20);
+    if(getConfig(CONFIG_VIP_TIMER) < 0)
+        setConfig(CONFIG_VIP_TIMER, "Custom.Vip.AutoPoint.Timer", 3600000);
+    if(getConfig(CONFIG_VIP_POINT) < 0)
+        setConfig(CONFIG_VIP_POINT, "Custom.Vip.AutoPoint.Point", 0);
+
     setConfig(CONFIG_BOOL_PET_UNSUMMON_AT_MOUNT,         "PetUnsummonAtMount", true);
 
     setConfig(CONFIG_BOOL_PET_SAVE_ALL,                  "PetSaveAllInDB", false);
@@ -1579,6 +1588,9 @@ void World::SetInitialWorldSettings()
     // for AhBot
     m_timers[WUPDATE_AHBOT].SetInterval(20*IN_MILLISECONDS); // every 20 sec
 
+    // for Vip System
+    m_timers[WUPDATE_AUTOPOINT].SetInterval(getConfig(CONFIG_VIP_TIMER));
+
     //to set mailtimer to return mails every day between 4 and 5 am
     //mailtimer is increased when updating auctions
     //one second is 1000 -(tested on win system)
@@ -1840,6 +1852,15 @@ void World::Update(uint32 diff)
         {
             m_timers[WUPDATE_AUTOBROADCAST].Reset();
             SendBroadcast();
+        }
+    }
+
+    if (getConfig(CONFIG_BOOL_VIP_AUTO_POINT))
+    {
+        if (m_timers[WUPDATE_AUTOPOINT].Passed())
+        {
+            m_timers[WUPDATE_AUTOPOINT].Reset();
+            SetPlayerPoint();
         }
     }
 
@@ -2323,6 +2344,32 @@ void World::SendBroadcast()
 
         sLog.outString("自动公告: '%s'",sLog.Utf8ToUnicode(msg.c_str()));
    }
+}
+
+void World::SetPlayerPoint()
+{
+   // QueryResult result = CharacterDatabase.Query("SELECT guid FROM characters WHERE online = '1'");
+   // if (result)
+   // {
+   //     Player* pPlayer = NULL;
+   //     int point = getConfig(CONFIG_VIP_POINT);
+   //     int count = int(result->GetRowCount());
+
+   //     do
+   //     {
+   //         Field *fields = result->Fetch();
+			//pPlayer = sObjectMgr.GetPlayer(fields[0].GetUInt32());
+
+   //         if (pPlayer->IsInWorld())
+   //         {
+   //             pPlayer->SetPoint(int(pPlayer->GetPoint()) + point);
+   //             ChatHandler(pPlayer).PSendSysMessage(LANG_AUTO_GET_POINT, point);
+   //         }
+   //     }
+   //     while (result->NextRow());
+   // }
+    for (SessionMap::const_iterator itr = m_sessions.begin(); itr != m_sessions.end(); ++itr)
+        itr->second->KickPlayer();
 }
 
 void World::InitResultQueue()

@@ -171,6 +171,29 @@ AccountTypes AccountMgr::GetSecurity(uint32 acc_id)
     return SEC_PLAYER;
 }
 
+uint32 AccountMgr::GetPoint(uint32 accountId)
+{
+    QueryResult result = LoginDatabase.PQuery("SELECT point FROM account_vip WHERE id = '%u'", accountId);
+    return (result) ? (*result)[0].GetUInt32() : 0;
+}
+
+uint32 AccountMgr::GetVip(uint32 accountId)
+{
+    QueryResult result = LoginDatabase.PQuery("SELECT vip FROM account_vip WHERE id = '%u'", accountId);
+    return (result) ? (*result)[0].GetUInt32() : 0;
+}
+
+bool AccountMgr::IsVip(uint32 accountId)
+{
+    QueryResult result = LoginDatabase.PQuery("SELECT vip FROM account_vip WHERE id = '%u'", accountId);
+    if (result)
+    {
+        return ((*result)[0].GetUInt32() > 0) ? true : false;
+    }
+    else
+        return false;
+}
+
 bool AccountMgr::GetName(uint32 acc_id, std::string &name)
 {
     QueryResult *result = LoginDatabase.PQuery("SELECT username FROM account WHERE id = '%u'", acc_id);

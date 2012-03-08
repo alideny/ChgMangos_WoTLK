@@ -965,30 +965,13 @@ enum MangosStrings
     LANG_DOT_DAMAGE                     = 1206,
     // Room for more debug                1207-1299 not used
 
-    // Reserved for old client release branches specific strings
-    // Room for old clients 2.x           1300-1399 not used
-    // Room for old clients 1.x           1400-1499 not used
-
-    // Level 2 (continue)
-    LANG_POOL_CHANCE_POOL_LIST_CONSOLE  = 1500,
-    LANG_POOL_POOL_LIST_CHAT            = 1501,
-    LANG_POOL_POOL_LIST_CONSOLE         = 1502,
-    LANG_NO_FREE_STATIC_GUID_FOR_SPAWN  = 1503,
-    LANG_NPC_AI_HEADER                  = 1504,
-    LANG_NPC_AI_NAMES                   = 1505,
-    LANG_NPC_EVENTAI_PHASE              = 1506,
-    LANG_NPC_EVENTAI_MOVE               = 1507,
-    LANG_NPC_EVENTAI_COMBAT             = 1508,
-    // Room for more Level 2              1509-1599 not used
-
-    // FREE IDS                           1600-9999
-
+    // Use for ChgMangos                  1300-1500
     // Broadcaster
     LANG_AUTO_BROADCAST                 = 1300,
     LANG_LOGIN_BROADCAST                = 1301,
     LANG_PVP_ANNOUNCER                  = 1302,
 
-    // PlayerBot
+    // PlayerBot                          1303-1399
     LANG_PLAYERBOT_CMD_DISABLE          = 1303,
     LANG_PLAYERBOT_CMD_NOTHERE          = 1304,
     LANG_PLAYERBOT_CMD_SYNTAX           = 1305,
@@ -1003,6 +986,34 @@ enum MangosStrings
     LANG_PLAYERBOT_CMD_ORDER            = 1314,
     LANG_PLAYERBOT_CMD_ERRTARGET        = 1315,
     LANG_PLAYERBOT_CMD_ERRORDER         = 1316,
+
+    // VIP SYSTEM                         1400-1499
+    LANG_VIP_INFO                       = 1400,
+    LANG_POINT_INFO                     = 1401,
+    LANG_SET_VIP_SCUCESS                = 1402,
+    LANG_SET_VIP_FAILED                 = 1403,
+    LANG_SET_POINT_SUCCESS              = 1404,
+    LANG_SET_POINT_FAILED               = 1405,
+    LANG_SET_VIPANDPOINT_SUCCESS        = 1406,
+    LANG_SET_VIPANDPOINT_FAILED         = 1407,
+    LANG_MODIFY_POINT_SUCESS            = 1408,
+    LANG_MODIFY_POINT_FAILED            = 1409,
+    LANG_AUTO_GET_POINT                 = 1410,
+    LANG_AUTO_GET_EXP                   = 1411,
+
+    // Level 2 (continue)
+    LANG_POOL_CHANCE_POOL_LIST_CONSOLE  = 1500,
+    LANG_POOL_POOL_LIST_CHAT            = 1501,
+    LANG_POOL_POOL_LIST_CONSOLE         = 1502,
+    LANG_NO_FREE_STATIC_GUID_FOR_SPAWN  = 1503,
+    LANG_NPC_AI_HEADER                  = 1504,
+    LANG_NPC_AI_NAMES                   = 1505,
+    LANG_NPC_EVENTAI_PHASE              = 1506,
+    LANG_NPC_EVENTAI_MOVE               = 1507,
+    LANG_NPC_EVENTAI_COMBAT             = 1508,
+    // Room for more Level 2              1509-1599 not used
+
+    // FREE IDS                           1600-9999
 
     // Use for not-in-offcial-sources patches
     //                                    10000-10999

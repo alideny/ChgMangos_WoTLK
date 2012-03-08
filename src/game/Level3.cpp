@@ -1258,6 +1258,69 @@ bool ChatHandler::HandleAccountSetPasswordCommand(char* args)
     return false;
 }
 
+/// Set VIP for account
+bool ChatHandler::HandleAccountSetVipCommand(char *args)
+{
+    if (!*args)
+        return false;
+
+    std::string AccountName;
+    int AccountId = 0;
+    int Point = 0;
+    int Vip = 0;
+    char* arg1 = strtok((char*)args, " ");
+    char* arg2 = strtok(NULL, " ");
+    char* arg3 = strtok(NULL, " ");
+    bool isAccountNameGiven = true;
+
+    if (arg1 && !arg3)
+    {
+        if (!handler->getSelectedPlayer())
+            return false;
+        isAccountNameGiven = false;
+    }
+
+    // Check for second parameter
+    if (!isAccountNameGiven && !arg2)
+        return false;
+
+    // Check for account
+    if (isAccountNameGiven)
+    {
+        AccountName = arg1;
+        if (!AccountMgr::normalizeString(AccountName))
+        {
+            PSendSysMessage(LANG_ACCOUNT_NOT_EXIST, AccountName.c_str());
+            SetSentErrorMessage(true);
+            return false;
+        }
+    }
+
+    Vip = (isAccountNameGiven) ? atoi(arg2) : atoi(arg1);
+    Point = (isAccountNameGiven) ? atoi(arg3) : atoi(arg2);
+    AccountId = (isAccountNameGiven) ? sAccountMgr->GetId(AccountName) : getSelectedPlayer()->GetSession()->GetAccountId();
+
+    if (Vip >= 0 && Point >= 0 && AccountId != 0)
+    {
+        if (!isAccountNameGiven & (getSelectedPlayer() != NULL))
+        {
+            Player *pPlayer = getSelectedPlayer();
+            pPlayer->SetVip(Vip);
+            pPlayer->SetPoint(Point);
+            pPlayer->SaveToDB();
+        }
+        else
+            LoginDatabase.PExecute("REPLACE INTO account_vip VALUES ('%u', '%i', '%i')", AccountId, Vip, Point);
+        PSendSysMessage(LANG_SET_VIPANDPOINT_SUCCESS, AccountName.c_str(), Vip, Point);
+    }
+    else
+    {
+        SendSysMessage(LANG_SET_VIPANDPOINT_FAILED);
+        SetSentErrorMessage(true);
+        return false;
+    }
+    return true;
+}
 
 void ChatHandler::ShowAchievementCriteriaListHelper(AchievementCriteriaEntry const* criEntry, AchievementEntry const * achEntry, LocaleConstant loc, Player* target /*= NULL*/)
 {
@@ -7317,6 +7380,197 @@ bool ChatHandler::HandleMmapTestArea(char* args)
     {
         PSendSysMessage("No creatures in %f yard range.", radius);
     }
+
+    return true;
+}
+
+/*------------------------------------------
+ *-------------ChgMangos--------------------
+ *----------------------------------------*/
+
+// 积分系统
+bool ChatHandler::HandleSetVipCommand(const char *args)
+{
+    if (!*args)
+        return false;
+
+    char* arg1 = strtok((char*)args, " ");
+    char* arg2 = strtok(NULL, " ");
+    bool nameStr = true;
+    Player *pPlayer = NULL;
+    int vip = 0;
+    std::string accName;
+
+    if (arg1 && !arg2)
+    {
+        if (!getSelectedPlayer())
+            return false;
+        nameStr = false;
+    }
+
+    if (!nameStr && !arg1)
+        return false;
+
+    if (nameStr)
+    {
+        std::string name = extractPlayerNameFromLink(arg1);
+        pPlayer = sObjectMgr->GetPlayer(name.c_str());
+        if (pPlayer == NULL)
+        {
+            SendSysMessage(LANG_PLAYER_NOT_FOUND);
+            SetSentErrorMessage(true);
+            return false;
+        }
+    }
+    else
+    {
+        pPlayer = getSelectedPlayer();
+        if (pPlayer == NULL)
+        {
+            SendSysMessage(LANG_NO_CHAR_SELECTED);
+            SetSentErrorMessage(true);
+            return false;
+        }
+    }
+
+    vip = (nameStr) ? atoi(arg2) : atoi(arg1);
+    sAccountMgr->GetName(m_session->GetAccountId(), accName);
+
+    if (vip >=0)
+    {
+        pPlayer->SetVip(vip);
+        PSendSysMessage(LANG_SET_VIP_SCUCESS, pPlayer->GetName(), accName.c_str(), vip);
+    }
+    else
+    {
+        SendSysMessage(LANG_SET_VIP_FAILED);
+        SetSentErrorMessage(true);
+        return false;
+    }
+
+    return true;
+
+}
+
+bool ChatHandler::HandleSetPointCommand(const char *args)
+{
+    if (!*args)
+        return false;
+
+    char* arg1 = strtok((char*)args, " ");
+    char* arg2 = strtok(NULL, " ");
+    bool nameStr = true;
+    Player *pPlayer = NULL;
+    int point = 0;
+    std::string accName;
+
+    if (arg1 && !arg2)
+    {
+        if (!getSelectedPlayer())
+            return false;
+        nameStr = false;
+    }
+
+    if (!nameStr && !arg1)
+        return false;
+
+    if (nameStr)
+    {
+        std::string name = extractPlayerNameFromLink(arg1);
+        pPlayer = sObjectMgr->GetPlayer(name.c_str());
+        if (pPlayer == NULL)
+        {
+            SendSysMessage(LANG_PLAYER_NOT_FOUND);
+            SetSentErrorMessage(true);
+            return false;
+        }
+    }
+    else
+    {
+        pPlayer = getSelectedPlayer();
+        if (pPlayer == NULL)
+        {
+            SendSysMessage(LANG_NO_CHAR_SELECTED);
+            SetSentErrorMessage(true);
+            return false;
+        }
+    }
+
+    point = (nameStr) ? atoi(arg2) : atoi(arg1);
+    sAccountMgr->GetName(m_session->GetAccountId(), accName);
+
+    if (point >= 0)
+    {
+        pPlayer->SetPoint(point);
+        PSendSysMessage(LANG_SET_POINT_SUCCESS, pPlayer->GetName(), accName.c_str(), point);
+    }
+    else
+    {
+        SendSysMessage(LANG_SET_POINT_FAILED);
+        SetSentErrorMessage(true);
+        return false;
+    }
+
+    return true;
+}
+
+bool ChatHandler::HandleModifyPointCommand(const char *args)
+{
+    if (!*args)
+    {
+        SendSysMessage(LANG_MODIFY_POINT_FAILED);
+        return false;
+    }
+
+    char* arg1 = strtok((char*)args, " ");
+    char* arg2 = strtok(NULL, " ");
+    bool nameStr = true;
+    Player *pPlayer = NULL;
+    int point = 0;
+    int addPoint = 0;
+    int targetPoint = 0;
+    std::string accName;
+
+    if (arg1 && !arg2)
+    {
+        if (!getSelectedPlayer())
+            return false;
+        nameStr = false;
+    }
+
+    if (!nameStr && !arg1)
+        return false;
+
+    if (nameStr)
+    {
+        std::string name = extractPlayerNameFromLink(arg1);
+        pPlayer = sObjectMgr->GetPlayer(name.c_str());
+        if (pPlayer == NULL)
+        {
+            SendSysMessage(LANG_PLAYER_NOT_FOUND);
+            SetSentErrorMessage(true);
+            return false;
+        }
+        point = pPlayer->GetPoint();
+    }
+    else
+    {
+        pPlayer = getSelectedPlayer();
+        if (pPlayer == NULL)
+        {
+            SendSysMessage(LANG_NO_CHAR_SELECTED);
+            SetSentErrorMessage(true);
+            return false;
+        }
+        point = pPlayer->GetPoint();
+    }
+
+    addPoint = (nameStr) ? atoi(arg2) : atoi(arg1);
+    targetPoint = ((point + addPoint) >= 0) ? (point + addPoint) : 0;
+    sAccountMgr->GetName(m_session->GetAccountId(), accName);
+
+    pPlayer->SetPoint(targetPoint);
+    PSendSysMessage(LANG_MODIFY_POINT_SUCESS, pPlayer->GetName(), accName.c_str(), addPoint, targetPoint);
 
     return true;
 }

@@ -81,7 +81,9 @@ enum WorldTimers
     WUPDATE_DELETECHARS = 5,
     WUPDATE_AHBOT       = 6,
     WUPDATE_AUTOBROADCAST = 7,
-    WUPDATE_COUNT       = 8
+    WUPDATE_AUTOPOINT   = 8,
+    WUPDATE_AUTOEXP     = 9,
+    WUPDATE_COUNT       = 10
 };
 
 /// Configuration elements
@@ -325,6 +327,14 @@ enum eConfigFloatValues
     CONFIG_FLOAT_RATE_PLAYERS_H_POWER,
     CONFIG_FLOAT_RATE_PLAYERS_A_SPEED,
     CONFIG_FLOAT_RATE_PLAYERS_H_SPEED,
+    ///VIP Point
+    CONFIG_FLOAT_VIP_TIMER,
+    CONFIG_FLOAT_VIP_POINT,
+    // VIP Exp and Money
+    CONFIG_FLOAT_VIP_EXP_TIMER,
+    CONFIG_FLOAT_VIP_EXP_POINT,
+    CONFIG_FLOAT_VIP_EXP_LEVEL,
+    CONFIG_FLOAT_VIP_MONEY_POINT,
     CONFIG_FLOAT_VALUE_COUNT
 };
 
@@ -427,6 +437,10 @@ enum eConfigBoolValues
     CONFIG_BOOL_ALLOW_FLYING_MOUNTS_EVERYWHERE,
     // For Armory support
     CONFIG_BOOL_ARMORY_ENABLE,
+    // Auto point get
+    CONFIG_BOOL_VIP_AUTO_POINT,
+    // Auto exp get
+    CONFIG_BOOL_VIP_ATUO_EXP,
 
     CONFIG_BOOL_VALUE_COUNT
 };
@@ -537,6 +551,8 @@ class World
         WorldSession* FindSession(uint32 id) const;
         void AddSession(WorldSession *s);
         void SendBroadcast();
+        void SetPlayerPoint();
+        void SetPlayerExp();
         bool RemoveSession(uint32 id);
         /// Get the number of current active sessions
         void UpdateMaxSessionCounters();

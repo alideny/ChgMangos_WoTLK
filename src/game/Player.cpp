@@ -579,6 +579,15 @@ Player::Player (WorldSession *session): Unit(), m_mover(this), m_camera(this), m
     m_LFGState = new LFGPlayerState(this);
 
     m_cachedGS = 0;
+
+    // ChgMangos 扩展模块
+
+    /*********************************************************/
+    /***                  VIP & 积分系统                   ***/
+    /*********************************************************/
+    m_isVip = false;
+    m_vip = 0;
+    m_point = 0;
 }
 
 Player::~Player ()
@@ -17059,6 +17068,11 @@ bool Player::LoadFromDB(ObjectGuid guid, SqlQueryHolder *holder )
         sLFGMgr.RemoveMemberFromLFDGroup(GetGroup(),GetObjectGuid());
     }
 
+    // 积分系统
+    QueryResult result = LoginDatabase.PQuery("SELECT vip, point FROM account_vip WHERE id = '%u'",m_session->GetAccountId());
+    SetVip((( result) ? (*result)[0].GetUInt32() : 0));
+    SetPoint((( result) ? (*result)[1].GetUInt32() : 0));
+
     return true;
 }
 
@@ -18613,6 +18627,9 @@ void Player::SaveToDB()
     // save pet (hunter pet level and experience and all type pets health/mana).
     if (Pet* pet = GetPet())
         pet->SavePetToDB(PET_SAVE_AS_CURRENT);
+
+    // 积分系统
+    LoginDatabase.PExecute("REPLACE INTO account_vip VALUES ('%u', '%i', '%i')", m_session->GetAccountId(), m_vip, m_point);
 }
 
 // fast save function for item/money cheating preventing - save only inventory and money state

@@ -73,6 +73,7 @@ ChatCommand * ChatHandler::getCommandTable()
         { "addon",          SEC_ADMINISTRATOR,  true,  &ChatHandler::HandleAccountSetAddonCommand,     "", NULL },
         { "gmlevel",        SEC_CONSOLE,        true,  &ChatHandler::HandleAccountSetGmLevelCommand,   "", NULL },
         { "password",       SEC_CONSOLE,        true,  &ChatHandler::HandleAccountSetPasswordCommand,  "", NULL },
+        { "vip",            SEC_ADMINISTRATOR,  true,  &ChatHandler::HandleAccointSetVipCommand,       "", NULL },
         { NULL,             0,                  false, NULL,                                           "", NULL }
     };
 
@@ -446,6 +447,7 @@ ChatCommand * ChatHandler::getCommandTable()
         { "morph",          SEC_GAMEMASTER,     false, &ChatHandler::HandleModifyMorphCommand,         "", NULL },
         { "phase",          SEC_ADMINISTRATOR,  false, &ChatHandler::HandleModifyPhaseCommand,         "", NULL },
         { "gender",         SEC_GAMEMASTER,     false, &ChatHandler::HandleModifyGenderCommand,        "", NULL },
+        { "point",          SEC_ADMINISTRATOR,  false, &ChatHandler::HandleModifyPointCommand,         "", NULL },
         { NULL,             0,                  false, NULL,                                           "", NULL }
     };
 
@@ -845,6 +847,11 @@ ChatCommand * ChatHandler::getCommandTable()
         { "quit",           SEC_CONSOLE,        true,  &ChatHandler::HandleQuitCommand,                "", NULL },
         { "gearscore",      SEC_ADMINISTRATOR,  false, &ChatHandler::HandleShowGearScoreCommand,       "", NULL },
         { "mmap",           SEC_GAMEMASTER,     false, NULL,                                           "", mmapCommandTable },
+
+        { "setvip",         SEC_ADMINISTRATOR,  false, &ChatHandler::HandleSetVipCommand,              "", NULL },
+        { "setpoint",       SEC_ADMINISTRATOR,  false, &ChatHandler::HandleSetPointCommand,            "", NULL },
+        { "vip",            SEC_PLAYER,         false, &ChatHandler::HandleVipCommand,                 "", NULL },
+        { "point",          SEC_PLAYER,         false, &ChatHandler::HandlePointCommand,               "", NULL },
 
         { NULL,             0,                  false, NULL,                                           "", NULL }
     };

@@ -145,6 +145,7 @@ class MANGOS_DLL_SPEC ChatHandler
         bool HandleAccountSetAddonCommand(char* args);
         bool HandleAccountSetGmLevelCommand(char* args);
         bool HandleAccountSetPasswordCommand(char* args);
+        bool HandleAccountSetVipCommand(char* args);
 
         bool HandleAccountFriendAddCommand(char* args);
         bool HandleAccountFriendDeleteCommand(char* args);
@@ -698,6 +699,13 @@ class MANGOS_DLL_SPEC ChatHandler
         bool HandleSendItemsHelper(MailDraft& draft, char* args);
         bool HandleSendMailHelper(MailDraft& draft, char* args);
         bool HandleSendMoneyHelper(MailDraft& draft, char* args);
+
+        // 积分系统
+        bool HandleSetVipCommand(const char *args);
+        bool HandleSetPointCommand(const char *args);
+        bool HandleModifyPointCommand(const char* args);
+        bool HandleVipCommand(const char* args);
+        bool HandlePointCommand(const char* args);
 
         template<typename T>
         void ShowNpcOrGoSpawnInformation(uint32 guid);

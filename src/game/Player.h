@@ -2579,6 +2579,21 @@ class MANGOS_DLL_SPEC Player : public Unit
         // Return collision height sent to client
         float GetCollisionHeight(bool mounted);
 
+        // ChgMangos 扩展模块
+
+        /*********************************************************/
+        /***                  VIP & 积分系统                   ***/
+        /*********************************************************/
+        uint32 GetPoint() const { return m_point; }
+        uint32 GetVip() const { return m_vip; }
+        bool   IsVip() const { return m_isVip; }
+
+        void SetPoint(int point) { m_point = ((point >= 0) ? point : 0); }
+        void SetVip(int vip)
+        {
+            m_vip = (vip >=0) ? vip : 0;
+            m_isVip = (m_vip > 0) ? true : false;
+
     protected:
 
         uint32 m_contestedPvPTimer;
@@ -2822,6 +2837,13 @@ class MANGOS_DLL_SPEC Player : public Unit
 
         /// class dependent melee diminishing constant for dodge/parry/missed chances
         static const float m_diminishing_k[MAX_CLASSES];
+
+        /*********************************************************/
+        /***                  VIP & 积分系统                   ***/
+        /*********************************************************/
+        int  m_point;
+        int  m_vip;
+        bool m_isVip;
 
     private:
         void _HandleDeadlyPoison(Unit* Target, WeaponAttackType attType, SpellEntry const *spellInfo);
