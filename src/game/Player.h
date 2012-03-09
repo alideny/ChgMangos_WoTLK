@@ -1629,6 +1629,7 @@ class MANGOS_DLL_SPEC Player : public Unit
         void SaveToDB();
         void SaveInventoryAndGoldToDB();                    // fast save function for item/money cheating preventing
         void SaveGoldToDB();
+        void SaveVipToDB();
         static void SetUInt32ValueInArray(Tokens& data,uint16 index, uint32 value);
         static void SetFloatValueInArray(Tokens& data,uint16 index, float value);
         static void Customize(ObjectGuid guid, uint8 gender, uint8 skin, uint8 face, uint8 hairStyle, uint8 hairColor, uint8 facialHair);
@@ -2595,10 +2596,11 @@ class MANGOS_DLL_SPEC Player : public Unit
         {
             m_vip = (vip >=0) ? vip : 0;
             m_isVip = (m_vip > 0) ? true : false;
-		}
+        }
 
         void ModifyPoint(int point);
         void ModifyXp(uint32 addXp);
+        void ModifyProfession(uint32 profession, uint32 point);
 
     protected:
 

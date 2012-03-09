@@ -2368,18 +2368,16 @@ void World::SendBroadcast()
 
 void World::SetPlayerPoint()
 {
-   // QueryResult result = CharacterDatabase.Query("SELECT guid FROM characters WHERE online = '1'");
-   // if (result)
-   // {
     Player* pPlayer = NULL;
-   //     int point = getConfig(CONFIG_VIP_POINT);
-   //     int count = int(result->GetRowCount());
+    int point = getConfig(CONFIG_FLOAT_VIP_POINT);
 
     for (SessionMap::const_iterator itr = m_sessions.begin(); itr != m_sessions.end(); ++itr)
     {
         pPlayer = itr->second->GetPlayer();
         if(pPlayer != NULL && pPlayer->IsInWorld())
         {
+            pPlayer->ModifyPoint(point);
+            ChatHandler(pPlayer).PSendSysMessage(LANG_AUTO_GET_POINT, point);
         }
     }
 }
@@ -2398,22 +2396,8 @@ void World::SetPlayerExp()
             uint8 level = pPlayer->getLevel();
             if(level <= getConfig(CONFIG_FLOAT_VIP_EXP_LEVEL) && level < getConfig(CONFIG_UINT32_MAX_PLAYER_LEVEL))
             {
-                uint32 nextLvlXP = pPlayer->GetUInt32Value(PLAYER_NEXT_LEVEL_XP);
-                uint32 curXP = pPlayer->GetUInt32Value(PLAYER_XP);
-                uint32 addXP = level * autoXP;
-
-                uint32 newXP = curXP + addXP;
-                while (newXP >= nextLvlXP && level <= getConfig(CONFIG_FLOAT_VIP_EXP_LEVEL) && level < getConfig(CONFIG_UINT32_MAX_PLAYER_LEVEL))
-                {
-                    newXP -= nextLvlXP;
-                    pPlayer->GiveLevel(level + 1);
-
-                    level = pPlayer->getLevel();
-                    nextLvlXP = pPlayer->GetUInt32Value(PLAYER_NEXT_LEVEL_XP);
-                }
-                pPlayer->SetUInt32Value(PLAYER_XP, newXP);
-                ChatHandler(pPlayer).PSendSysMessage(LANG_AUTO_GET_EXP, addXP, autoMoney/10000);
-                pPlayer->SaveToDB();
+                pPlayer->ModifyXp(autoXP * level);
+                pPlayer->ModifyMoney(int32(autoMoney));
             }
         }
     }

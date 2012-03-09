@@ -103,8 +103,11 @@ enum eScriptCommand
                                                             // datalong=NPCFlags
                                                             // datalong1=creature entry, datalong2=search radius
                                                             // data_flags = 0x01=add, 0x02=remove
-    SCRIPT_COMMAND_GIVEXP                   = 35,           // VIP Point System
-    SCRIPT_COMMAND_GIVEMONEY                = 36,           // VIP Point System
+    SCRIPT_COMMAND_GIVEXP                   = 30,           // VIP Point System
+    SCRIPT_COMMAND_GIVEMONEY                = 31,           // VIP Point System
+    SCRIPT_COMMAND_GIVEHONOR                = 32,           // source = Player, datalong = honor
+    SCRIPT_COMMAND_GIVEARENA                = 33,           // source = Player, datalong = conquest
+    SCRIPT_COMMAND_GIVEPROFESSION           = 34            // source = Player, datalong = profession, datalong2 = point
 };
 
 #define MAX_TEXT_ID 4                                       // used for SCRIPT_COMMAND_TALK
@@ -327,15 +330,31 @@ struct ScriptInfo
             uint32 data[9];
         } raw;
 
-        struct                                              // SCRIPT_COMMAND_GIVEXP (35)
+        struct                                              // SCRIPT_COMMAND_GIVEXP (30)
         {
             uint32 Xp;                                      // datalong
         } GiveXp;
 
-        struct                                              // SCRIPT_COMMAND_GIVEMONEY (36)
+        struct                                              // SCRIPT_COMMAND_GIVEMONEY (31)
         {
             uint32 Money;                                   // datalong
         } GiveMoney;
+
+        struct                                              // SCRIPT_COMMAND_GIVEHONOR (32)
+        {
+            uint32 Honor;                                   // datalong
+        } GiveHonor;
+
+        struct                                              // SCRIPT_COMMAND_GIVEARENA (33)
+        {
+            uint32 Arena;                                   // datalong
+        } GiveArena;
+
+        struct                                              // SCRIPT_COMMAND_GIVEPROFESSION (34)
+        {
+            uint32 profession;                              // datalong
+            uint32 point;                                   // datalong2
+        } GiveProfession;
     };
 
     float x;

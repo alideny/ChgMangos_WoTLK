@@ -1002,6 +1002,7 @@ enum MangosStrings
     LANG_AUTO_GET_EXP                   = 1411,
     LANG_NOT_ENOUGH_VIP                 = 1412,
     LANG_NOT_ENOUGH_POINT               = 1413,
+    LANG_NOT_LEARN_SKILL                = 1414,
 
     // Level 2 (continue)
     LANG_POOL_CHANCE_POOL_LIST_CONSOLE  = 1500,

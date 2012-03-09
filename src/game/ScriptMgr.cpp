@@ -596,11 +596,21 @@ void ScriptMgr::LoadScripts(ScriptMapMap& scripts, const char* tablename)
             }
             case SCRIPT_COMMAND_GIVEXP:
             case SCRIPT_COMMAND_GIVEMONEY:
+            case SCRIPT_COMMAND_GIVEHONOR:
+            case SCRIPT_COMMAND_GIVEARENA:
             {
-                if (tmp.GiveXp.Xp < 0 || tmp.GiveMoney.Money < 0)
+                if (tmp.GiveXp.Xp < 0 || tmp.GiveMoney.Money < 0 || tmp.GiveHonor.Honor < 0 || tmp.GiveArena.Arena < 0)
                 {
-                    sLog.outErrorDb("Table `%s` SCRIPT_COMMAND_GIVEXP or SCRIPT_COMMAND_GIVEMONEY but value is %u for script id %u",
-                        tablename, tmp.GiveMoney.Money, tmp.id);
+                    sLog.outErrorDb("数据表 `%s` 包含 SCRIPT_COMMAND_GIVE 但值不正确", tablename);
+                    continue;
+                }
+                break;
+            }
+            case SCRIPT_COMMAND_GIVEPROFESSION:
+            {
+                if (tmp.GiveProfession.profession > 14 || tmp.GiveProfession.profession < 1 || tmp.GiveProfession.point < 0)
+                {
+                    sLog.outErrorDb("数据表 `%s` 包含 SCRIPT_COMMAND_GIVEPROFESSION 但值不正确(必须在 1 和 14 之间)", tablename);
                     continue;
                 }
                 break;

@@ -663,10 +663,7 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder *holder)
     // 上线公告
     if ( sWorld.getConfig(CONFIG_BOOL_LOGIN_BROADCAST))
     {
-        std::string playername = pCurrChar->GetName();
-        std::string loginmsg = "[" + playername +"]  ";
-        std::string sendmsg = loginmsg + "已经登陆服务器啦! 大家鼓掌欢迎,送上鲜花!";
-        sWorld.SendWorldText(LANG_LOGIN_BROADCAST, sendmsg.c_str());
+        sWorld.SendWorldText(LANG_LOGIN_BROADCAST, pCurrChar->GetName());
     }
 
     // load player specific part before send times

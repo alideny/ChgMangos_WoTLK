@@ -892,6 +892,20 @@ bool Player::Create( uint32 guidlow, const std::string& name, uint8 race, uint8 
     }
     // all item positions resolved
 
+    // 积分系统
+    QueryResult *result = LoginDatabase.PQuery("SELECT vip, point FROM account_vip WHERE id = '%u'",m_session->GetAccountId());
+    if(result)
+    {
+        SetVip((*result)[0].GetUInt32());
+        SetPoint((*result)[1].GetUInt32());
+        delete result;
+    }
+    else
+    {
+        SetVip(0);
+        SetPoint(0);
+    }
+
     return true;
 }
 
@@ -18671,6 +18685,11 @@ void Player::SaveGoldToDB()
     stmt.PExecute(GetMoney(), GetGUIDLow());
 }
 
+void Player::SaveVipToDB()
+{
+    LoginDatabase.PExecute("REPLACE INTO account_vip VALUES ('%u', '%i', '%i')", m_session->GetAccountId(), m_vip, m_point);
+}
+
 void Player::_SaveActions()
 {
     static SqlStatementID insertAction ;
@@ -25736,6 +25755,7 @@ float Player::GetCollisionHeight(bool mounted)
 void Player::ModifyPoint(int point)
 {
     SetPoint(int(GetPoint()) + point);
+    SaveVipToDB();
 }
 
 void Player::ModifyXp(uint32 addXP)
@@ -25754,4 +25774,18 @@ void Player::ModifyXp(uint32 addXP)
     }
     SetUInt32Value(PLAYER_XP, newXP);
     SaveToDB();
+}
+
+void Player::ModifyProfession(uint32 profession, uint32 point)
+{
+    if (!HasSkill(profession))
+    {
+        ChatHandler(this).PSendSysMessage(LANG_NOT_LEARN_SKILL);
+        return;
+    }
+
+    uint16 curValue = GetSkillValue(profession);
+    uint16 maxValue = GetPureMaxSkillValue(profession);
+    uint16 newValue = (curValue + (uint16)point) <= maxValue ? (curValue + (uint16)point) : maxValue;
+    SetSkill(profession, newValue, maxValue);
 }

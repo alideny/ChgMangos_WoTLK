@@ -3101,9 +3101,81 @@ void Map::ScriptsProcess()
                     pReceiver->ModifyMoney(int32(step.script->GiveMoney.Money * 10000));
                 }
                 break;
+            case SCRIPT_COMMAND_GIVEHONOR:
+                // Source must be player.
+                if (target->GetTypeId() == TYPEID_PLAYER)
+                {
+                    Player* pReceiver = (Player*)target;
+                    if (pReceiver->getLevel() < sWorld.getConfig(CONFIG_UINT32_MAX_HONOR_POINTS))
+                        pReceiver->ModifyHonorPoints(step.script->GiveHonor.Honor);
+                }
+                break;
+            case SCRIPT_COMMAND_GIVEARENA:
+                // Source must be player.
+                if (target->GetTypeId() == TYPEID_PLAYER)
+                {
+                    Player* pReceiver = (Player*)target;
+                    if (pReceiver->getLevel() < sWorld.getConfig(CONFIG_UINT32_MAX_ARENA_POINTS))
+                        pReceiver->ModifyArenaPoints(step.script->GiveArena.Arena);
+                }
+                break;
+            case SCRIPT_COMMAND_GIVEPROFESSION:
+                // Source must be player.
+                if (target->GetTypeId() == TYPEID_PLAYER)
+                {
+                    Player* pReceiver = (Player*)target;
+                    switch (step.script->GiveProfession.profession)
+                    {
+                        case 1:
+                            pReceiver->ModifyProfession(171, step.script->GiveProfession.point);
+                            break;
+                        case 2:
+                            pReceiver->ModifyProfession(164, step.script->GiveProfession.point);
+                            break;
+                        case 3:
+                            pReceiver->ModifyProfession(333, step.script->GiveProfession.point);
+                            break;
+                        case 4:
+                            pReceiver->ModifyProfession(202, step.script->GiveProfession.point);
+                            break;
+                        case 5:
+                            pReceiver->ModifyProfession(182, step.script->GiveProfession.point);
+                            break;
+                        case 6:
+                            pReceiver->ModifyProfession(755, step.script->GiveProfession.point);
+                            break;
+                        case 7:
+                            pReceiver->ModifyProfession(165, step.script->GiveProfession.point);
+                            break;
+                        case 8:
+                            pReceiver->ModifyProfession(186, step.script->GiveProfession.point);
+                            break;
+                        case 9:
+                            pReceiver->ModifyProfession(393, step.script->GiveProfession.point);
+                            break;
+                        case 10:
+                            pReceiver->ModifyProfession(197, step.script->GiveProfession.point);
+                            break;
+                        case 11:
+                            pReceiver->ModifyProfession(773, step.script->GiveProfession.point);
+                            break;
+                        case 12:
+                            pReceiver->ModifyProfession(185, step.script->GiveProfession.point);
+                            break;
+                        case 13:
+                            pReceiver->ModifyProfession(129, step.script->GiveProfession.point);
+                            break;
+                        case 14:
+                            pReceiver->ModifyProfession(356, step.script->GiveProfession.point);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                break;
 
             default:
-                sLog.outError("Unknown SCRIPT_COMMAND_ %u called for script id %u.", step.script->command, step.script->id);
+                sLog.outError("未知的 SCRIPT_COMMAND_ %u 被脚本 %u 调用", step.script->command, step.script->id);
                 break;
         }
 
