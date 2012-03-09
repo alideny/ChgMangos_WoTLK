@@ -2062,32 +2062,32 @@ Custom.EventAnnouncer = 1
 ###################################################################################################################
 #    野外PvP 掉落系统
 #
-#    PvPToken.Enable
+#    Custom.PvPToken.Enable
 #        开启/关闭 PVP掉落系统 
 #        默认: 1  开启
 #              0  关闭
 #
-#    PvPToken.ItemID
+#    Custom.PvPToken.ItemID
 #        在杀死敌对阵营玩家之后玩家可获得的物品 ID
 #        默认: 29434 (正义徽章)
 #
-#    PvPToken.ItemCount
+#    Custom.PvPToken.ItemCount
 #        获得物品的数量
 #        Default: 1
 #
-#    PvPToken.Gold
+#    Custom.PvPToken.Gold
 #        在杀死敌对阵营玩家之后玩家可获得的金钱数量,单位为铜币
 #        默认: 100000
-#    PvPToken.Honor  
+#    Custom.PvPToken.Honor
 #        在杀死敌对阵营玩家之后玩家可获得的荣誉点数
 #        默认: 75000  
 #  
-#    PvPToken.Arena  
+#    Custom.PvPToken.Arena
 #        在杀死敌对阵营玩家之后玩家可获得的竞技场点数
 #        默认: 5000 
 #
 #
-#    PvPToken.MapRestriction
+#    Custom.PvPToken.MapRestriction
 #        玩家可以获得 野外PVP 奖励的地图类型
 #        默认:    4 - 所有地图都可以获取
 #                 3 - 仅在战场中
@@ -2096,37 +2096,37 @@ Custom.EventAnnouncer = 1
 #
 ###################################################################################################################
 
-PvPToken.Enable     = 1
-PvPToken.ItemID     = 29434
-PvPToken.ItemCount  = 1
-PvPToken.Gold       = 10000
-PvPToken.Honor      = 30
-PvPToken.Arena      = 0
-PvPToken.MapRestriction = 4
+Custom.PvPToken.Enable     = 1
+Custom.PvPToken.ItemID     = 29434
+Custom.PvPToken.ItemCount  = 1
+Custom.PvPToken.Gold       = 10000
+Custom.PvPToken.Honor      = 30
+Custom.PvPToken.Arena      = 0
+Custom.PvPToken.MapRestriction = 4
 
 ###################################################################################################################
 #    PvP 通告系统
 #
-#    PvPAnnouncer.Enable
+#    Custom.PvPAnnouncer.Enable
 #       开启/关闭 PVP击杀通告系统
 #       默认   : 1 - 开启
 #                0 - 关闭
 #
-#    PvPAnnouncer.ColorKiller
+#    Custom.PvPAnnouncer.ColorKiller
 #       击杀者名字提示颜色  
 #
-#    PvPAnnouncer.ColorKilled
+#    Custom.PvPAnnouncer.ColorKilled
 #       被杀的玩家名字颜色提示 
 #
-#    PvPAnnouncer.ColorArea
+#    Custom.PvPAnnouncer.ColorArea
 #       击杀位置提示颜色 
 #
 ###################################################################################################################
 
-PvPAnnouncer.Enable      = 1
-PvPAnnouncer.ColorKiller = |CFFFFFF01
-PvPAnnouncer.ColorKilled = |CFFFFFF01
-PvPAnnouncer.ColorArea   = |CFFFE8A0E
+Custom.PvPAnnouncer.Enable      = 1
+Custom.PvPAnnouncer.ColorKiller = |CFFFFFF01
+Custom.PvPAnnouncer.ColorKilled = |CFFFFFF01
+Custom.PvPAnnouncer.ColorArea   = |CFFFE8A0E
 
 ###################################################################################################################
 #
@@ -2197,7 +2197,8 @@ Rate.Player.Horde.Speed          = 1
 Custom.ArmorySupport = 1
 
 ###################################################################################################################
-#  VIP 系统
+#
+#    VIP 系统
 #
 #
 ###################################################################################################################
@@ -2205,3 +2206,8 @@ Custom.ArmorySupport = 1
 Custom.Vip.AutoPoint.Enable = 1
 Custom.Vip.AutoPoint.Timer  = 600000
 Custom.Vip.AutoPoint.Point  = 20
+Custom.Vip.AutoExp.Enable   = 1
+Custom.Vip.AutoExp.Timer    = 1800000
+Custom.Vip.AutoExp.Point    = 1000
+Custom.Vip.AutoExp.Level    = 80
+Custom.Vip.AutoMoney.Point  = 50000
